@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { motion } from "framer-motion";
+import Shimmer from "components/Design/Shimmer/Shimmer";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         >
           Learn React
         </a>
+        <Shimmer.Button />
       </header>
     </div>
   );
