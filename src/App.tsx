@@ -28,6 +28,8 @@ function App() {
           Learn React
         </a>
         <Shimmer.Button />
+        <br />
+        <Shimmer.Img />
       </header>
     </div>
   );
