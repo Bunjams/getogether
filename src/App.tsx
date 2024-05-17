@@ -1,12 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { motion } from "framer-motion";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <motion.img
+          src={logo}
+          alt="logo"
+          className="h-40 w-40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, scale: 1.5 }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+        />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
