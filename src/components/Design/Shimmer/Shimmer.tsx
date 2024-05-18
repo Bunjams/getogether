@@ -1,18 +1,33 @@
+import {
+  Button as AntButton,
+  Avatar as AntAvatar,
+  ButtonProps,
+  AvatarProps,
+} from "antd";
 import React from "react";
 
-const Button = () => {
-  return <button className="animate-pulse h-10 w-20 bg-slate-500 rounded" />;
+type ShimmerProps = {
+  Button: ButtonProps;
+  Avatar: AvatarProps;
 };
 
-const Img = () => {
+const Button = (props: ShimmerProps["Button"]) => {
   return (
-    <div
-      className="animate-pulse h-10 w-10 bg-slate-500 rounded-full"
-      role="img"
+    <AntButton
+      className="animate-pulse bg-slate-200 rounded w-32"
+      type="text"
+      disabled
+      {...props}
     />
   );
 };
 
-const Shimmer = { Button, Img };
+const Avatar = (props: ShimmerProps["Avatar"]) => {
+  return (
+    <AntAvatar className="animate-pulse bg-slate-200 rounded-full" {...props} />
+  );
+};
+
+const Shimmer = { Button, Avatar };
 
 export default Shimmer;
