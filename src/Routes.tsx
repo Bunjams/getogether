@@ -8,7 +8,7 @@ import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
 import { Link, Routes, Route } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
-import Logo from "static/Logo/Logo.svg";
+import Logo from "logo.svg";
 
 const { Content, Sider } = Layout;
 const items: MenuProps["items"] = [

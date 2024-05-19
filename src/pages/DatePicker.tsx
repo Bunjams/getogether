@@ -21,7 +21,7 @@ const Day = ({
     weekStartDayNumber > index ? null : index - weekStartDayNumber + 1
   );
 
-  var currentDay = dayjs(selectedDate).get("date");
+  const currentDay = dayjs(selectedDate).get("date");
 
   return (
     <div className="grid grid-cols-7 gap-3 justify-between">
@@ -32,9 +32,9 @@ const Day = ({
         return (
           <button
             className={classNames(
-              "all:unset p-2 h-10 w-11 text-center bg-gray-300",
+              "all:unset p-2 h-10 w-11 text-center bg-neutral-300",
               {
-                "!bg-gray-600 text-white":
+                "!bg-neutral-600 text-white":
                   day === currentDay && isCurrentMonthDateSelected,
               }
             )}
@@ -54,7 +54,7 @@ const Week = () => {
     <div className="grid grid-cols-7 gap-3 justify-between">
       {weekNames.map((weekName) => {
         return (
-          <div className="bg-slate-400 p-2 h-10 w-11 text-center">
+          <div className="bg-neutral-400 p-2 h-10 w-11 text-center">
             {weekName}
           </div>
         );
@@ -78,7 +78,7 @@ const Header = ({
     <div className="flex items-center justify-between w-full">
       <button
         onClick={handleMonthDecrement}
-        className="p-2 px-4 hover:bg-gray-300 rounded"
+        className="p-2 px-4 hover:bg-neutral-300 rounded"
       >
         {"<"}
       </button>
@@ -87,7 +87,7 @@ const Header = ({
       </div>
       <button
         onClick={handleMonthIncrement}
-        className="p-2 px-4 hover:bg-gray-300 rounded"
+        className="p-2 px-4 hover:bg-neutral-300 rounded"
       >
         {">"}
       </button>
@@ -128,8 +128,9 @@ const DatePciker = () => {
     setSelectedDate(date);
   };
 
-  const isCurrentMonthDateSelected =
-    dayjs(date).format("M") === dayjs(selectedDate).format("M");
+  const isCurrentMonthYearDateSelected =
+    dayjs(date).format("M") === dayjs(selectedDate).format("M") &&
+    dayjs(date).format("YYYY") === dayjs(selectedDate).format("YYYY");
 
   return (
     <div className="max-w-96 bg-white m-10 flex flex-col items-center p-3 gap-3">
@@ -147,7 +148,7 @@ const DatePciker = () => {
         daysCount={currentMonthDaysCount}
         weekStartDayNumber={weekStartDayNumber}
         selectedDate={selectedDate}
-        isCurrentMonthDateSelected={isCurrentMonthDateSelected}
+        isCurrentMonthDateSelected={isCurrentMonthYearDateSelected}
       />
       {selectedDate && (
         <span className="bg-black text-white w-full text-center p-3">
