@@ -1,14 +1,14 @@
-import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
+import { Dropdown, Layout, Menu, MenuProps } from "antd";
 import ErrorPage from "components/ErrorBoundary/ErrorBoundary";
 import NotFound from "components/NotFound/NotFound";
+import Logo from "logo.svg";
 import About from "pages/About";
 import DatePciker from "pages/DatePicker";
 import Home from "pages/Home";
 import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
-import Logo from "logo.svg";
 
 const { Content, Sider } = Layout;
 const items: MenuProps["items"] = [
@@ -35,7 +35,11 @@ const AllProtectedRoutes = () => {
       >
         <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
           <button className="p-2 all:unset">
-            <img src={Logo} className="rounded" />
+            <img
+              src={Logo}
+              className="rounded text-footnote"
+              alt="getogether"
+            />
           </button>
         </Dropdown>
         <Menu theme="light" mode="inline" defaultSelectedKeys={["3"]}>
