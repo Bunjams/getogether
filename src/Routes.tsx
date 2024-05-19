@@ -2,6 +2,7 @@ import { Layout, Menu } from "antd";
 import ErrorPage from "components/ErrorBoundary/ErrorBoundary";
 import NotFound from "components/NotFound/NotFound";
 import About from "pages/About";
+import DatePciker from "pages/DatePicker";
 import Home from "pages/Home";
 import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
@@ -22,19 +23,19 @@ const AllProtectedRoutes = () => {
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item className="all:unset">
-            <Link to="/about">About</Link>
+            <Link to="/date-picker">Date</Link>
+          </Menu.Item>
+          <Menu.Item className="all:unset">
+            <Link to="/long-page">Long page</Link>
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="ml-[200px]">
         <Content className="overflow-auto">
           <Routes>
-            <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} ErrorBoundary={ErrorPage} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-            <Route path="/login" element={<>Login</>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/date-picker" element={<DatePciker />} />
+            <Route path="/long-page" element={<About />} />
           </Routes>
         </Content>
       </Layout>
@@ -51,9 +52,8 @@ const Routing = () => {
           element={<AllProtectedRoutes />}
           ErrorBoundary={ErrorPage}
         >
-          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
