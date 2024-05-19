@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
 import ErrorPage from "components/ErrorBoundary/ErrorBoundary";
 import NotFound from "components/NotFound/NotFound";
 import About from "pages/About";
@@ -8,8 +8,23 @@ import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
 import { Link, Routes, Route } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
+import Logo from "static/Logo/Logo.svg";
 
 const { Content, Sider } = Layout;
+const items: MenuProps["items"] = [
+  {
+    key: "1",
+    label: "Host",
+  },
+  {
+    key: "2",
+    label: "Vendor",
+  },
+  {
+    key: "3",
+    label: "Guest",
+  },
+];
 
 const AllProtectedRoutes = () => {
   return (
@@ -18,6 +33,11 @@ const AllProtectedRoutes = () => {
         theme="light"
         className="overflow-auto h-screen !fixed left-0 top-0 bottom-0"
       >
+        <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
+          <button className="p-2 all:unset">
+            <img src={Logo} className="rounded" />
+          </button>
+        </Dropdown>
         <Menu theme="light" mode="inline" defaultSelectedKeys={["3"]}>
           <Menu.Item className="all:unset">
             <Link to="/">Home</Link>
