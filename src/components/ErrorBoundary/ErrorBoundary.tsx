@@ -1,17 +1,36 @@
-import { useRouteError } from "react-router-dom";
+import {
+  isRouteErrorResponse,
+  useNavigate,
+  useRouteError,
+} from "react-router-dom";
 
-export default function ErrorPage() {
-  const error = useRouteError();
-  console.error(error);
+import { Button, Result } from "antd";
+import { ResultStatusType } from "antd/es/result";
+import React from "react";
+
+const ErrorPage: React.FC = () => {
+  const navigate = useNavigate();
+  const error = useRouteError() as Error;
+
+  if (!isRouteErrorResponse(error)) {
+    return null;
+  }
+
+  const errorText = error.data;
+  const errorStatus = error.status as ResultStatusType;
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        {/* @ts-ignore */}
-        <i>{error.statusText || error.message}</i>
-      </p>
-    </div>
+    <Result
+      status={errorStatus}
+      title="404"
+      subTitle={`Sorry, ${errorText}`}
+      extra={
+        <Button type="primary" onClick={() => navigate("/")}>
+          Back Home
+        </Button>
+      }
+    />
   );
-}
+};
+
+export default ErrorPage;
