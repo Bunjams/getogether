@@ -8,6 +8,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+img {
+  @apply text-footnote;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

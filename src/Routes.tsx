@@ -4,6 +4,7 @@ import NotFound from "components/NotFound/NotFound";
 import Logo from "logo.svg";
 import About from "pages/About";
 import Home from "pages/Home";
+import OTP from "pages/OTP";
 import SignIn from "pages/SignIn";
 import SignUp from "pages/SignUp";
 import { Link, Route, Routes } from "react-router-dom";
@@ -69,6 +70,7 @@ const Routing = () => {
       <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
+      <Route path="/otp" element={<OTP />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
     </Routes>
