@@ -4,22 +4,24 @@ import {
   ConfigProvider,
 } from "antd";
 
-export const Button = (props: AntButtonProps) => {
+const Button = (props: AntButtonProps) => {
   return (
     <ConfigProvider
       theme={{
-        token: {
-          borderRadius: 2,
-          colorPrimary: "#EF897A",
-          colorPrimaryHover: "#F6A295",
-          colorPrimaryActive: "#D85E4D",
-          colorBgContainerDisabled: "#F3F4F8",
-          colorTextDisabled: "#B3B5BC",
-          colorLink: "#4E97D9",
-          colorLinkActive: "#2774BA",
-          colorLinkHover: "#79B7EF",
-          colorBgTextHover: "#F3F4F8",
-          colorBgTextActive: "#FAFAFA",
+        components: {
+          Button: {
+            borderRadius: 2,
+            colorPrimary: "#EF897A",
+            colorPrimaryHover: "#F6A295",
+            colorPrimaryActive: "#D85E4D",
+            colorBgContainerDisabled: "#F3F4F8",
+            colorTextDisabled: "#B3B5BC",
+            colorLink: "#4E97D9",
+            colorLinkActive: "#2774BA",
+            colorLinkHover: "#79B7EF",
+            colorBgTextHover: "#F3F4F8",
+            colorBgTextActive: "#FAFAFA",
+          },
         },
       }}
     >

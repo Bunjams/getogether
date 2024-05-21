@@ -7,7 +7,8 @@ module.exports = {
     extend: {},
     colors: {
       transparent: "transparent",
-      white: "#FFFFFF",
+      whitebase: "#FFFFFF",
+      white: "#FEFDFD",
       black: "#07070D",
       neutral: {
         0: "#FAFAFA",
