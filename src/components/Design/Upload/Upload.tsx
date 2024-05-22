@@ -50,17 +50,14 @@ const Upload = ({
 const UploadAvatar = ({ ...restProps }: Omit<UploadProps, "children">) => {
   const [file, setFile] = React.useState<File | null>(null);
 
-  const onDrop = React.useCallback(
-    (
-      acceptedFiles: File[],
-      fileRejections: FileRejection[],
-      event: DropEvent
-    ) => {
-      setFile(acceptedFiles[0]);
-      restProps?.onDrop?.(acceptedFiles, fileRejections, event);
-    },
-    []
-  );
+  const onDrop = (
+    acceptedFiles: File[],
+    fileRejections: FileRejection[],
+    event: DropEvent
+  ) => {
+    setFile(acceptedFiles[0]);
+    restProps?.onDrop?.(acceptedFiles, fileRejections, event);
+  };
 
   return (
     <Upload

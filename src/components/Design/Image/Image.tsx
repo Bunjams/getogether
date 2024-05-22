@@ -24,7 +24,7 @@ const LazyImage = ({
       img.src = fallbackimg;
       setLoading(false);
     };
-  }, [src]);
+  }, [src, fallbackimg]);
 
   return loading ? (
     <Blurhash
@@ -34,7 +34,7 @@ const LazyImage = ({
       style={fallbackStyle}
     />
   ) : (
-    <img src={src} loading="lazy" {...rest} />
+    <img src={src} loading="lazy" alt="" {...rest} />
   );
 };
 
