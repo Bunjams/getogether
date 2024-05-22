@@ -2,10 +2,10 @@ import { Dropdown, Layout, Menu, MenuProps } from "antd";
 import ErrorPage from "components/ErrorBoundary/ErrorBoundary";
 import NotFound from "components/NotFound/NotFound";
 import Logo from "logo.svg";
-import About from "pages/About";
 import Home from "pages/Home";
+import Login from "pages/Login";
 import OTP from "pages/OTP";
-import SignIn from "pages/SignIn";
+import ProfileSetup from "pages/ProfileSetup";
 import SignUp from "pages/SignUp";
 import { Link, Route, Routes } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
@@ -46,16 +46,12 @@ const AllProtectedRoutes = () => {
           <Menu.Item className="all:unset">
             <Link to="/">Home</Link>
           </Menu.Item>
-          <Menu.Item className="all:unset">
-            <Link to="/long-page">Long page</Link>
-          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="ml-[200px]">
         <Content className="overflow-auto">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/long-page" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Content>
@@ -70,8 +66,9 @@ const Routing = () => {
       <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
+      <Route path="/profile-setup" element={<ProfileSetup />} />
       <Route path="/otp" element={<OTP />} />
-      <Route path="/signin" element={<SignIn />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
     </Routes>
   );

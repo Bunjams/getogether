@@ -1,6 +1,6 @@
+import cx from "classnames";
 import React, { HTMLAttributes, forwardRef } from "react";
 import Logo from "static/Image/Logo.svg";
-import cx from "classnames";
 
 type DashboardContainerProps = {
   children?: React.ReactNode;
@@ -12,6 +12,17 @@ const Header = ({ className }: DashboardContainerProps) => (
     <div className="px-6 py-3 col-span-2 self-start">
       <img src={Logo} alt="getogether" />
     </div>
+  </div>
+);
+
+const Content = ({
+  img,
+  children,
+}: DashboardContainerProps &
+  HTMLAttributes<HTMLDivElement> & { img: string }) => (
+  <div className="h-[calc(100vh-76px)] flex items-center w-full md:justify-between md:px-16 justify-center">
+    {children}
+    <img src={img} alt="SignInSignUpSide" className="md:block hidden" />
   </div>
 );
 
@@ -33,6 +44,7 @@ const LandingPage = Object.assign(
   ),
   {
     Header,
+    Content,
   }
 );
 

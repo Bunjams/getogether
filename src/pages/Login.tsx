@@ -3,19 +3,22 @@ import { Divider } from "antd";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import LandingPage from "components/LandingPage/LandingPage";
+import useDocumentTitle from "hooks/useDocumentTitle";
 import { useTokenDecode } from "hooks/useTokenDecode";
 import { useNavigate } from "react-router-dom";
 import SignInSignUpSide from "static/Image/SignInSignUpSide.svg";
 
-const SignIn = () => {
+const Login = () => {
+  useDocumentTitle("Login");
   const { getDecodedHeader } = useTokenDecode();
   const navigate = useNavigate();
+
   return (
     <LandingPage>
       <LandingPage.Header />
-      <div className="h-[calc(100vh-76px)] flex items-center w-full md:justify-between md:px-16 justify-center">
+      <LandingPage.Content img={SignInSignUpSide}>
         <div className="md:mx-44 md:w-96 w-4/5">
-          <h2 className="text-h2 pb-3">Create your account</h2>
+          <h2 className="text-h2 pb-3">Sign In to Your Account</h2>
           <span className="flex gap-4 flex-col">
             <Input
               label="Email address"
@@ -24,7 +27,11 @@ const SignIn = () => {
               size="large"
               type="email"
             />
-            <Button size="large" type="primary">
+            <Button
+              size="large"
+              type="primary"
+              onClick={() => navigate("/otp")}
+            >
               Continue
             </Button>
           </span>
@@ -49,18 +56,15 @@ const SignIn = () => {
             />
             <span className="text-body-regular">
               Don't have an account yet?
-              <Button type="link">Sign Up</Button>
+              <Button type="link" onClick={() => navigate("/signup")}>
+                Sign up
+              </Button>
             </span>
           </div>
         </div>
-        <img
-          src={SignInSignUpSide}
-          alt="SignInSignUpSide"
-          className="md:block hidden"
-        />
-      </div>
+      </LandingPage.Content>
     </LandingPage>
   );
 };
 
-export default SignIn;
+export default Login;

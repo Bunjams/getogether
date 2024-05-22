@@ -7,7 +7,7 @@ const PrivateRoute = () => {
     user = JSON.parse(localStorage.getItem("user") || "");
   } catch (error) {}
 
-  return user?.email ? <Outlet /> : <Navigate to="/signin" />;
+  return user?.email ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

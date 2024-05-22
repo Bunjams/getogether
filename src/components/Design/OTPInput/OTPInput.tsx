@@ -1,12 +1,15 @@
 import { Input as AntInput, ConfigProvider } from "antd";
 import type { OTPProps } from "antd/es/input/OTP";
+import useDocumentTitle from "hooks/useDocumentTitle";
 
 type Props = {
   label?: string;
   name?: string;
 } & OTPProps;
 
-const InputOTP = ({ label, name, ...props }: Props) => {
+const OTPInput = ({ label, name, ...props }: Props) => {
+  useDocumentTitle("Verification Required");
+
   return (
     <ConfigProvider
       theme={{
@@ -41,4 +44,4 @@ const InputOTP = ({ label, name, ...props }: Props) => {
   );
 };
 
-export default InputOTP;
+export default OTPInput;
