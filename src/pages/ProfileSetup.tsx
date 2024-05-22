@@ -46,7 +46,7 @@ export const ProfileSetup = () => {
             prefix={<MobileOutlined className="text-neutral-300" />}
           />
 
-          <Button size="large" type="primary" onClick={() => navigate("/otp")}>
+          <Button size="large" type="primary" onClick={() => navigate("/")}>
             Continue
           </Button>
         </div>

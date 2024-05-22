@@ -7,6 +7,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/store";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ConfigProvider } from "antd";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,13 +16,21 @@ const root = ReactDOM.createRoot(
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={clientId}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routing />
-        </BrowserRouter>
-      </Provider>
-    </GoogleOAuthProvider>
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: "'Raleway', sans-serif",
+        },
+      }}
+    >
+      <GoogleOAuthProvider clientId={clientId}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Routing />
+          </BrowserRouter>
+        </Provider>
+      </GoogleOAuthProvider>
+    </ConfigProvider>
   </React.StrictMode>
 );
 
