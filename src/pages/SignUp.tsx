@@ -2,11 +2,19 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Divider } from "antd";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
-import LandingPage from "components/LandingPage/LandingPage";
+import OnboardingLayout from "components/Onboarding/OnboardingLayout";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useTokenDecode } from "hooks/useTokenDecode";
+import { LoaderCircle } from "lucide-react";
+import { Suspense, lazy, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import SignInSignUpSide from "static/Image/SignInSignUpSide.svg";
+import SignInSignUpSide from "static/Image/SignInSignUpSide.jpg";
+
+const OnbordingSideImage = lazy(
+  () => import("components/Onboarding/OnbordingSideImage")
+);
+
+const MemoImg = memo(OnbordingSideImage);
 
 const SignUp = () => {
   useDocumentTitle("Sign up");
@@ -14,9 +22,9 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   return (
-    <LandingPage>
-      <LandingPage.Header />
-      <LandingPage.Content img={SignInSignUpSide}>
+    <OnboardingLayout>
+      <OnboardingLayout.Header />
+      <OnboardingLayout.Content>
         <div className="md:mx-44 md:w-96 w-4/5">
           <h2 className="text-h2 pb-3">Create your account</h2>
           <span className="flex gap-4 flex-col">
@@ -62,8 +70,21 @@ const SignUp = () => {
             </span>
           </div>
         </div>
-      </LandingPage.Content>
-    </LandingPage>
+        <Suspense
+          fallback={
+            <LoaderCircle
+              strokeWidth={2}
+              className="animate-spin text-red-700"
+            />
+          }
+        >
+          <MemoImg
+            img={SignInSignUpSide}
+            fallbackimg="LZSy%9tko#jGo}cEaLjuuPV[i^j?"
+          />
+        </Suspense>
+      </OnboardingLayout.Content>
+    </OnboardingLayout>
   );
 };
 

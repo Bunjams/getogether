@@ -3,19 +3,27 @@ import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import Label from "components/Design/Label/Label";
 import { UploadAvatar } from "components/Design/Upload/Upload";
-import LandingPage from "components/LandingPage/LandingPage";
+import OnboardingLayout from "components/Onboarding/OnboardingLayout";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { LoaderCircle } from "lucide-react";
+import { Suspense, lazy, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import UserProfileSetup from "static/Image/UserProfileSetup.svg";
+import UserProfileSetup from "static/Image/UserProfileSetup.jpg";
+
+const OnbordingSideImage = lazy(
+  () => import("components/Onboarding/OnbordingSideImage")
+);
+
+const MemoImg = memo(OnbordingSideImage);
 
 export const ProfileSetup = () => {
   useDocumentTitle("Profile Setup");
   const navigate = useNavigate();
 
   return (
-    <LandingPage>
-      <LandingPage.Header />
-      <LandingPage.Content img={UserProfileSetup}>
+    <OnboardingLayout>
+      <OnboardingLayout.Header />
+      <OnboardingLayout.Content>
         <div className="md:mx-44 md:w-96 w-4/5 flex gap-4 flex-col">
           <span>
             <h2 className="text-h2 m-0">Setup your profile</h2>
@@ -50,8 +58,21 @@ export const ProfileSetup = () => {
             Continue
           </Button>
         </div>
-      </LandingPage.Content>
-    </LandingPage>
+        <Suspense
+          fallback={
+            <LoaderCircle
+              strokeWidth={2}
+              className="animate-spin text-red-700"
+            />
+          }
+        >
+          <MemoImg
+            img={UserProfileSetup}
+            fallbackimg="LFS|B1ngp{tPuOU_ajobipiwjXjX"
+          />
+        </Suspense>
+      </OnboardingLayout.Content>
+    </OnboardingLayout>
   );
 };
 

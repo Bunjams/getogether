@@ -1,14 +1,15 @@
 import { Dropdown, Layout, Menu, MenuProps } from "antd";
-import ErrorPage from "components/ErrorBoundary/ErrorBoundary";
-import NotFound from "components/NotFound/NotFound";
 import Logo from "logo.svg";
-import Home from "pages/Home";
-import Login from "pages/Login";
-import OTP from "pages/OTP";
-import ProfileSetup from "pages/ProfileSetup";
-import SignUp from "pages/SignUp";
+import { Suspense, lazy } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
+const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
+const SignUp = lazy(() => import("pages/SignUp"));
+const OTP = lazy(() => import("pages/OTP"));
+const Login = lazy(() => import("pages/Login"));
+const Home = lazy(() => import("pages/Home"));
+const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
+const NotFound = lazy(() => import("components/NotFound/NotFound"));
 
 const { Content, Sider } = Layout;
 const items: MenuProps["items"] = [
@@ -51,8 +52,22 @@ const AllProtectedRoutes = () => {
       <Layout className="ml-[200px]">
         <Content className="overflow-auto">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/"
+              element={
+                <Suspense>
+                  <Home />
+                </Suspense>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Suspense>
+                  <NotFound />
+                </Suspense>
+              }
+            />
           </Routes>
         </Content>
       </Layout>
@@ -63,13 +78,48 @@ const AllProtectedRoutes = () => {
 const Routing = () => {
   return (
     <Routes>
-      <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
+      <Route
+        element={<PrivateRoute />}
+        errorElement={
+          <Suspense>
+            <ErrorPage />
+          </Suspense>
+        }
+      >
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
-      <Route path="/profile-setup" element={<ProfileSetup />} />
-      <Route path="/otp" element={<OTP />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route
+        path="/profile-setup"
+        element={
+          <Suspense>
+            <ProfileSetup />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/otp"
+        element={
+          <Suspense>
+            <OTP />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <Suspense>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <Suspense>
+            <SignUp />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };
