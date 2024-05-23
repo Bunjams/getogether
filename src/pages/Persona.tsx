@@ -1,14 +1,12 @@
-import { MobileOutlined, UserOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import Label from "components/Design/Label/Label";
-import { UploadAvatar } from "components/Design/Upload/Upload";
 import OnboardingLayout from "components/Onboarding/OnboardingLayout";
 import { Form, Formik, useFormikContext } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { LoaderCircle } from "lucide-react";
-import { ChangeEventHandler, Suspense, lazy, memo, useState } from "react";
+import { Suspense, lazy, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfileSetup from "static/Image/UserProfileSetup.jpg";
 
@@ -73,15 +71,16 @@ const Persona = () => {
               We'll streamline your onboarding experience accordingly.
             </Label>
           </span>
-          <Formik initialValues={{ persona: "" }} onSubmit={() => {}}>
+          <Formik initialValues={{ persona: "HOST" }} onSubmit={() => {}}>
             <Form className="all:unset flex gap-4 flex-col">
-              <PersonaCard personaType="VENDOR" />
               <PersonaCard personaType="HOST" />
+              <PersonaCard personaType="VENDOR" />
 
               <Button
                 size="large"
                 type="primary"
-                onClick={() => navigate("/persona")}
+                typeof="submit"
+                onClick={() => navigate("/")}
               >
                 Continue
               </Button>

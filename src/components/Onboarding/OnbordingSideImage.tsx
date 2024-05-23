@@ -1,4 +1,4 @@
-import LazyImage from "components/Design/Image/Image";
+import ImageLazy from "components/Design/Image/ImageLazy";
 
 const OnbordingSideImage = ({
   fallbackimg,
@@ -8,7 +8,7 @@ const OnbordingSideImage = ({
   fallbackimg: string;
 }) => {
   return (
-    <LazyImage
+    <ImageLazy
       src={img}
       fallbackimg={fallbackimg}
       alt="SignInSignUpSide"

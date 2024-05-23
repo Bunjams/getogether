@@ -1,7 +1,7 @@
 import React, { ImgHTMLAttributes, useEffect, useState } from "react";
 import { Blurhash } from "react-blurhash";
 
-const LazyImage = ({
+const ImageLazy = ({
   src,
   fallbackimg,
   fallbackClassName,
@@ -38,4 +38,4 @@ const LazyImage = ({
   );
 };
 
-export default LazyImage;
+export default ImageLazy;
