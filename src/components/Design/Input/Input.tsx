@@ -1,6 +1,11 @@
 import { Input as AntInput, ConfigProvider, InputProps } from "antd";
+import Label from "../Label/Label";
 
-const Input = (props: InputProps) => {
+type Props = InputProps & {
+  label?: string;
+};
+
+const Input = ({ label, size = "middle", ...props }: Props) => {
   return (
     <ConfigProvider
       theme={{
@@ -20,7 +25,14 @@ const Input = (props: InputProps) => {
         },
       }}
     >
-      <AntInput {...props} />
+      <span className="relative block w-full">
+        {label && (
+          <Label htmlFor={props.name} required={props.required}>
+            {label}
+          </Label>
+        )}
+        <AntInput {...props} size={size} />
+      </span>
     </ConfigProvider>
   );
 };

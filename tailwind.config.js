@@ -4,7 +4,9 @@ const plugin = require("tailwindcss/plugin");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {},
+    },
     colors: {
       transparent: "transparent",
       whitebase: "#FFFFFF",
@@ -122,6 +124,14 @@ module.exports = {
         },
       ],
 
+      "body-lg": [
+        "1rem",
+        {
+          fontWeight: 400,
+          lineHeight: "1.5rem",
+        },
+      ],
+
       "body-regular": [
         "0.875rem",
         {
@@ -130,10 +140,10 @@ module.exports = {
         },
       ],
 
-      "body-medium": [
+      "body-bold": [
         "0.875rem",
         {
-          fontWeight: 500,
+          fontWeight: 900,
           lineHeight: "1.375rem",
         },
       ],
@@ -146,6 +156,13 @@ module.exports = {
         },
       ],
 
+      subheading: [
+        "1rem;",
+        {
+          fontWeight: 700,
+          lineHeight: "1.375rem",
+        },
+      ],
       footnote: [
         "0.75rem",
         {

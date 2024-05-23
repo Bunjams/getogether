@@ -10,7 +10,6 @@ const Button = (props: AntButtonProps) => {
       theme={{
         components: {
           Button: {
-            borderRadius: 2,
             colorPrimary: "#EF897A",
             colorPrimaryHover: "#F6A295",
             colorPrimaryActive: "#D85E4D",
@@ -21,6 +20,11 @@ const Button = (props: AntButtonProps) => {
             colorLinkHover: "#79B7EF",
             colorBgTextHover: "#F3F4F8",
             colorBgTextActive: "#FAFAFA",
+            borderRadius: 2,
+            borderRadiusLG: 2,
+            borderRadiusSM: 2,
+            borderRadiusXS: 2,
+            borderRadiusOuter: 2,
           },
         },
       }}

@@ -16,8 +16,8 @@ const OnbordingSideImage = lazy(
 
 const MemoImg = memo(OnbordingSideImage);
 
-const SignUp = () => {
-  useDocumentTitle("Sign up");
+const Login = () => {
+  useDocumentTitle("Login");
   const { getDecodedHeader } = useTokenDecode();
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const SignUp = () => {
       <OnboardingLayout.Header />
       <OnboardingLayout.Content>
         <div className="md:mx-44 md:w-96 w-4/5">
-          <h2 className="text-h2 pb-3">Create your account</h2>
+          <h2 className="text-h2 pb-3">Sign In to Your Account</h2>
           <span className="flex gap-4 flex-col">
             <Input
               label="Email address"
@@ -63,9 +63,9 @@ const SignUp = () => {
               useOneTap
             />
             <span className="text-body-regular">
-              Already have an account?
-              <Button type="link" onClick={() => navigate("/login")}>
-                Login
+              Don't have an account yet?
+              <Button type="link" onClick={() => navigate("/signup")}>
+                Sign up
               </Button>
             </span>
           </div>
@@ -88,4 +88,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

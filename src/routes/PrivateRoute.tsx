@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
-  const { user } = { user: "null" };
-  return user ? <Outlet /> : <Navigate to="/signin" />;
+  let user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  return user?.email ? <Outlet context={{ user }} /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
