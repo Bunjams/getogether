@@ -10,6 +10,7 @@ const Login = lazy(() => import("pages/Login"));
 const Home = lazy(() => import("pages/Home"));
 const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
+const Persona = lazy(() => import("pages/Persona"));
 
 const { Content, Sider } = Layout;
 const items: MenuProps["items"] = [
@@ -88,6 +89,14 @@ const Routing = () => {
       >
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
+      <Route
+        path="/persona"
+        element={
+          <Suspense>
+            <Persona />
+          </Suspense>
+        }
+      />
       <Route
         path="/profile-setup"
         element={

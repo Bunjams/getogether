@@ -16,7 +16,7 @@ const OnbordingSideImage = lazy(
 
 const MemoImg = memo(OnbordingSideImage);
 
-export const ProfileSetup = () => {
+const ProfileSetup = () => {
   useDocumentTitle("Profile Setup");
   const navigate = useNavigate();
 
@@ -54,7 +54,11 @@ export const ProfileSetup = () => {
             prefix={<MobileOutlined className="text-neutral-300" />}
           />
 
-          <Button size="large" type="primary" onClick={() => navigate("/")}>
+          <Button
+            size="large"
+            type="primary"
+            onClick={() => navigate("/persona")}
+          >
             Continue
           </Button>
         </div>
