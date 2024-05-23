@@ -30,49 +30,27 @@ const items: MenuProps["items"] = [
 
 const AllProtectedRoutes = () => {
   return (
-    <Layout hasSider className="flex flex-col h-screen">
-      <Sider
-        theme="light"
-        className="overflow-auto h-screen !fixed left-0 top-0 bottom-0"
-      >
-        <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
-          <button className="p-2 all:unset">
-            <img
-              src={Logo}
-              className="rounded text-footnote"
-              alt="getogether"
-            />
-          </button>
-        </Dropdown>
-        <Menu theme="light" mode="inline" defaultSelectedKeys={["3"]}>
-          <Menu.Item className="all:unset">
-            <Link to="/">Home</Link>
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout className="ml-[200px]">
-        <Content className="overflow-auto">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Suspense>
-                  <Home />
-                </Suspense>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Suspense>
-                  <NotFound />
-                </Suspense>
-              }
-            />
-          </Routes>
-        </Content>
-      </Layout>
-    </Layout>
+    <div className="flex flex-col h-screen">
+      hey from all protected routes
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Suspense>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense>
+              <NotFound />
+            </Suspense>
+          }
+        />
+      </Routes>
+    </div>
   );
 };
 
