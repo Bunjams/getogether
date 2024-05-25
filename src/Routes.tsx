@@ -1,3 +1,4 @@
+import Loader from "components/Design/Loader/Loader";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
@@ -40,7 +41,7 @@ const AllProtectedRoutes = () => {
             path="/chat"
             element={
               <section className="flex items-center w-full justify-center">
-                Chat
+                <Loader /> Chat
               </section>
             }
           />
@@ -49,7 +50,7 @@ const AllProtectedRoutes = () => {
             path="/guest-list"
             element={
               <section className="flex items-center w-full justify-center">
-                Guest List
+                <Loader /> Guest List
               </section>
             }
           />
@@ -57,7 +58,7 @@ const AllProtectedRoutes = () => {
             path="/vendors"
             element={
               <section className="flex items-center w-full justify-center">
-                Vendors
+                <Loader /> Vendors
               </section>
             }
           />
@@ -65,7 +66,7 @@ const AllProtectedRoutes = () => {
             path="/expense-manager"
             element={
               <section className="flex items-center w-full justify-center">
-                Expense Manager
+                <Loader /> Expense Manager
               </section>
             }
           />

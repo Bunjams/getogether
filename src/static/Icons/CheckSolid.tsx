@@ -14,9 +14,9 @@ const CheckSolid = () => {
       <path
         d="M7.5 10.0002L9.16667 11.6668L12.5 8.3335"
         stroke="white"
-        stroke-width="1.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

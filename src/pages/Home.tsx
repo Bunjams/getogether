@@ -1,5 +1,4 @@
 import Button from "components/Design/Button/Button";
-import ImageLazy from "components/Design/Image/ImageLazy";
 import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import EventEmpty from "static/Image/EventEmpty.png";
@@ -13,19 +12,24 @@ const Home = () => {
   if (isLoading) {
     return (
       <section className="flex items-center w-full justify-center flex-col">
-        <Loader size="large" />
+        <Loader />
       </section>
     );
   }
 
   return (
     <section className="flex items-center w-full justify-center flex-col gap-2">
-      <ImageLazy
+      {/* <ImageLazy
         src={EventEmpty}
         fallbackimg="LJLDW3-t2LJv%~x[wdM|5;tJv}RF"
         alt="SignInSignUpSide"
         fallbackClassName="rounded-3xl overflow-hidden !w-72 !h-56"
         className="rounded-3xl overflow-hidden w-72 h-56"
+      /> */}
+      <img
+        src={EventEmpty}
+        className="rounded-3xl overflow-hidden w-72 h-56"
+        loading="lazy"
       />
       <h4 className="text-h4 font-semibold text-neutral-900">Get Started</h4>
       <p className="text-body-regular text-neutral-900">

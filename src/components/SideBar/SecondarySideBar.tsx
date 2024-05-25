@@ -6,7 +6,6 @@ import {
   MessageSquareMore,
   Users,
 } from "lucide-react";
-import { ReactNode } from "react";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import Logo from "static/Image/Logo.svg";
 
@@ -20,9 +19,9 @@ const NavMenu = ({
       {...props}
       className={({ isActive }) =>
         classNames("flex gap-2 items-center px-4 py-1 rounded border-l-4", {
-          "bg-neutral-0 text-red-600 text-body-strong font-semibold border-red-400":
+          "bg-neutral-0 text-red-600 text-body-strong font-semibold border-red-400 transform transition duration-300 ease-in-out":
             isActive,
-          "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent":
+          "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent transform transition-all duration-[400ms] ease-in-out":
             !isActive,
         })
       }
