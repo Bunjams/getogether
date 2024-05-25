@@ -27,6 +27,7 @@ const Login = () => {
   const [signIn] = useSignInMutation();
   const { alert } = useToast();
   localStorage.removeItem("authUser");
+  localStorage.removeItem("email");
 
   const onSingIn = async ({ email }: { email: string }) => {
     try {

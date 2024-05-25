@@ -27,6 +27,7 @@ const SignUp = () => {
   const [signUp] = useSignUpMutation();
   const { alert } = useToast();
   localStorage.removeItem("authUser");
+  localStorage.removeItem("email");
 
   const onSingUp = async ({ email }: { email: string }) => {
     try {

@@ -1,6 +1,8 @@
 import { MenuProps } from "antd";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import AccountSetup from "routes/AccountSetup";
+import OtpOutlet from "routes/OtpOutlet";
 import PrivateRoute from "routes/PrivateRoute";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
 const SignUp = lazy(() => import("pages/SignUp"));
@@ -66,6 +68,35 @@ const Routing = () => {
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
 
+      <Route element={<AccountSetup />}>
+        <Route
+          path="/persona"
+          element={
+            <Suspense>
+              <Persona />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/profile-setup"
+          element={
+            <Suspense>
+              <ProfileSetup />
+            </Suspense>
+          }
+        />
+      </Route>
+
+      <Route element={<OtpOutlet />}>
+        <Route
+          path="/otp"
+          element={
+            <Suspense>
+              <OTP />
+            </Suspense>
+          }
+        />
+      </Route>
       <Route
         path="/login"
         element={
@@ -79,30 +110,6 @@ const Routing = () => {
         element={
           <Suspense>
             <SignUp />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/persona"
-        element={
-          <Suspense>
-            <Persona />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/profile-setup"
-        element={
-          <Suspense>
-            <ProfileSetup />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/otp"
-        element={
-          <Suspense>
-            <OTP />
           </Suspense>
         }
       />
