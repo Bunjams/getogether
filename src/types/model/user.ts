@@ -25,9 +25,6 @@ export type User = {
 //   access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MTMxNDI2LCJpYXQiOjE3MTY1MjY2MjYsImp0aSI6IjZjMzdmYTQ4YmZmZDRmOGViYWMwYmQzNTEyNTlhOGUxIiwidXNlcl9pZCI6Mn0.88UxeTpyykeO1hzGI5HPaGFLu8mgyQrUPqKLmV2aBoo";
 // },
 
-// Signup response  FIXME: Update this
-//  - don't add default role
-
 // {
 //   "first_name": "",
 //   "last_name": "",

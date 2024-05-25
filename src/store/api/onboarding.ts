@@ -55,6 +55,31 @@ export const onboardingApi = createApi({
         };
       },
     }),
+
+    googleAuth: builder.mutation<
+      { data: User },
+      {
+        email: string;
+        given_name: string;
+        family_name: string;
+        name: string;
+        picture: string;
+      }
+    >({
+      query: ({ email, family_name, given_name, name, picture }) => {
+        return {
+          url: "users/google/",
+          method: "POST",
+          body: {
+            family_name,
+            given_name,
+            name,
+            picture,
+            email,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -63,4 +88,5 @@ export const {
   useSignUpMutation,
   useVerifyOtpMutation,
   useResendOTPMutation,
+  useGoogleAuthMutation,
 } = onboardingApi;

@@ -1,4 +1,4 @@
-import { MenuProps } from "antd";
+import Loader from "components/Design/Loader/Loader";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
@@ -12,43 +12,74 @@ const Home = lazy(() => import("pages/Home"));
 const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const Persona = lazy(() => import("pages/Persona"));
-
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Host",
-  },
-  {
-    key: "2",
-    label: "Vendor",
-  },
-  {
-    key: "3",
-    label: "Guest",
-  },
-];
+const PrimarySideBar = lazy(() => import("components/SideBar/PrimarySideBar"));
+const SecondarySideBar = lazy(
+  () => import("components/SideBar/SecondarySideBar")
+);
 
 const AllProtectedRoutes = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              <Home />
-            </Suspense>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <Suspense>
-              <NotFound />
-            </Suspense>
-          }
-        />
-      </Routes>
+    <div className="flex flex-col h-screen p-2 bg-red-400">
+      <div className="flex h-screen bg-neutral-0">
+        <Suspense>
+          <PrimarySideBar />
+        </Suspense>
+        <Suspense>
+          <SecondarySideBar />
+        </Suspense>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/chat"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Chat
+              </section>
+            }
+          />
+
+          <Route
+            path="/guest-list"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Guest List
+              </section>
+            }
+          />
+          <Route
+            path="/vendors"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Vendors
+              </section>
+            }
+          />
+          <Route
+            path="/expense-manager"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Expense Manager
+              </section>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </div>
     </div>
   );
 };

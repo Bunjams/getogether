@@ -35,6 +35,7 @@ const ProfileSetup = () => {
     mobile: string;
     profile_url: string | null;
   }) => {
+    // TODO: ask vikas for profile_url key
     try {
       const user = await addUserData({
         mobile,
