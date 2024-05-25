@@ -1,7 +1,6 @@
-import { Dropdown, Layout, Menu, MenuProps } from "antd";
-import Logo from "logo.svg";
+import { MenuProps } from "antd";
 import { Suspense, lazy } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "routes/PrivateRoute";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
 const SignUp = lazy(() => import("pages/SignUp"));
@@ -12,7 +11,6 @@ const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const Persona = lazy(() => import("pages/Persona"));
 
-const { Content, Sider } = Layout;
 const items: MenuProps["items"] = [
   {
     key: "1",
@@ -67,6 +65,23 @@ const Routing = () => {
       >
         <Route path="/*" element={<AllProtectedRoutes />} />
       </Route>
+
+      <Route
+        path="/login"
+        element={
+          <Suspense>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <Suspense>
+            <SignUp />
+          </Suspense>
+        }
+      />
       <Route
         path="/persona"
         element={
@@ -88,22 +103,6 @@ const Routing = () => {
         element={
           <Suspense>
             <OTP />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <Suspense>
-            <Login />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <Suspense>
-            <SignUp />
           </Suspense>
         }
       />

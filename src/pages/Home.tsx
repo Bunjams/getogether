@@ -1,7 +1,5 @@
 import Button from "components/Design/Button/Button";
-import Shimmer from "components/Design/Shimmer/Shimmer";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import React from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { User } from "types/model/user";
 
@@ -18,9 +16,15 @@ const Home = () => {
 
   return (
     <header className="flex items-center w-full justify-center flex-col">
-      <img src={user.picture} className="rounded-full" alt={user.given_name} />
+      {user.profile_url && (
+        <img
+          src={user.profile_url}
+          className="rounded-full"
+          alt={user.first_name}
+        />
+      )}
       <p className="text-subheading">
-        {user.given_name} {user.family_name}
+        {user.first_name} {user.last_name}
       </p>
       <Button type="primary" onClick={logout}>
         logout

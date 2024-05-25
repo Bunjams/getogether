@@ -1,15 +1,102 @@
-import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
-import type { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import type {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
 
-export const handleBlockUser = (dispatch: BaseQueryApi["dispatch"]) => {};
+const getAccessToken = async () => {
+  let authInLocal;
+  try {
+    authInLocal = localStorage.getItem("authUser");
+    authInLocal = JSON.parse(authInLocal || "");
+    if (!authInLocal.access) {
+      window.location.replace(window.location.origin + "/login");
+    }
+    const user = jwtDecode<{ exp: number }>(authInLocal.access);
+    const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
-const baseQuery: BaseQueryFn = async () => {
-  return { data: {} };
+    if (isExpired) {
+      window.location.replace(window.location.origin + "/login");
+    }
+
+    if (authInLocal.access) {
+      return authInLocal.access;
+    }
+    throw new Error("No access token present");
+  } catch (error) {
+    // FIXME: Ask vikas for this API
+    // try {
+    //   const { access } = await getAccessTokenUsingRefreshToken({
+    //     refresh: authInLocal.refresh,
+    //   });
+    //   localStorage.setItem(
+    //     "authUser",
+    //     JSON.stringify({ ...authInLocal, access })
+    //   );
+    // } catch (error) {
+    //   return false;
+    // }
+  }
+};
+
+export const baseURL = process.env.REACT_APP_API_BASE_URL;
+
+const query = fetchBaseQuery({
+  baseUrl: baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+const signout = () => {
+  localStorage.removeItem("authUser");
+  window.location.href = `${window.location.origin}/login`;
+};
+
+const baseQuery: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  const accessToken = await getAccessToken();
+  const headers: { Authorization?: string } = {};
+
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  let queryParams: string | FetchArgs = { url: "" };
+
+  if (typeof args === "object") {
+    queryParams = { ...args, headers };
+  } else {
+    queryParams = { url: args, headers };
+  }
+
+  let result = await query(queryParams, api, extraOptions);
+  if (result.error) {
+    if (result?.error?.status === 401) {
+      signout();
+    }
+
+    return {
+      error: result.error,
+    };
+  }
+
+  return {
+    ...result,
+    data: (result.data as { data: unknown } | null)?.data,
+  } as QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>;
 };
 
 export const emptyApi = createApi({
-  tagTypes: [],
+  tagTypes: ["USER_PROFILE"],
   baseQuery: baseQuery,
   endpoints: () => ({}),
 });
