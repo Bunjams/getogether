@@ -43,8 +43,24 @@ export const onboardingApi = createApi({
         },
       }
     ),
+
+    resendOTP: builder.mutation<void, { email: string }>({
+      query: ({ email }) => {
+        return {
+          url: "users/resend-otp/",
+          method: "POST",
+          body: {
+            email,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useSignInMutation, useSignUpMutation, useVerifyOtpMutation } =
-  onboardingApi;
+export const {
+  useSignInMutation,
+  useSignUpMutation,
+  useVerifyOtpMutation,
+  useResendOTPMutation,
+} = onboardingApi;

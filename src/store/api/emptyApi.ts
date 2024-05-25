@@ -9,11 +9,34 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 
+export const baseURL = process.env.REACT_APP_API_BASE_URL;
+
+const getAccessTokenUsingRefreshToken = async ({
+  refresh,
+}: {
+  refresh: string;
+}) => {
+  const response = await fetch(`${baseURL}users/refresh-token/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refresh }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to get access token using refresh token");
+  }
+
+  return response.json();
+};
+
 const getAccessToken = async () => {
   let authInLocal;
   try {
     authInLocal = localStorage.getItem("authUser");
     authInLocal = JSON.parse(authInLocal || "");
+
     if (!authInLocal.access) {
       window.location.replace(window.location.origin + "/login");
     }
@@ -29,22 +52,19 @@ const getAccessToken = async () => {
     }
     throw new Error("No access token present");
   } catch (error) {
-    // FIXME: Ask vikas for this API
-    // try {
-    //   const { access } = await getAccessTokenUsingRefreshToken({
-    //     refresh: authInLocal.refresh,
-    //   });
-    //   localStorage.setItem(
-    //     "authUser",
-    //     JSON.stringify({ ...authInLocal, access })
-    //   );
-    // } catch (error) {
-    //   return false;
-    // }
+    try {
+      const { access } = await getAccessTokenUsingRefreshToken({
+        refresh: authInLocal.refresh[0],
+      });
+      localStorage.setItem(
+        "authUser",
+        JSON.stringify({ ...authInLocal, access })
+      );
+    } catch (error) {
+      return false;
+    }
   }
 };
-
-export const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const query = fetchBaseQuery({
   baseUrl: baseURL,

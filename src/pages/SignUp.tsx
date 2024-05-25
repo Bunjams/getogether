@@ -26,8 +26,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [signUp] = useSignUpMutation();
   const { alert } = useToast();
-
-  //FIXME:  signUp allowing user to login
+  localStorage.removeItem("authUser");
 
   const onSingUp = async ({ email }: { email: string }) => {
     try {
@@ -36,6 +35,9 @@ const SignUp = () => {
       localStorage.setItem("email", email);
     } catch (e) {
       alert({ message: (e as BackendError).data.error.message });
+      if ((e as BackendError).data.error.code === "user_already_exist") {
+        navigate("/login");
+      }
     }
   };
 

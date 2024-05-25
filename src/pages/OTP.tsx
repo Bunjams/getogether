@@ -6,10 +6,14 @@ import { Form, Formik } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
-import { Suspense, lazy, memo } from "react";
+import { Suspense, lazy, memo, useState } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useNavigate } from "react-router-dom";
 import SignInSignUpSide from "static/Image/SignInSignUpSide.jpg";
-import { useVerifyOtpMutation } from "store/api/onboarding";
+import {
+  useResendOTPMutation,
+  useVerifyOtpMutation,
+} from "store/api/onboarding";
 import { BackendError } from "types/utils/backendError";
 
 const OnbordingSideImage = lazy(
@@ -18,12 +22,41 @@ const OnbordingSideImage = lazy(
 
 const MemoImg = memo(OnbordingSideImage);
 
+const Timer = ({ setShowTimer }: { setShowTimer: () => void }) => {
+  function updateShowTimer() {
+    setShowTimer();
+    return {
+      shouldRepeat: false,
+      delay: 1,
+    };
+  }
+  return (
+    <span className="t-mr-1">
+      <CountdownCircleTimer
+        isPlaying
+        duration={20}
+        colors={["#871B0C", "#F7B801", "#BA6527", "#0C874C"]}
+        colorsTime={[7, 5, 2, 0]}
+        strokeWidth={2}
+        size={25}
+        onComplete={updateShowTimer}
+      >
+        {({ remainingTime }) => (
+          <span className="text-footnote">{remainingTime}</span>
+        )}
+      </CountdownCircleTimer>
+    </span>
+  );
+};
+
 const OTP = () => {
   useDocumentTitle("OTP Verification");
   const navigate = useNavigate();
-  const [verifyOtp] = useVerifyOtpMutation();
   const email = localStorage.getItem("email") || "";
-  const { alert } = useToast();
+  const { alert, success } = useToast();
+  const [showTimer, setShowTimer] = useState(false);
+  const [verifyOtp] = useVerifyOtpMutation();
+  const [resendOTP] = useResendOTPMutation();
 
   const onVerifyOtp = async ({
     email,
@@ -37,16 +70,25 @@ const OTP = () => {
       localStorage.removeItem("email");
       localStorage.setItem("authUser", JSON.stringify(data));
 
-      // FIXME: check with some other key
-      if (data.first_name) {
+      if (!data.mobile) {
+        navigate("/profile-setup", { replace: true });
+        return;
+      }
+      if (!data.role) {
         navigate("/persona", { replace: true });
         return;
       }
-      if (data.role) {
-        navigate("/", { replace: true });
-        return;
-      }
-      navigate("/profile-setup", { replace: true });
+      navigate("/", { replace: true });
+    } catch (e) {
+      alert({ message: (e as BackendError).data.error.message });
+    }
+  };
+
+  const onResendOtp = async () => {
+    setShowTimer(true);
+    try {
+      await resendOTP({ email });
+      success({ message: "OTP sent successfully" });
     } catch (e) {
       alert({ message: (e as BackendError).data.error.message });
     }
@@ -87,9 +129,15 @@ const OTP = () => {
                   >
                     Continue
                   </Button>
-                  <span className="text-body-regular">
+                  <span className="text-body-regular flex gap-1 items-center">
                     Didn't receive an OTP?
-                    <Button type="link">Resend</Button>
+                    {showTimer ? (
+                      <Timer setShowTimer={() => setShowTimer(false)} />
+                    ) : (
+                      <Button type="link" onClick={onResendOtp} size="small">
+                        Resend
+                      </Button>
+                    )}
                   </span>
                 </Form>
               );

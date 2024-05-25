@@ -5,10 +5,13 @@ import Label from "components/Design/Label/Label";
 import OnboardingLayout from "components/Onboarding/OnboardingLayout";
 import { Form, Formik, useFormikContext } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
 import { Suspense, lazy, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfileSetup from "static/Image/UserProfileSetup.jpg";
+import { useUpdateRoleMutation } from "store/api/userProfile";
+import { BackendError } from "types/utils/backendError";
 
 const OnbordingSideImage = lazy(
   () => import("components/Onboarding/OnbordingSideImage")
@@ -17,7 +20,7 @@ const OnbordingSideImage = lazy(
 const MemoImg = memo(OnbordingSideImage);
 
 type FieldType = {
-  persona: "HOST" | "VENDOR";
+  persona: "HOST" | "VENDOR" | "GUEST";
 };
 
 const PersonaCard = ({ personaType }: { personaType: "HOST" | "VENDOR" }) => {
@@ -59,6 +62,18 @@ const PersonaCard = ({ personaType }: { personaType: "HOST" | "VENDOR" }) => {
 const Persona = () => {
   useDocumentTitle("Persona");
   const navigate = useNavigate();
+  const [updateRole] = useUpdateRoleMutation();
+  const { alert } = useToast();
+
+  const onRoleUpdate = async ({ persona }: FieldType) => {
+    try {
+      const user = await updateRole({ role: persona }).unwrap();
+      localStorage.setItem("authUser", JSON.stringify(user));
+      navigate("/", { replace: true });
+    } catch (error) {
+      alert({ message: (error as BackendError).data.error.message });
+    }
+  };
 
   return (
     <OnboardingLayout>
@@ -71,20 +86,25 @@ const Persona = () => {
               We'll streamline your onboarding experience accordingly.
             </Label>
           </span>
-          <Formik initialValues={{ persona: "HOST" }} onSubmit={() => {}}>
-            <Form className="all:unset flex gap-4 flex-col">
-              <PersonaCard personaType="HOST" />
-              <PersonaCard personaType="VENDOR" />
+          <Formik initialValues={{ persona: "HOST" }} onSubmit={onRoleUpdate}>
+            {({ isSubmitting, submitForm }) => {
+              return (
+                <Form className="all:unset flex gap-4 flex-col">
+                  <PersonaCard personaType="HOST" />
+                  <PersonaCard personaType="VENDOR" />
 
-              <Button
-                size="large"
-                type="primary"
-                typeof="submit"
-                onClick={() => navigate("/")}
-              >
-                Continue
-              </Button>
-            </Form>
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={submitForm}
+                    loading={isSubmitting}
+                    disabled={isSubmitting}
+                  >
+                    Continue
+                  </Button>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
         <Suspense

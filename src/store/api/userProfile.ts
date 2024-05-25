@@ -3,14 +3,37 @@ import { emptyApi } from "./emptyApi";
 
 export const userApi = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query<{ data: User }, void>({
+    getUser: builder.query<User, void>({
       query: () => {
         return {
-          url: "/users/profile/",
+          url: "users/profile/",
+        };
+      },
+    }),
+
+    updateUser: builder.mutation<
+      User,
+      { name: string; mobile: string; profile_url: string | null }
+    >({
+      query: ({ mobile, name, profile_url }) => {
+        return {
+          url: "users/profile/",
+          method: "PUT",
+          body: { name, profile_url, mobile },
+        };
+      },
+    }),
+
+    updateRole: builder.mutation<User, { role: "HOST" | "GUEST" | "VENDOR" }>({
+      query: ({ role }) => {
+        return {
+          url: "users/profile/update-role/",
+          method: "PUT",
+          body: { role },
         };
       },
     }),
   }),
 });
-// FIXME: CORS error
-export const { useGetUsersQuery } = userApi;
+export const { useGetUserQuery, useUpdateUserMutation, useUpdateRoleMutation } =
+  userApi;

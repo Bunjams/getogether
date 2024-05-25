@@ -1,12 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useGetUsersQuery } from "store/api/userProfile";
 
 const PrivateRoute = () => {
-  let user = JSON.parse(localStorage.getItem("user") || "{}");
-  const { data } = useGetUsersQuery();
-  console.log("data:", data);
+  let user = JSON.parse(localStorage.getItem("authUser") || "{}");
 
-  return user?.role ? <Outlet context={{ user }} /> : <Navigate to="/login" />;
+  return user?.role ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
