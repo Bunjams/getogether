@@ -2,7 +2,7 @@ import Button from "components/Design/Button/Button";
 import ImageLazy from "components/Design/Image/ImageLazy";
 import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import EventEmpty from "static/Image/EventEmpty.jpg";
+import EventEmpty from "static/Image/EventEmpty.png";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 
 const Home = () => {
@@ -22,7 +22,7 @@ const Home = () => {
     <section className="flex items-center w-full justify-center flex-col gap-2">
       <ImageLazy
         src={EventEmpty}
-        fallbackimg="LLHn1~?1EME@%yx[w|Rj0ftJ-UM-"
+        fallbackimg="LJLDW3-t2LJv%~x[wdM|5;tJv}RF"
         alt="SignInSignUpSide"
         fallbackClassName="rounded-3xl overflow-hidden !w-72 !h-56"
         className="rounded-3xl overflow-hidden w-72 h-56"

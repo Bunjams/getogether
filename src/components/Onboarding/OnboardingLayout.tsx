@@ -10,7 +10,7 @@ type DashboardContainerProps = {
 const Header = ({ className }: DashboardContainerProps) => (
   <div className={cx("flex-[0_0_auto] flex w-full", className || "")}>
     <div className="px-6 py-3 col-span-2 self-start">
-      <img src={Logo} alt="getogether" />
+      <img src={Logo} alt="getogether" loading="lazy" />
     </div>
   </div>
 );

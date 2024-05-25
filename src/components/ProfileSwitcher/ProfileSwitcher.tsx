@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { HandHeart, PartyPopper } from "lucide-react";
 import { useState } from "react";
 import CheckSolid from "static/Icons/CheckSolid";
-// FIXME: ask vivi for color palette update
 
 type ProfileType = "HOST" | "VENDOR";
 
@@ -23,7 +22,7 @@ const DropdownItem = ({
         <p className="text-body-regular text-neutral-500">{subTitle}</p>
       </div>
       {isActive && (
-        <div className="text-red-600 justify-self-end">
+        <div className="text-red-600 justify-self-end mr-2">
           <CheckSolid />
         </div>
       )}
@@ -51,7 +50,7 @@ const MenuIcon = ({
   return (
     <div
       className={classNames("p-3 rounded-sm", {
-        "text-red-700 bg-red-100": isActive,
+        "text-red-600 bg-red-100": isActive,
         "bg-neutral-100 text-neutral-500": isActive,
       })}
     >
@@ -110,7 +109,7 @@ const ProfileSwitcher = () => {
 
   return (
     <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
-      <button className="all:unset bg-red-100 p-3 rounded-sm cursor-pointer text-red-700">
+      <button className="all:unset bg-red-100 p-3 rounded-sm cursor-pointer text-red-600">
         <Icon icon={currentProfile} />
       </button>
     </Dropdown>

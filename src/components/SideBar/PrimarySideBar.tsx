@@ -9,7 +9,7 @@ const PrimarySideBar = () => {
       <div>
         <ProfileSwitcher />
         <Divider className="my-4 bg-whitebase" style={{ height: "2px" }} />
-        <div className="text-red-400 bg-whitebase rounded-full flex items-center justify-center">
+        <div className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10">
           <Plus size={40} strokeWidth={1.5} color="currentColor" />
         </div>
       </div>

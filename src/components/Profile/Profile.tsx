@@ -36,23 +36,26 @@ const Profile = () => {
         <DropdownItem subTitle={email} title={`${first_name} ${last_name}`} />
       ),
       icon: (
-        <Avatar
-          size="large"
-          shape="circle"
-          src={profile_url}
-          icon={<UserOutlined />}
-        />
+        <span className="ml-2">
+          {profile_url ? (
+            <Avatar size="large" shape="circle" src={profile_url} />
+          ) : (
+            <div className="text-red-400 bg-neutral-0 rounded-full flex items-center justify-center h-10 w-10">
+              <UserOutlined size={40} color="currentColor" />
+            </div>
+          )}
+        </span>
       ),
     },
     {
       key: "signOut",
       label: (
-        <div className="text-red-700 text-body-regular font-medium p-2">
+        <div className="text-red-600 text-body-regular font-medium p-2">
           Sign out
         </div>
       ),
       icon: (
-        <span className="text-red-700">
+        <span className="text-red-600">
           <LogOut size={16} strokeWidth={2} color="currentColor" />
         </span>
       ),
@@ -67,12 +70,13 @@ const Profile = () => {
       disabled={isLoading}
     >
       <button className="all:unset cursor-pointer">
-        <Avatar
-          size="large"
-          shape="circle"
-          src={profile_url}
-          icon={<UserOutlined size={40} />}
-        />
+        {profile_url ? (
+          <Avatar size="large" shape="circle" src={profile_url} />
+        ) : (
+          <div className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10">
+            <UserOutlined size={40} color="currentColor" />
+          </div>
+        )}
       </button>
     </Dropdown>
   );

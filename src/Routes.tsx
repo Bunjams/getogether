@@ -12,13 +12,19 @@ const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const Persona = lazy(() => import("pages/Persona"));
 const PrimarySideBar = lazy(() => import("components/SideBar/PrimarySideBar"));
+const SecondarySideBar = lazy(
+  () => import("components/SideBar/SecondarySideBar")
+);
 
 const AllProtectedRoutes = () => {
   return (
     <div className="flex flex-col h-screen p-2 bg-red-400">
-      <div className="flex h-screen bg-whitebase">
+      <div className="flex h-screen bg-neutral-0">
         <Suspense>
           <PrimarySideBar />
+        </Suspense>
+        <Suspense>
+          <SecondarySideBar />
         </Suspense>
         <Routes>
           <Route
@@ -27,6 +33,40 @@ const AllProtectedRoutes = () => {
               <Suspense>
                 <Home />
               </Suspense>
+            }
+          />
+
+          <Route
+            path="/chat"
+            element={
+              <section className="flex items-center w-full justify-center">
+                Chat
+              </section>
+            }
+          />
+
+          <Route
+            path="/guest-list"
+            element={
+              <section className="flex items-center w-full justify-center">
+                Guest List
+              </section>
+            }
+          />
+          <Route
+            path="/vendors"
+            element={
+              <section className="flex items-center w-full justify-center">
+                Vendors
+              </section>
+            }
+          />
+          <Route
+            path="/expense-manager"
+            element={
+              <section className="flex items-center w-full justify-center">
+                Expense Manager
+              </section>
             }
           />
           <Route
