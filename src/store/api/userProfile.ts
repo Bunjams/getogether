@@ -3,7 +3,7 @@ import { emptyApi } from "./emptyApi";
 
 export const userApi = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<User, void>({
+    getUserProfile: builder.query<User, void>({
       query: () => {
         return {
           url: "users/profile/",
@@ -35,5 +35,8 @@ export const userApi = emptyApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetUserQuery, useUpdateUserMutation, useUpdateRoleMutation } =
-  userApi;
+export const {
+  useGetUserProfileQuery,
+  useUpdateUserMutation,
+  useUpdateRoleMutation,
+} = userApi;

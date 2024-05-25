@@ -1,4 +1,3 @@
-import { MenuProps } from "antd";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
@@ -12,43 +11,34 @@ const Home = lazy(() => import("pages/Home"));
 const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const Persona = lazy(() => import("pages/Persona"));
-
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Host",
-  },
-  {
-    key: "2",
-    label: "Vendor",
-  },
-  {
-    key: "3",
-    label: "Guest",
-  },
-];
+const PrimarySideBar = lazy(() => import("components/SideBar/PrimarySideBar"));
 
 const AllProtectedRoutes = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              <Home />
-            </Suspense>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <Suspense>
-              <NotFound />
-            </Suspense>
-          }
-        />
-      </Routes>
+    <div className="flex flex-col h-screen p-2 bg-red-400">
+      <div className="flex h-screen bg-whitebase">
+        <Suspense>
+          <PrimarySideBar />
+        </Suspense>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </div>
     </div>
   );
 };
