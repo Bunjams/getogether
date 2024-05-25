@@ -23,6 +23,10 @@ root.render(
           fontFamily: "'Raleway', sans-serif",
         },
         components: {
+          Spin: {
+            colorPrimary: "#EF897A",
+          },
+
           Button: {
             colorPrimary: "#EF897A",
             colorPrimaryHover: "#F6A295",

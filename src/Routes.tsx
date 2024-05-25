@@ -31,7 +31,6 @@ const items: MenuProps["items"] = [
 const AllProtectedRoutes = () => {
   return (
     <div className="flex flex-col h-screen">
-      hey from all protected routes
       <Routes>
         <Route
           path="/"

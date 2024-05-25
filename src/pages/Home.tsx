@@ -1,4 +1,5 @@
 import Button from "components/Design/Button/Button";
+import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useNavigate } from "react-router-dom";
 import { useGetUserQuery } from "store/api/userProfile";
@@ -15,7 +16,11 @@ const Home = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader size="large" />
+      </div>
+    );
   }
 
   return (
