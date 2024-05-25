@@ -1,12 +1,11 @@
-import { GoogleLogin } from "@react-oauth/google";
 import { Divider } from "antd";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
+import GoogleSSO from "components/GoogleSSO/GoogleSSO";
 import OnboardingLayout from "components/Onboarding/OnboardingLayout";
 import { Form, Formik } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
-import { useTokenDecode } from "hooks/useTokenDecode";
 import { LoaderCircle } from "lucide-react";
 import { Suspense, lazy, memo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +21,6 @@ const MemoImg = memo(OnbordingSideImage);
 
 const SignUp = () => {
   useDocumentTitle("Sign up");
-  const { getDecodedHeader } = useTokenDecode();
   const navigate = useNavigate();
   const [signUp] = useSignUpMutation();
   const { alert } = useToast();
@@ -80,22 +78,7 @@ const SignUp = () => {
           </Formik>
           <Divider className="my-6">or</Divider>
           <div className="w-full justify-center items-center flex flex-col gap-4">
-            <GoogleLogin
-              theme="outline"
-              locale="en"
-              size="large"
-              onSuccess={(credentialResponse) => {
-                const user = getDecodedHeader({
-                  token: credentialResponse.credential,
-                });
-
-                navigate("/otp");
-              }}
-              onError={() => {
-                console.log("Login Faied");
-              }}
-              useOneTap
-            />
+            <GoogleSSO />
             <span className="text-body-regular">
               Already have an account?
               <Button type="link" onClick={() => navigate("/login")}>
