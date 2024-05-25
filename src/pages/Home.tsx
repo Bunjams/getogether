@@ -1,26 +1,35 @@
 import Button from "components/Design/Button/Button";
-import Shimmer from "components/Design/Shimmer/Shimmer";
+import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import React from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { User } from "types/model/user";
+import { useNavigate } from "react-router-dom";
+import { useGetUserQuery } from "store/api/userProfile";
 
 const Home = () => {
   useDocumentTitle("Getogether");
   const navigate = useNavigate();
-
-  const { user } = useOutletContext<{ user: User }>();
+  const { data, isLoading } = useGetUserQuery();
+  const { profile_url, first_name, last_name } = data || {};
 
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("authUser");
     navigate("/login", { replace: true });
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader size="large" />
+      </div>
+    );
+  }
+
   return (
     <header className="flex items-center w-full justify-center flex-col">
-      <img src={user.picture} className="rounded-full" alt={user.given_name} />
+      {profile_url && (
+        <img src={profile_url} className="rounded-full" alt={first_name} />
+      )}
       <p className="text-subheading">
-        {user.given_name} {user.family_name}
+        {first_name} {last_name}
       </p>
       <Button type="primary" onClick={logout}>
         logout

@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { emptyApi } from "./api/emptyApi";
+import { onboardingApi } from "./api/onboarding";
 
 const rootReducer = combineReducers({
   [emptyApi.reducerPath]: emptyApi.reducer,
+  [onboardingApi.reducerPath]: onboardingApi.reducer,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {
@@ -10,7 +12,9 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
     reducer: rootReducer,
     preloadedState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(emptyApi.middleware),
+      getDefaultMiddleware()
+        .concat(emptyApi.middleware)
+        .concat(onboardingApi.middleware),
   });
 };
 

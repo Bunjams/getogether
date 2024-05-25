@@ -1,3 +1,6 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ConfigProvider } from "antd";
+import NotificationProvider from "components/Context/Notification";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
@@ -6,8 +9,6 @@ import Routing from "./Routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/store";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ConfigProvider } from "antd";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -21,15 +22,40 @@ root.render(
         token: {
           fontFamily: "'Raleway', sans-serif",
         },
+        components: {
+          Spin: {
+            colorPrimary: "#EF897A",
+          },
+
+          Button: {
+            colorPrimary: "#EF897A",
+            colorPrimaryHover: "#F6A295",
+            colorPrimaryActive: "#D85E4D",
+            colorBgContainerDisabled: "#F3F4F8",
+            colorTextDisabled: "#B3B5BC",
+            colorLink: "#4E97D9",
+            colorLinkActive: "#2774BA",
+            colorLinkHover: "#79B7EF",
+            colorBgTextHover: "#F3F4F8",
+            colorBgTextActive: "#FAFAFA",
+            borderRadius: 2,
+            borderRadiusLG: 2,
+            borderRadiusSM: 2,
+            borderRadiusXS: 2,
+            borderRadiusOuter: 2,
+          },
+        },
       }}
     >
-      <GoogleOAuthProvider clientId={clientId}>
-        <Provider store={store}>
-          <BrowserRouter>
-            <Routing />
-          </BrowserRouter>
-        </Provider>
-      </GoogleOAuthProvider>
+      <NotificationProvider>
+        <GoogleOAuthProvider clientId={clientId}>
+          <Provider store={store}>
+            <BrowserRouter>
+              <Routing />
+            </BrowserRouter>
+          </Provider>
+        </GoogleOAuthProvider>
+      </NotificationProvider>
     </ConfigProvider>
   </React.StrictMode>
 );

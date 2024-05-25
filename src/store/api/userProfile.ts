@@ -1,0 +1,39 @@
+import { User } from "types/model/user";
+import { emptyApi } from "./emptyApi";
+
+export const userApi = emptyApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getUser: builder.query<User, void>({
+      query: () => {
+        return {
+          url: "users/profile/",
+        };
+      },
+    }),
+
+    updateUser: builder.mutation<
+      User,
+      { name: string; mobile: string; profile_url: string | null }
+    >({
+      query: ({ mobile, name, profile_url }) => {
+        return {
+          url: "users/profile/",
+          method: "PUT",
+          body: { name, profile_url, mobile },
+        };
+      },
+    }),
+
+    updateRole: builder.mutation<User, { role: "HOST" | "GUEST" | "VENDOR" }>({
+      query: ({ role }) => {
+        return {
+          url: "users/profile/update-role/",
+          method: "PUT",
+          body: { role },
+        };
+      },
+    }),
+  }),
+});
+export const { useGetUserQuery, useUpdateUserMutation, useUpdateRoleMutation } =
+  userApi;
