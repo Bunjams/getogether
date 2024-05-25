@@ -18,12 +18,15 @@ const NavMenu = ({
     <NavLink
       {...props}
       className={({ isActive }) =>
-        classNames("flex gap-2 items-center px-4 py-1 rounded border-l-4", {
-          "bg-neutral-0 text-red-600 text-body-strong font-semibold border-red-400 transform transition duration-300 ease-in-out":
-            isActive,
-          "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent transform transition-all duration-[400ms] ease-in-out":
-            !isActive,
-        })
+        classNames(
+          "flex gap-2 items-center px-4 py-1 rounded border-l-4 transform transition duration-300 ease-in-out",
+          {
+            "bg-neutral-0 text-red-600 text-body-strong font-semibold border-red-400":
+              isActive,
+            "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent hover:bg-neutral-100":
+              !isActive,
+          }
+        )
       }
     >
       <span className="shrink-0">{icon}</span>
