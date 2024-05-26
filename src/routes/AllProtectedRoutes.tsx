@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const Home = lazy(() => import("pages/Home"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
+const GuestList = lazy(() => import("pages/GuestList"));
 
 const AllProtectedRoutes = () => {
   const { isLoading } = useGetUserProfileQuery(
@@ -68,9 +69,9 @@ const AllProtectedRoutes = () => {
           <Route
             path="/guest-list"
             element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Guest List
-              </section>
+              <Suspense>
+                <GuestList />
+              </Suspense>
             }
           />
           <Route

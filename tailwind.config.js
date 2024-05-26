@@ -73,6 +73,18 @@ module.exports = {
         900: "#3D1A00",
       },
 
+      yellow: {
+        100: "#FFF9EB",
+        200: "#FFF3D6",
+        300: "#FFEEC3",
+        400: "#F5DD9F",
+        500: "#EFCE7A",
+        600: "#D9B14E",
+        700: "#BA9027",
+        800: "#87640C",
+        900: "#3D2C00",
+      },
+
       purple: {
         100: "#F3EBFF",
         200: "#E7D6FF",
@@ -118,7 +130,15 @@ module.exports = {
         },
       ],
 
-      h5: [
+      "h5-regular": [
+        "1rem",
+        {
+          fontWeight: 400,
+          lineHeight: "1.5rem",
+        },
+      ],
+
+      "h5-medium": [
         "1rem",
         {
           fontWeight: 500,
@@ -126,10 +146,10 @@ module.exports = {
         },
       ],
 
-      "body-lg": [
+      "h5-bold": [
         "1rem",
         {
-          fontWeight: 400,
+          fontWeight: 700,
           lineHeight: "1.5rem",
         },
       ],
@@ -142,33 +162,34 @@ module.exports = {
         },
       ],
 
+      "body-medium": [
+        "0.875rem",
+        {
+          fontWeight: 500,
+          lineHeight: "1.375rem",
+        },
+      ],
+
       "body-bold": [
         "0.875rem",
         {
-          fontWeight: 900,
-          lineHeight: "1.375rem",
-        },
-      ],
-
-      "body-strong": [
-        "0.875rem",
-        {
           fontWeight: 700,
           lineHeight: "1.375rem",
         },
       ],
 
-      subheading: [
-        "1rem;",
-        {
-          fontWeight: 700,
-          lineHeight: "1.375rem",
-        },
-      ],
       footnote: [
         "0.75rem",
         {
           fontWeight: 400,
+          lineHeight: "1.25rem",
+        },
+      ],
+
+      "footnote-system-monospace": [
+        "0.75rem",
+        {
+          fontWeight: 500,
           lineHeight: "1.25rem",
         },
       ],

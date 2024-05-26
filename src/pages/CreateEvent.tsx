@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEvent.png";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
+import useDocumentTitle from "hooks/useDocumentTitle";
 
 const eventList = [
   "WEDDING",
@@ -139,6 +140,7 @@ const EventConsole = () => {
               </div>
 
               <div className="ml-auto mt-auto">
+                {/* TODO: Add validation */}
                 <Button
                   type="primary"
                   size="large"
@@ -159,6 +161,7 @@ const EventConsole = () => {
 };
 
 const CreateEvent = () => {
+  useDocumentTitle("Create Event");
   const sectionVariants = {
     hidden: { opacity: 0, x: -200 },
     visible: { opacity: 1, x: 0 },

@@ -22,7 +22,7 @@ const DropdownItem = ({
   return (
     <div className="py-2 flex gap-3 items-center w-full justify-between ml-3">
       <div className="flex flex-col">
-        <p className="text-subheading text-neutral-900">{title}</p>
+        <p className="text-h5-bold text-neutral-900">{title}</p>
         <p className="text-body-regular text-neutral-500">{subTitle}</p>
       </div>
       {isActive && (
