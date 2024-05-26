@@ -7,14 +7,15 @@ import EventEmpty from "static/Image/EventEmpty.png";
 const Home = () => {
   useDocumentTitle("Getogether");
   const sectionVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 100 },
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   return (
     <AnimatedPage
       variants={sectionVariants}
+      transition={{ duration: 0.8 }}
       className="flex items-center w-full justify-center flex-col gap-2"
     >
       <img
