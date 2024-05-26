@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const PrimarySideBar = () => {
   return (
-    <div className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between transform transition duration-300 ease-in-out">
+    <nav className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between">
       <div>
         <RoleSwitcher />
         <Divider className="my-4 bg-whitebase" style={{ height: "2px" }} />
@@ -17,7 +17,7 @@ const PrimarySideBar = () => {
         </Link>
       </div>
       <Profile />
-    </div>
+    </nav>
   );
 };
 

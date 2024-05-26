@@ -64,10 +64,7 @@ const MenuIcon = ({
 };
 
 const RoleSwitcher = () => {
-  const { data, isFetching } = useGetUserProfileQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
+  const { data, isFetching } = useGetUserProfileQuery({});
 
   const { role: currentProfile } = data || {};
 

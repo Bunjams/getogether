@@ -1,25 +1,10 @@
 import Button from "components/Design/Button/Button";
-import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { Link } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
-import { useGetUserProfileQuery } from "store/api/userProfile";
 
 const Home = () => {
   useDocumentTitle("Getogether");
-  const { data, isLoading } = useGetUserProfileQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
-  const { profile_url, first_name, last_name } = data || {};
-
-  if (isLoading) {
-    return (
-      <section className="flex items-center w-full justify-center flex-col">
-        <Loader />
-      </section>
-    );
-  }
 
   return (
     <section className="flex items-center w-full justify-center flex-col gap-2">

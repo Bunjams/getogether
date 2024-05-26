@@ -6,9 +6,9 @@ import { Form, Formik, useFormikContext } from "formik";
 import { useToast } from "hooks/useNotification";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEvent.png";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const eventList = [
   "WEDDING",
@@ -67,7 +67,9 @@ const EventType = ({ event }: { event: string }) => {
 };
 
 const EventConsole = () => {
+  const navigate = useNavigate();
   const { success } = useToast();
+
   const onCreateEvent = async ({ eventName, eventType, venue }: Event) => {
     try {
       success({
@@ -77,12 +79,16 @@ const EventConsole = () => {
       console.error(error);
     }
   };
+
   return (
     <section className="h-full self-start grid grid-flow-row w-full md:pb-3 md:py-10 md:pl-20 md:pr-32 p-10 gap-12 md:col-span-2 col-span-3">
-      <Link to="/" className="flex text-h4 gap-2.5 items-center">
+      <button
+        className="all:unset flex text-h4 gap-2.5 items-center cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
         <ArrowLeft />
         Go Back
-      </Link>
+      </button>
       <Formik
         initialValues={{ eventType: "", eventName: "", venue: "" }}
         onSubmit={onCreateEvent}
@@ -155,27 +161,28 @@ const CreateEvent = () => {
   const sectionVariants = {
     hidden: { opacity: 0, x: -200 },
     visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 200 },
   };
 
   return (
-    <motion.section
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={sectionVariants}
-      transition={{ duration: 0.5 }}
-      className="grid grid-flow-col w-full justify-between h-screen grid-cols-3"
-    >
-      <EventConsole />
-      <motion.aside className="bg-red-200 h-full items-center px-9 md:flex hidden md:col-span-1">
-        <img
-          src={CreateEventImg}
-          alt="placeholder"
-          className="h-auto w-[450px]"
-        />
-      </motion.aside>
-    </motion.section>
+    <AnimatePresence mode="wait">
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={sectionVariants}
+        transition={{ duration: 0.5 }}
+        className="grid grid-flow-col w-full justify-between h-screen grid-cols-3"
+      >
+        <EventConsole />
+        <motion.aside className="bg-red-200 h-full items-center px-9 md:flex hidden md:col-span-1">
+          <img
+            src={CreateEventImg}
+            alt="placeholder"
+            className="h-auto w-[450px]"
+          />
+        </motion.aside>
+      </motion.section>
+    </AnimatePresence>
   );
 };
 
