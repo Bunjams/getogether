@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const Home = lazy(() => import("pages/Home"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
+const GuestList = lazy(() => import("pages/GuestList"));
 
 const AllProtectedRoutes = () => {
   const { isLoading } = useGetUserProfileQuery(
@@ -46,58 +47,60 @@ const AllProtectedRoutes = () => {
             <SecondarySideBar />
           </motion.aside>
         </AnimatePresence>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Suspense>
-                <Home />
-              </Suspense>
-            }
-          />
+        <section className="w-full pt-8 pr-[18px] pl-10">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Suspense>
+                  <Home />
+                </Suspense>
+              }
+            />
 
-          <Route
-            path="/chat"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Chat
-              </section>
-            }
-          />
+            <Route
+              path="/chat"
+              element={
+                <section className="flex items-center w-full justify-center">
+                  <Loader /> Chat
+                </section>
+              }
+            />
 
-          <Route
-            path="/guest-list"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Guest List
-              </section>
-            }
-          />
-          <Route
-            path="/vendors"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Vendors
-              </section>
-            }
-          />
-          <Route
-            path="/expense-manager"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Expense Manager
-              </section>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Suspense>
-                <NotFound />
-              </Suspense>
-            }
-          />
-        </Routes>
+            <Route
+              path="/guest-list"
+              element={
+                <Suspense>
+                  <GuestList />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/vendors"
+              element={
+                <section className="flex items-center w-full justify-center">
+                  <Loader /> Vendors
+                </section>
+              }
+            />
+            <Route
+              path="/expense-manager"
+              element={
+                <section className="flex items-center w-full justify-center">
+                  <Loader /> Expense Manager
+                </section>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Suspense>
+                  <NotFound />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </section>
       </section>
     </section>
   );

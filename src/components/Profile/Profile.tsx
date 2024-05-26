@@ -13,7 +13,7 @@ const DropdownItem = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <p className="text-subheading text-neutral-900">{title}</p>
+      <p className="text-h5-bold text-neutral-900">{title}</p>
       <p className="text-body-regular text-neutral-500">{subTitle}</p>
     </div>
   );
