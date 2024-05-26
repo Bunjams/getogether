@@ -6,7 +6,10 @@ import { useGetUserProfileQuery } from "store/api/userProfile";
 
 const Home = () => {
   useDocumentTitle("Getogether");
-  const { data, isLoading } = useGetUserProfileQuery();
+  const { data, isLoading } = useGetUserProfileQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
   const { profile_url, first_name, last_name } = data || {};
 
   if (isLoading) {
@@ -19,13 +22,6 @@ const Home = () => {
 
   return (
     <section className="flex items-center w-full justify-center flex-col gap-2">
-      {/* <ImageLazy
-        src={EventEmpty}
-        fallbackimg="LJLDW3-t2LJv%~x[wdM|5;tJv}RF"
-        alt="SignInSignUpSide"
-        fallbackClassName="rounded-3xl overflow-hidden !w-72 !h-56"
-        className="rounded-3xl overflow-hidden w-72 h-56"
-      /> */}
       <img
         src={EventEmpty}
         className="rounded-3xl overflow-hidden w-72 h-56"

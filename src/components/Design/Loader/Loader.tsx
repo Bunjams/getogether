@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const Loader = () => {
+const Loader = ({ size = "44" }: { size?: string }) => {
   const pathVariants = {
     hidden: {
       pathLength: 0.1,
@@ -19,8 +19,8 @@ const Loader = () => {
 
   return (
     <motion.svg
-      width="44"
-      height="44"
+      width={size}
+      height={size}
       viewBox="0 0 44 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,10 +1,14 @@
 import { Dropdown, MenuProps } from "antd";
 import classNames from "classnames";
+import Loader from "components/Design/Loader/Loader";
 import { HandHeart, PartyPopper } from "lucide-react";
-import { useState } from "react";
 import CheckSolid from "static/Icons/CheckSolid";
+import {
+  useGetUserProfileQuery,
+  useUpdateRoleMutation,
+} from "store/api/userProfile";
 
-type ProfileType = "HOST" | "VENDOR";
+type ProfileType = "HOST" | "VENDOR" | "GUEST";
 
 const DropdownItem = ({
   title,
@@ -59,11 +63,20 @@ const MenuIcon = ({
   );
 };
 
-const ProfileSwitcher = () => {
-  const [currentProfile, setCurrentProfile] = useState<ProfileType>("HOST");
+const RoleSwitcher = () => {
+  const { data, isFetching } = useGetUserProfileQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
 
-  const onProfileChange = (profile: ProfileType) => {
-    setCurrentProfile(profile);
+  const { role: currentProfile } = data || {};
+
+  const [onRoleUpdate, { isLoading }] = useUpdateRoleMutation();
+
+  const onProfileChange = async (profile: ProfileType) => {
+    try {
+      await onRoleUpdate({ role: profile }).unwrap();
+    } catch (error) {}
   };
 
   const items: MenuProps["items"] = [
@@ -84,7 +97,7 @@ const ProfileSwitcher = () => {
           icon: <MenuIcon icon="HOST" isActive={currentProfile === "HOST"} />,
 
           onClick: () => {
-            setCurrentProfile("HOST");
+            onProfileChange("HOST");
           },
         },
         {
@@ -107,13 +120,24 @@ const ProfileSwitcher = () => {
     },
   ];
 
+  const loading = isLoading || isFetching;
+
   return (
-    <Dropdown menu={{ items }} placement="bottomLeft" trigger={["click"]}>
+    <Dropdown
+      menu={{ items }}
+      placement="bottomLeft"
+      trigger={["click"]}
+      disabled={loading}
+    >
       <button className="all:unset bg-red-100 p-3 rounded-sm cursor-pointer text-red-600">
-        <Icon icon={currentProfile} />
+        {loading ? (
+          <Loader size="20" />
+        ) : (
+          <>{currentProfile && <Icon icon={currentProfile} />}</>
+        )}
       </button>
     </Dropdown>
   );
 };
 
-export default ProfileSwitcher;
+export default RoleSwitcher;
