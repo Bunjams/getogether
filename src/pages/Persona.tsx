@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import Label from "components/Design/Label/Label";
@@ -76,52 +77,54 @@ const Persona = () => {
   };
 
   return (
-    <OnboardingLayout>
-      <OnboardingLayout.Header />
-      <OnboardingLayout.Content>
-        <div className="md:mx-44 md:w-96 w-4/5 flex gap-4 flex-col">
-          <span>
-            <h2 className="text-h2 m-0">How will you use Getogether?</h2>
-            <Label>
-              We'll streamline your onboarding experience accordingly.
-            </Label>
-          </span>
-          <Formik initialValues={{ persona: "HOST" }} onSubmit={onRoleUpdate}>
-            {({ isSubmitting, submitForm }) => {
-              return (
-                <Form className="all:unset flex gap-4 flex-col">
-                  <PersonaCard personaType="HOST" />
-                  <PersonaCard personaType="VENDOR" />
+    <AnimatedPage>
+      <OnboardingLayout>
+        <OnboardingLayout.Header />
+        <OnboardingLayout.Content>
+          <div className="md:mx-44 md:w-96 w-4/5 flex gap-4 flex-col">
+            <span>
+              <h2 className="text-h2 m-0">How will you use Getogether?</h2>
+              <Label>
+                We'll streamline your onboarding experience accordingly.
+              </Label>
+            </span>
+            <Formik initialValues={{ persona: "HOST" }} onSubmit={onRoleUpdate}>
+              {({ isSubmitting, submitForm }) => {
+                return (
+                  <Form className="all:unset flex gap-4 flex-col">
+                    <PersonaCard personaType="HOST" />
+                    <PersonaCard personaType="VENDOR" />
 
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={submitForm}
-                    loading={isSubmitting}
-                    disabled={isSubmitting}
-                  >
-                    Continue
-                  </Button>
-                </Form>
-              );
-            }}
-          </Formik>
-        </div>
-        <Suspense
-          fallback={
-            <LoaderCircle
-              strokeWidth={2}
-              className="animate-spin text-red-700"
+                    <Button
+                      size="large"
+                      type="primary"
+                      onClick={submitForm}
+                      loading={isSubmitting}
+                      disabled={isSubmitting}
+                    >
+                      Continue
+                    </Button>
+                  </Form>
+                );
+              }}
+            </Formik>
+          </div>
+          <Suspense
+            fallback={
+              <LoaderCircle
+                strokeWidth={2}
+                className="animate-spin text-red-700"
+              />
+            }
+          >
+            <MemoImg
+              img={UserProfileSetup}
+              fallbackimg="LFS|B1ngp{tPuOU_ajobipiwjXjX"
             />
-          }
-        >
-          <MemoImg
-            img={UserProfileSetup}
-            fallbackimg="LFS|B1ngp{tPuOU_ajobipiwjXjX"
-          />
-        </Suspense>
-      </OnboardingLayout.Content>
-    </OnboardingLayout>
+          </Suspense>
+        </OnboardingLayout.Content>
+      </OnboardingLayout>
+    </AnimatedPage>
   );
 };
 

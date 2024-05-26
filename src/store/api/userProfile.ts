@@ -3,12 +3,13 @@ import { emptyApi } from "./emptyApi";
 
 export const userApi = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUserProfile: builder.query<User, void>({
+    getUserProfile: builder.query<User, {}>({
       query: () => {
         return {
           url: "users/profile/",
         };
       },
+      providesTags: ["USER_PROFILE"],
     }),
 
     updateUser: builder.mutation<
@@ -32,6 +33,7 @@ export const userApi = emptyApi.injectEndpoints({
           body: { role },
         };
       },
+      invalidatesTags: ["USER_PROFILE"],
     }),
   }),
 });

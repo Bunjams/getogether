@@ -21,7 +21,10 @@ const DropdownItem = ({
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetUserProfileQuery();
+  const { data, isLoading } = useGetUserProfileQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
   const { profile_url, first_name, last_name, email = "" } = data || {};
 
   const signOut = () => {

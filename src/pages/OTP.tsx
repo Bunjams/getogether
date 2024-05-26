@@ -1,3 +1,4 @@
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import Label from "components/Design/Label/Label";
 import OTPInput from "components/Design/OTPInput/OTPInput";
@@ -95,71 +96,78 @@ const OTP = () => {
   };
 
   return (
-    <OnboardingLayout>
-      <OnboardingLayout.Header />
-      <OnboardingLayout.Content>
-        <div className="md:mx-44 md:w-96 w-4/5">
-          <h2 className="text-h2 pb-3">Verification Required</h2>
-          <Formik
-            initialValues={{ email: email, otp: "" }}
-            onSubmit={onVerifyOtp}
-            validateOnChange
-            validateOnBlur
-          >
-            {({ isSubmitting, submitForm, values: { otp }, setFieldValue }) => {
-              return (
-                <Form className="flex gap-4 flex-col">
-                  <span className="flex flex-col gap-1">
-                    <Label>Enter OTP</Label>
-                    <OTPInput
-                      formatter={(str) => str.replace(/[^0-9]/g, "")}
-                      onChange={(o) => setFieldValue("otp", o)}
-                      length={6}
-                      inputMode="numeric"
-                      name="otp"
-                      autoFocus
-                    />
-                  </span>
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={submitForm}
-                    loading={isSubmitting}
-                    disabled={isSubmitting || otp.length < 6}
-                  >
-                    Continue
-                  </Button>
-                  <span className="text-body-regular flex gap-1 items-center">
-                    Didn't receive an OTP?
-                    {showTimer ? (
-                      <Timer setShowTimer={() => setShowTimer(false)} />
-                    ) : (
-                      <Button type="link" onClick={onResendOtp} size="small">
-                        Resend
-                      </Button>
-                    )}
-                  </span>
-                </Form>
-              );
-            }}
-          </Formik>
-        </div>
+    <AnimatedPage>
+      <OnboardingLayout>
+        <OnboardingLayout.Header />
+        <OnboardingLayout.Content>
+          <div className="md:mx-44 md:w-96 w-4/5">
+            <h2 className="text-h2 pb-3">Verification Required</h2>
+            <Formik
+              initialValues={{ email: email, otp: "" }}
+              onSubmit={onVerifyOtp}
+              validateOnChange
+              validateOnBlur
+            >
+              {({
+                isSubmitting,
+                submitForm,
+                values: { otp },
+                setFieldValue,
+              }) => {
+                return (
+                  <Form className="flex gap-4 flex-col">
+                    <span className="flex flex-col gap-1">
+                      <Label>Enter OTP</Label>
+                      <OTPInput
+                        formatter={(str) => str.replace(/[^0-9]/g, "")}
+                        onChange={(o) => setFieldValue("otp", o)}
+                        length={6}
+                        inputMode="numeric"
+                        name="otp"
+                        autoFocus
+                      />
+                    </span>
+                    <Button
+                      size="large"
+                      type="primary"
+                      onClick={submitForm}
+                      loading={isSubmitting}
+                      disabled={isSubmitting || otp.length < 6}
+                    >
+                      Continue
+                    </Button>
+                    <span className="text-body-regular flex gap-1 items-center">
+                      Didn't receive an OTP?
+                      {showTimer ? (
+                        <Timer setShowTimer={() => setShowTimer(false)} />
+                      ) : (
+                        <Button type="link" onClick={onResendOtp} size="small">
+                          Resend
+                        </Button>
+                      )}
+                    </span>
+                  </Form>
+                );
+              }}
+            </Formik>
+          </div>
 
-        <Suspense
-          fallback={
-            <LoaderCircle
-              strokeWidth={2}
-              className="animate-spin text-red-700"
+          <Suspense
+            fallback={
+              <LoaderCircle
+                strokeWidth={2}
+                className="animate-spin text-red-700"
+              />
+            }
+          >
+            <MemoImg
+              img={SignInSignUpSide}
+              fallbackimg="LZSy%9tko#jGo}cEaLjuuPV[i^j?"
             />
-          }
-        >
-          <MemoImg
-            img={SignInSignUpSide}
-            fallbackimg="LZSy%9tko#jGo}cEaLjuuPV[i^j?"
-          />
-        </Suspense>
-      </OnboardingLayout.Content>
-    </OnboardingLayout>
+          </Suspense>
+        </OnboardingLayout.Content>
+      </OnboardingLayout>
+    </AnimatedPage>
   );
 };
 

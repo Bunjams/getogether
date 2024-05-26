@@ -1,4 +1,5 @@
 import { Divider } from "antd";
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import GoogleSSO from "components/GoogleSSO/GoogleSSO";

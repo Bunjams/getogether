@@ -37,7 +37,7 @@ const NavMenu = ({
 
 const SecondarySideBar = () => {
   return (
-    <div className="bg-whitebase p-3 flex gap-4 flex-col  w-64">
+    <nav className="bg-whitebase p-3 flex gap-4 flex-col w-64">
       <NavLink to="/" className="py-1 flex items-center gap-1">
         <img src={Logo} alt="getogether" loading="lazy" className="h-6 w-6" />
         <h4 className="text-red-600 font-bold text-h4">Getogether</h4>
@@ -74,7 +74,7 @@ const SecondarySideBar = () => {
       >
         Expense Manager
       </NavMenu>
-    </div>
+    </nav>
   );
 };
 
