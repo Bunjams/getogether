@@ -1,6 +1,7 @@
 import Button from "components/Design/Button/Button";
 import Loader from "components/Design/Loader/Loader";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { Link } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 
@@ -31,9 +32,11 @@ const Home = () => {
       <p className="text-body-regular text-neutral-900">
         Start by adding your first event.
       </p>
-      <Button type="primary" size="large">
-        Create Event
-      </Button>
+      <Link to="/create-event">
+        <Button type="primary" size="large">
+          Create Event
+        </Button>
+      </Link>
     </section>
   );
 };
