@@ -27,7 +27,7 @@ const LandingPageLayout = Object.assign(
   forwardRef<HTMLDivElement, DashboardContainerProps>(
     ({ children, className }, ref) => {
       return (
-        <div
+        <section
           ref={ref}
           className={cx(
             "flex flex-col w-full bg-[url('static/Image/LandingPageBackground.svg')] bg-no-repeat bg-cover items-center justify-center",
@@ -35,7 +35,7 @@ const LandingPageLayout = Object.assign(
           )}
         >
           {children}
-        </div>
+        </section>
       );
     }
   ),

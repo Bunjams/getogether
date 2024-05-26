@@ -9,6 +9,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEvent.png";
 import { AnimatePresence, motion } from "framer-motion";
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 
 const eventList = [
   "WEDDING",
@@ -164,25 +165,20 @@ const CreateEvent = () => {
   };
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        variants={sectionVariants}
-        transition={{ duration: 0.5 }}
-        className="grid grid-flow-col w-full justify-between h-screen grid-cols-3"
-      >
-        <EventConsole />
-        <motion.aside className="bg-red-200 h-full items-center px-9 md:flex hidden md:col-span-1">
-          <img
-            src={CreateEventImg}
-            alt="placeholder"
-            className="h-auto w-[450px]"
-          />
-        </motion.aside>
-      </motion.section>
-    </AnimatePresence>
+    <AnimatedPage
+      variants={sectionVariants}
+      transition={{ duration: 0.5 }}
+      className="grid grid-flow-col w-full justify-between h-screen grid-cols-3"
+    >
+      <EventConsole />
+      <motion.aside className="bg-red-200 h-full items-center px-9 md:flex hidden md:col-span-1">
+        <img
+          src={CreateEventImg}
+          alt="placeholder"
+          className="h-auto w-[450px]"
+        />
+      </motion.aside>
+    </AnimatedPage>
   );
 };
 

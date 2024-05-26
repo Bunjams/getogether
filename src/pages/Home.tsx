@@ -1,3 +1,4 @@
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { Link } from "react-router-dom";
@@ -5,9 +6,17 @@ import EventEmpty from "static/Image/EventEmpty.png";
 
 const Home = () => {
   useDocumentTitle("Getogether");
+  const sectionVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 100 },
+  };
 
   return (
-    <section className="flex items-center w-full justify-center flex-col gap-2">
+    <AnimatedPage
+      variants={sectionVariants}
+      className="flex items-center w-full justify-center flex-col gap-2"
+    >
       <img
         src={EventEmpty}
         className="rounded-3xl overflow-hidden w-72 h-56"
@@ -22,7 +31,7 @@ const Home = () => {
           Create Event
         </Button>
       </Link>
-    </section>
+    </AnimatedPage>
   );
 };
 
