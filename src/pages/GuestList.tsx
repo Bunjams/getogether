@@ -17,9 +17,9 @@ const GuestList = () => {
   return (
     <AnimatedPage
       variants={sectionVariants}
-      className="flex items-center w-full justify-center flex-col gap-2"
+      className="flex w-full flex-col gap-2"
     >
-      <Async.Root isEmpty={true} isLoading={false} isSuccess={true}>
+      <Async.Root isEmpty={false} isLoading={false} isSuccess={true}>
         <Async.Empty>
           <img
             src={GuestListEmpty}

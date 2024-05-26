@@ -22,7 +22,7 @@ const NavMenu = ({
           "flex gap-2 items-center px-4 py-1 rounded border-l-4 transform transition duration-300 ease-in-out",
           {
             "bg-neutral-0 text-red-600 text-body-bold border-red-400": isActive,
-            "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent hover:bg-neutral-100":
+            "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent hover:bg-neutral-0":
               !isActive,
           }
         )

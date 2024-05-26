@@ -6,6 +6,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {},
+      boxShadow: {
+        "button-secondary": "0px 2px 0px 0px rgba(0, 0, 0, 0.02);",
+      },
     },
     colors: {
       transparent: "transparent",
@@ -98,6 +101,14 @@ module.exports = {
       },
     },
     fontSize: {
+      title: [
+        "4rem",
+        {
+          fontWeight: 600,
+          lineHeight: "2.875rem;",
+        },
+      ],
+
       h1: [
         "2.375rem",
         {
