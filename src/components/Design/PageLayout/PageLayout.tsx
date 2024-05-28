@@ -1,7 +1,8 @@
 import React from "react";
 
 const PageLayout = () => {
-  return <div>PageLayout</div>;
+  // TODO: add fallback for suspense and add all styling here
+  return <div>Layout</div>;
 };
 
 export default PageLayout;

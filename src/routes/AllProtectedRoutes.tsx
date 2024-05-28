@@ -2,6 +2,7 @@ import Loader from "components/Design/Loader/Loader";
 import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import SecondarySideBar from "components/SideBar/SecondarySideBar";
 import { AnimatePresence, motion } from "framer-motion";
+import ChatPage from "pages/ChatPage";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
@@ -47,60 +48,59 @@ const AllProtectedRoutes = () => {
             <SecondarySideBar />
           </motion.aside>
         </AnimatePresence>
-        <section className="w-full pt-8 pr-[18px] pl-10">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Suspense>
-                  <Home />
-                </Suspense>
-              }
-            />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
 
-            <Route
-              path="/chat"
-              element={
-                <section className="flex items-center w-full justify-center">
-                  <Loader /> Chat
-                </section>
-              }
-            />
+          <Route
+            path="/chat"
+            element={
+              <ChatPage />
+              // <section className="flex items-center w-full justify-center">
+              //   <Loader /> Chat
+              // </section>
+            }
+          />
 
-            <Route
-              path="/guest-list"
-              element={
-                <Suspense>
-                  <GuestList />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/vendors"
-              element={
-                <section className="flex items-center w-full justify-center">
-                  <Loader /> Vendors
-                </section>
-              }
-            />
-            <Route
-              path="/expense-manager"
-              element={
-                <section className="flex items-center w-full justify-center">
-                  <Loader /> Expense Manager
-                </section>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Suspense>
-                  <NotFound />
-                </Suspense>
-              }
-            />
-          </Routes>
-        </section>
+          <Route
+            path="/guest-list"
+            element={
+              <Suspense>
+                <GuestList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/vendors"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Vendors
+              </section>
+            }
+          />
+          <Route
+            path="/expense-manager"
+            element={
+              <section className="flex items-center w-full justify-center">
+                <Loader /> Expense Manager
+              </section>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Routes>
       </section>
     </section>
   );

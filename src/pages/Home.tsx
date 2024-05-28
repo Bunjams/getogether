@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <AnimatedPage
       variants={sectionVariants}
-      className="flex items-center w-full justify-center flex-col gap-2"
+      className="flex items-center w-full justify-center flex-col gap-2 pt-8 pr-[18px] pl-10"
     >
       <Async.Root isEmpty={true} isLoading={false} isSuccess={true}>
         <Async.Empty>
