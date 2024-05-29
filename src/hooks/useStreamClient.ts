@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useGetUserProfileQuery } from "store/api/userProfile";
 import { StreamChat } from "stream-chat";
 
 export const useStreamClient = () => {
+  const { data: user } = useGetUserProfileQuery({});
   const [client, setClient] = useState<StreamChat | null>(null);
 
   useEffect(() => {
@@ -30,6 +32,7 @@ export const useStreamClient = () => {
       await client.connectUser(
         {
           id: userId,
+          name: user?.first_name,
         },
         token
       );

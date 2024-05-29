@@ -50,3 +50,13 @@ const Loader = ({ size = "44" }: { size?: string }) => {
 };
 
 export default Loader;
+
+export const PageLoader = () => {
+  return (
+    <section className="flex flex-col h-screen p-2 bg-red-400">
+      <section className="w-screen h-screen flex justify-center items-center bg-neutral-0">
+        <Loader />
+      </section>
+    </section>
+  );
+};

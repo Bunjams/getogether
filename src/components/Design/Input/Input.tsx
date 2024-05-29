@@ -1,4 +1,4 @@
-import { Input as AntInput, ConfigProvider, InputProps } from "antd";
+import { ConfigProvider, Input as AntInput, InputProps } from "antd";
 import Label from "../Label/Label";
 
 type Props = InputProps & {
@@ -21,6 +21,7 @@ const Input = ({ label, size = "middle", ...props }: Props) => {
             borderRadiusSM: 2,
             borderRadiusXS: 2,
             borderRadiusOuter: 2,
+            colorBorder: "#F3F4F8",
           },
         },
       }}

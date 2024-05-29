@@ -7,12 +7,29 @@ import {
   ChannelHeader,
   ChannelList,
   Chat,
+  DefaultStreamChatGenerics,
   MessageInput,
   MessageList,
   Thread,
   Window,
+  useMessageContext,
+  MessageSimple,
+  Message,
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/v2/index.css";
+
+// const MM = <
+//   StreamChatGenerics extends
+//     DefaultStreamChatGenerics = DefaultStreamChatGenerics,
+// >() => {
+//   const { message } = useMessageContext();
+
+//   if (message.text === "hey") {
+//     return <div dangerouslySetInnerHTML={{ __html: message.html! }} />;
+//   }
+
+//   return <MessageSimple />;
+// };
 
 const ChatPage = () => {
   const { client } = useStreamClient();

@@ -1,3 +1,4 @@
+import Loader, { PageLoader } from "components/Design/Loader/Loader";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
@@ -9,7 +10,7 @@ const OTP = lazy(() => import("pages/OTP"));
 const Login = lazy(() => import("pages/Login"));
 const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const Persona = lazy(() => import("pages/Persona"));
-const CreateEvent = lazy(() => import("pages/CreateEvent"));
+const CreateEvent = lazy(() => import("routes/CreateEventRoutes"));
 const AllProtectedRoutes = lazy(() => import("routes/AllProtectedRoutes"));
 
 const Routing = () => {
@@ -18,7 +19,7 @@ const Routing = () => {
       <Route
         element={<PrivateRoute />}
         errorElement={
-          <Suspense>
+          <Suspense fallback={<PageLoader />}>
             <ErrorPage />
           </Suspense>
         }
@@ -26,15 +27,15 @@ const Routing = () => {
         <Route
           path="/*"
           element={
-            <Suspense>
+            <Suspense fallback={<PageLoader />}>
               <AllProtectedRoutes />
             </Suspense>
           }
         />
         <Route
-          path="/create-event"
+          path="/create-event/*"
           element={
-            <Suspense>
+            <Suspense fallback={<PageLoader />}>
               <CreateEvent />
             </Suspense>
           }
@@ -45,7 +46,7 @@ const Routing = () => {
         <Route
           path="/persona"
           element={
-            <Suspense>
+            <Suspense fallback={<PageLoader />}>
               <Persona />
             </Suspense>
           }
@@ -53,7 +54,7 @@ const Routing = () => {
         <Route
           path="/profile-setup"
           element={
-            <Suspense>
+            <Suspense fallback={<PageLoader />}>
               <ProfileSetup />
             </Suspense>
           }
@@ -64,7 +65,7 @@ const Routing = () => {
         <Route
           path="/otp"
           element={
-            <Suspense>
+            <Suspense fallback={<PageLoader />}>
               <OTP />
             </Suspense>
           }
@@ -73,7 +74,7 @@ const Routing = () => {
       <Route
         path="/login"
         element={
-          <Suspense>
+          <Suspense fallback={<PageLoader />}>
             <Login />
           </Suspense>
         }
@@ -81,7 +82,7 @@ const Routing = () => {
       <Route
         path="/signup"
         element={
-          <Suspense>
+          <Suspense fallback={<PageLoader />}>
             <SignUp />
           </Suspense>
         }

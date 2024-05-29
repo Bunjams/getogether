@@ -7,7 +7,7 @@ import { useToast } from "hooks/useNotification";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CreateEventImg from "static/Image/CreateEvent.png";
+import CreateEventImg from "static/Image/CreateEventStep1.png";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import useDocumentTitle from "hooks/useDocumentTitle";
@@ -74,9 +74,7 @@ const EventConsole = () => {
 
   const onCreateEvent = async ({ eventName, eventType, venue }: Event) => {
     try {
-      success({
-        message: `Event name ${eventName}, Event type ${eventType}, Venue ${venue}`,
-      });
+      navigate("/create-event/duration");
     } catch (error) {
       console.error(error);
     }

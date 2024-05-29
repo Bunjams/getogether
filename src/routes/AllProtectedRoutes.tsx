@@ -58,15 +58,7 @@ const AllProtectedRoutes = () => {
             }
           />
 
-          <Route
-            path="/chat"
-            element={
-              <ChatPage />
-              // <section className="flex items-center w-full justify-center">
-              //   <Loader /> Chat
-              // </section>
-            }
-          />
+          <Route path="/chat" element={<ChatPage />} />
 
           <Route
             path="/guest-list"
