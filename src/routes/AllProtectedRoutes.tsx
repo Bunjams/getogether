@@ -1,9 +1,10 @@
+import CurrentUserProvider from "components/Context/CurrentUser";
 import Loader from "components/Design/Loader/Loader";
 import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import SecondarySideBar from "components/SideBar/SecondarySideBar";
 import { AnimatePresence, motion } from "framer-motion";
 import ChatPage from "pages/ChatPage";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const Home = lazy(() => import("pages/Home"));
@@ -33,68 +34,70 @@ const AllProtectedRoutes = () => {
   }
 
   return (
-    <section className="flex flex-col h-screen p-2 bg-red-400">
-      <section className="flex h-screen bg-neutral-0">
-        <AnimatePresence mode="wait">
-          <motion.aside
-            className="flex"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={sectionVariants}
-            transition={{ duration: 0.5 }}
-          >
-            <PrimarySideBar />
-            <SecondarySideBar />
-          </motion.aside>
-        </AnimatePresence>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Suspense>
-                <Home />
-              </Suspense>
-            }
-          />
+    <CurrentUserProvider>
+      <section className="flex flex-col h-screen p-2 bg-red-400">
+        <section className="flex h-screen bg-neutral-0">
+          <AnimatePresence mode="wait">
+            <motion.aside
+              className="flex"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={sectionVariants}
+              transition={{ duration: 0.5 }}
+            >
+              <PrimarySideBar />
+              <SecondarySideBar />
+            </motion.aside>
+          </AnimatePresence>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Suspense>
+                  <Home />
+                </Suspense>
+              }
+            />
 
-          <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat" element={<ChatPage />} />
 
-          <Route
-            path="/guest-list"
-            element={
-              <Suspense>
-                <GuestList />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/vendors"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Vendors
-              </section>
-            }
-          />
-          <Route
-            path="/expense-manager"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Loader /> Expense Manager
-              </section>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Suspense>
-                <NotFound />
-              </Suspense>
-            }
-          />
-        </Routes>
+            <Route
+              path="/guest-list"
+              element={
+                <Suspense>
+                  <GuestList />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/vendors"
+              element={
+                <section className="flex items-center w-full justify-center">
+                  <Loader /> Vendors
+                </section>
+              }
+            />
+            <Route
+              path="/expense-manager"
+              element={
+                <section className="flex items-center w-full justify-center">
+                  <Loader /> Expense Manager
+                </section>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Suspense>
+                  <NotFound />
+                </Suspense>
+              }
+            />
+          </Routes>
+        </section>
       </section>
-    </section>
+    </CurrentUserProvider>
   );
 };
 

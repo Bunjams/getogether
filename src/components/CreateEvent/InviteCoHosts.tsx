@@ -6,7 +6,7 @@ import { emailValidation } from "FormSchema/emailValidation";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep3.png";
 
 const EventConsole = () => {
@@ -22,13 +22,21 @@ const EventConsole = () => {
 
   return (
     <section className="h-max self-start grid grid-flow-row w-full md:pb-3 md:py-10 md:pl-20 md:pr-32 p-10 gap-12 md:col-span-2 col-span-3">
-      <button
-        className="all:unset flex text-h4 gap-2.5 items-center cursor-pointer h-max"
-        onClick={() => navigate(-1)}
-      >
-        <ArrowLeft />
-        Go Back
-      </button>
+      <div className="flex justify-between items-center">
+        <button
+          className="all:unset flex text-h4 gap-2.5 items-center cursor-pointer h-max"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft />
+          Go Back
+        </button>
+        <Link to="/">
+          <Button size="small" typeof="submit">
+            Skip for now
+          </Button>
+        </Link>
+      </div>
+
       <Formik
         initialValues={{
           email: "",

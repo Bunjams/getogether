@@ -18,6 +18,7 @@ export const userApi = emptyApi.injectEndpoints({
           url: "events/",
         };
       },
+      providesTags: ["EVENTS"],
     }),
 
     addEvent: builder.mutation<
@@ -82,6 +83,7 @@ export const userApi = emptyApi.injectEndpoints({
           },
         };
       },
+      invalidatesTags: ["EVENTS"],
     }),
   }),
 });
@@ -91,21 +93,3 @@ export const {
   useGetEevntTypesQuery,
   useUpdateEventMutation,
 } = userApi;
-
-// [
-//     {
-//       name: "Mehendi",
-//       start_date: "2024-07-01",
-//       end_date: "2024-07-09",
-//       venue: {
-//         name: "Hyatt",
-//         address: {
-//           street_address: "MG Road",
-//           city: "Delhi",
-//           state: "Delhi",
-//           zipcode: "578783",
-//           country: "India",
-//         },
-//       },
-//     },
-//   ],
