@@ -8,12 +8,17 @@ import Label from "components/Design/Label/Label";
 import RadioButton from "components/Design/Radio/RadioButton";
 import RadioGroup from "components/Design/Radio/RadioGroup";
 import { Form, Formik, useFormikContext } from "formik";
+import { addEventSchema } from "FormSchema/addEventSchema";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { useToast } from "hooks/useNotification";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import randomBytes from "randombytes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep2.png";
+import { useUpdateEventMutation } from "store/api/event";
+import { BackendError } from "types/utils/backendError";
+import { array, object, string } from "yup";
 
 type EventType = {
   eventName: string;
@@ -23,7 +28,7 @@ type EventType = {
   id: string;
 };
 
-type Event = { duration: string; eventList: EventType[] };
+type Event = { duration: string; date: string; eventList: EventType[] };
 
 const MultiDayEvent = ({ title, index }: { title: string; index: number }) => {
   const { values, setFieldValue, handleChange } = useFormikContext<Event>();
@@ -98,7 +103,6 @@ const MultiDayEventCards = () => {
         venue: "",
         startDate: "",
         endDate: "",
-        time: "",
         id: randomBytes(10).toString("hex"),
       },
     ]);
@@ -129,7 +133,6 @@ const Duration = () => {
         venue: "",
         startDate: "",
         endDate: "",
-        time: "",
         id: randomBytes(10).toString("hex"),
       },
     ]);
@@ -151,12 +154,52 @@ const Duration = () => {
 };
 const EventConsole = () => {
   const navigate = useNavigate();
+  const { alert } = useToast();
+  const [updateEvent] = useUpdateEventMutation();
+  const location = useLocation();
+  const { eventId } = location.state || {};
 
-  const onCreateEvent = async () => {
+  const onCreateEvent = async ({ date, duration, eventList }: Event) => {
+    const multiEvent = duration === "MULTI_DAY";
+    const firstDate = eventList[0].startDate;
+    const lastDate = eventList[eventList.length - 1].endDate;
+
+    const payload = multiEvent
+      ? {
+          eventId,
+          startDate: firstDate,
+          endDate: lastDate,
+          multiEvent,
+          subeventDetails: eventList.map((event) => ({
+            name: event.eventName,
+            start_date: event.startDate,
+            end_date: event.endDate,
+            venue: {
+              name: event.venue,
+              address: {
+                street_address: "",
+                city: "",
+                state: "",
+                zipcode: "",
+                country: "",
+              },
+            },
+          })),
+        }
+      : {
+          eventId,
+          startDate: date,
+          endDate: date,
+          multiEvent,
+        };
+
     try {
-      navigate("/create-event/invite-co-hosts");
+      await updateEvent({
+        ...payload,
+      }).unwrap();
+      navigate("/create-event/invite-co-hosts", { state: { eventId: null } });
     } catch (error) {
-      console.error(error);
+      alert({ message: (error as BackendError).data.error.message });
     }
   };
 
@@ -179,18 +222,20 @@ const EventConsole = () => {
               venue: "",
               startDate: "",
               endDate: "",
-              time: "",
               id: randomBytes(10).toString("hex"),
             },
           ],
         }}
         onSubmit={onCreateEvent}
+        validateOnChange
+        validationSchema={addEventSchema}
       >
         {({
           isSubmitting,
           submitForm,
           values: { duration },
           setFieldValue,
+          isValid,
         }) => {
           return (
             <Form className="flex flex-col gap-4 h-full">
@@ -225,7 +270,7 @@ const EventConsole = () => {
                 <Button
                   type="primary"
                   size="large"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isValid}
                   onClick={submitForm}
                   loading={isSubmitting}
                   typeof="submit"

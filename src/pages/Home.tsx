@@ -4,21 +4,25 @@ import Button from "components/Design/Button/Button";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { Link } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
+import { useGetAllEevntsQuery } from "store/api/event";
 
 const Home = () => {
   useDocumentTitle("Getogether");
+  const { data, isLoading, isSuccess } = useGetAllEevntsQuery();
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
     exit: { opacity: 0 },
   };
 
+  const isEmpty = data?.length === 0;
+
   return (
     <AnimatedPage
       variants={sectionVariants}
       className="flex items-center w-full justify-center flex-col gap-2 pt-8 pr-[18px] pl-10"
     >
-      <Async.Root isEmpty={true} isLoading={false} isSuccess={true}>
+      <Async.Root isEmpty={isEmpty} isLoading={isLoading} isSuccess={isSuccess}>
         <Async.Empty>
           <img
             src={EventEmpty}
