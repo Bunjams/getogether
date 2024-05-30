@@ -1,5 +1,5 @@
-import Loader, { PageLoader } from "components/Design/Loader/Loader";
-import { Suspense, lazy } from "react";
+import { PageLoader } from "components/Design/Loader/Loader";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
 import OtpOutlet from "routes/OtpOutlet";
@@ -12,6 +12,7 @@ const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const Persona = lazy(() => import("pages/Persona"));
 const CreateEvent = lazy(() => import("routes/CreateEventRoutes"));
 const AllProtectedRoutes = lazy(() => import("routes/AllProtectedRoutes"));
+const MagicLink = lazy(() => import("components/MagicLink/MagicLink"));
 
 const Routing = () => {
   return (
@@ -84,6 +85,14 @@ const Routing = () => {
         element={
           <Suspense fallback={<PageLoader />}>
             <SignUp />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/magic-link"
+        element={
+          <Suspense fallback={<PageLoader />}>
+            <MagicLink />
           </Suspense>
         }
       />

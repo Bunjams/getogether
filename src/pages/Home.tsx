@@ -9,13 +9,13 @@ import { useGetAllEevntsQuery } from "store/api/event";
 const Home = () => {
   useDocumentTitle("Getogether");
   const { data, isLoading, isSuccess } = useGetAllEevntsQuery();
+  const isEmpty = data?.length === 0;
+
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
     exit: { opacity: 0 },
   };
-
-  const isEmpty = data?.length === 0;
 
   return (
     <AnimatedPage

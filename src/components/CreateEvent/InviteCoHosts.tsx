@@ -43,6 +43,7 @@ const EventConsole = () => {
         }}
         onSubmit={onCreateEvent}
         validationSchema={emailValidation}
+        validateOnChange
       >
         {({ isSubmitting, submitForm, handleChange, errors: { email } }) => {
           return (

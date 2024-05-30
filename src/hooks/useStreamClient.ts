@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useGetUserProfileQuery } from "store/api/userProfile";
 import { StreamChat } from "stream-chat";
+import { useCurrentUser } from "./useCurrentUser";
 
 export const useStreamClient = () => {
-  const { data: user } = useGetUserProfileQuery({});
+  const user = useCurrentUser();
   const [client, setClient] = useState<StreamChat | null>(null);
 
   useEffect(() => {

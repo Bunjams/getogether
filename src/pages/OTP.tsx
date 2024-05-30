@@ -9,7 +9,7 @@ import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
 import { Suspense, lazy, memo, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SignInSignUpSide from "static/Image/SignInSignUpSide.jpg";
 import {
   useResendOTPMutation,
@@ -53,11 +53,12 @@ const Timer = ({ setShowTimer }: { setShowTimer: () => void }) => {
 const OTP = () => {
   useDocumentTitle("OTP Verification");
   const navigate = useNavigate();
-  const email = localStorage.getItem("email") || "";
   const { alert, success } = useToast();
   const [showTimer, setShowTimer] = useState(false);
   const [verifyOtp] = useVerifyOtpMutation();
   const [resendOTP] = useResendOTPMutation();
+  const location = useLocation();
+  const { email } = location.state || {};
 
   const onVerifyOtp = async ({
     email,
@@ -68,18 +69,17 @@ const OTP = () => {
   }) => {
     try {
       const { data } = await verifyOtp({ email, otp }).unwrap();
-      localStorage.removeItem("email");
       localStorage.setItem("authUser", JSON.stringify(data));
 
       if (!data.mobile) {
-        navigate("/profile-setup", { replace: true });
+        navigate("/profile-setup", { replace: true, state: { email: null } });
         return;
       }
       if (!data.role) {
-        navigate("/persona", { replace: true });
+        navigate("/persona", { replace: true, state: { email: null } });
         return;
       }
-      navigate("/", { replace: true });
+      navigate("/", { replace: true, state: { email: null } });
     } catch (e) {
       alert({ message: (e as BackendError).data.error.message });
     }
