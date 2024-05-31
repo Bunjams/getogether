@@ -54,7 +54,7 @@ const AllProtectedRoutes = () => {
 
   return (
     <CurrentUserProvider>
-      <section className="flex h-screen bg-neutral-0 border-8 border-red-400 overflow-auto w-full">
+      <section className="flex h-screen bg-neutral-0 border-8 border-red-400 overflow-auto w-full no-scrollbar">
         <AnimatePresence mode="wait">
           <motion.aside
             className="flex"
@@ -68,7 +68,7 @@ const AllProtectedRoutes = () => {
             <SecondarySideBar />
           </motion.aside>
         </AnimatePresence>
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={<PageLoader noBorder />}>
           <Routes location={location}>
             <Route path="/home" element={<HostEventPage />} />
 
