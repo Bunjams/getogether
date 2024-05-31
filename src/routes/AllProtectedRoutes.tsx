@@ -21,7 +21,7 @@ export const NoEventPage = () => {
   return (
     <CurrentUserProvider>
       <section className="flex flex-col h-screen p-2 bg-red-400">
-        <section className="flex h-screen bg-neutral-0">
+        <section className="flex h-[calc(100vh-16px)] bg-neutral-0">
           <AnimatePresence mode="wait">
             <motion.aside
               className="flex"
@@ -60,8 +60,8 @@ const AllProtectedRoutes = () => {
 
   return (
     <CurrentUserProvider>
-      <section className="flex flex-col h-screen p-2 bg-red-400">
-        <section className="flex h-screen bg-neutral-0">
+      <section className="flex flex-col h-screen p-2 bg-red-400 w-full">
+        <section className="flex h-[calc(100vh-16px)] bg-neutral-0 w-[calc(100vw-16px)] overflow-auto">
           <AnimatePresence mode="wait">
             <motion.aside
               className="flex"

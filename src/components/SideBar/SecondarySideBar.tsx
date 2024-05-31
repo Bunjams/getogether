@@ -38,7 +38,7 @@ const SecondarySideBar = () => {
   const { eventId } = useParams<{ eventId: string }>();
 
   return (
-    <nav className="bg-whitebase p-3 flex gap-4 flex-col w-64">
+    <nav className="bg-whitebase p-3 flex gap-4 flex-col w-64 h-[calc(100vh-16px)] overflow-y-auto">
       <NavLink
         to={`/event/${eventId}/home`}
         className="py-1 flex items-center gap-1"

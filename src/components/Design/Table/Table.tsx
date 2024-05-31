@@ -1,19 +1,15 @@
 import type { TableProps } from "antd";
-import { Table as AntTable, ConfigProvider } from "antd";
-import AnimatedPage from "../AnimatedPage/AnimatedPage";
+import { ConfigProvider, Table as AntTable } from "antd";
+import { ReactNode } from "react";
 
-const Table = (props: TableProps) => {
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
+type Props = {
+  header?: ReactNode;
+} & TableProps;
 
+const Table = ({ header, ...rest }: Props) => {
   return (
-    <AnimatedPage
-      variants={sectionVariants}
-      className="bg-white shadow-button-secondary p-4 rounded-lg"
-    >
+    <div className="bg-white shadow-button-secondary p-4 rounded-lg">
+      {header}
       <ConfigProvider
         theme={{
           components: {
@@ -26,9 +22,9 @@ const Table = (props: TableProps) => {
           },
         }}
       >
-        <AntTable {...props} />
+        <AntTable {...rest} />
       </ConfigProvider>
-    </AnimatedPage>
+    </div>
   );
 };
 

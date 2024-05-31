@@ -11,6 +11,7 @@ module.exports = {
       },
       zIndex: {
         "primary-sideBar": "1",
+        header: "2",
       },
     },
     colors: {

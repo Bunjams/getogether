@@ -1,11 +1,11 @@
 import { Avatar, Divider } from "antd";
 import Profile from "components/Profile/Profile";
 import RoleSwitcher from "components/RoleSwitcher/RoleSwitcher";
+import { motion } from "framer-motion";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGetAllEevntsQuery } from "store/api/event";
-import { AnimatePresence, motion } from "framer-motion";
 
 const EventList = () => {
   const { data = [], isSuccess } = useGetAllEevntsQuery();
@@ -17,12 +17,14 @@ const EventList = () => {
   return (
     <div className="flex flex-col gap-4 items-center">
       {data?.map(({ uuid, name }) => (
-        <Link to={`/event/${uuid}/home`} key={uuid}>
-          <button className="flex items-center gap-2 cursor-pointer">
-            <Avatar className="!border-solid !border-4 !border-red-300 h-10 w-10">
-              {name[0]}
-            </Avatar>
-          </button>
+        <Link
+          to={`/event/${uuid}/home`}
+          key={uuid}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <Avatar className="!border-solid !border-4 !border-red-300 h-10 w-10">
+            {name[0]}
+          </Avatar>
         </Link>
       ))}
     </div>
@@ -39,7 +41,7 @@ const PrimarySideBar = () => {
   };
 
   return (
-    <nav className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between z-primary-sideBar">
+    <nav className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between z-primary-sideBar h-[calc(100vh-16px)] overflow-y-auto">
       <div>
         <RoleSwitcher />
         {role === "HOST" && (
@@ -56,10 +58,11 @@ const PrimarySideBar = () => {
               style={{ height: "2px" }}
             />
             <EventList />
-            <Link to="/create-event">
-              <button className="all:unset text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10">
-                <Plus size={40} strokeWidth={1.5} color="currentColor" />
-              </button>
+            <Link
+              to="/create-event"
+              className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10"
+            >
+              <Plus size={40} strokeWidth={1.5} color="currentColor" />
             </Link>
           </motion.div>
         )}

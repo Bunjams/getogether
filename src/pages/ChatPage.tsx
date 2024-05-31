@@ -25,7 +25,12 @@ import "stream-chat-react/dist/css/v2/index.css";
 //   const { message } = useMessageContext();
 
 //   if (message.text === "hey") {
-//     return <div dangerouslySetInnerHTML={{ __html: message.html! }} />;
+//     return (
+//       <div className="text-body-bold bg-red-200 rounded p-2 text-red-600">
+//         {message.text}
+//         <Loader />
+//       </div>
+//     );
 //   }
 
 //   return <MessageSimple />;
