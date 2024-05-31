@@ -3,13 +3,16 @@ import Loader, { PageLoader } from "components/Design/Loader/Loader";
 import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import SecondarySideBar from "components/SideBar/SecondarySideBar";
 import { AnimatePresence, motion } from "framer-motion";
-import ChatPage from "pages/ChatPage";
-import Home from "pages/Home";
 import { lazy, Suspense } from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
-const GuestList = lazy(() => import("pages/GuestList"));
+const GuestList = lazy(() => import("pages/Host/GuestList"));
+const HostEventPage = lazy(() => import("pages/Host/EventHomePage"));
+const ChatPage = lazy(() => import("pages/ChatPage"));
+const HostNoEventPage = lazy(() => import("pages/Host/HostNoEventPage"));
+const VendorList = lazy(() => import("pages/Host/VendorList"));
+const ExpenseManager = lazy(() => import("pages/Host/ExpenseManager"));
 
 const sectionVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -20,99 +23,64 @@ const sectionVariants = {
 export const NoEventPage = () => {
   return (
     <CurrentUserProvider>
-      <section className="flex flex-col h-screen p-2 bg-red-400">
-        <section className="flex h-[calc(100vh-16px)] bg-neutral-0">
-          <AnimatePresence mode="wait">
-            <motion.aside
-              className="flex"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={sectionVariants}
-              transition={{ duration: 0.5 }}
-            >
-              <PrimarySideBar />
-            </motion.aside>
-            <Routes>
-              <Route index element={<Home />} />
-            </Routes>
-          </AnimatePresence>
-        </section>
+      <section className="flex h-screen bg-neutral-0 border-8 border-red-400">
+        <AnimatePresence mode="wait">
+          <motion.aside
+            className="flex"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={sectionVariants}
+            transition={{ duration: 0.5 }}
+          >
+            <PrimarySideBar />
+          </motion.aside>
+          <Routes>
+            <Route index element={<HostNoEventPage />} />
+          </Routes>
+        </AnimatePresence>
       </section>
     </CurrentUserProvider>
   );
 };
 
 const AllProtectedRoutes = () => {
-  const { eventId } = useParams<{ eventId: string }>();
   const location = useLocation();
   const { isLoading } = useGetUserProfileQuery({});
 
   if (isLoading) {
-    return (
-      <section className="flex flex-col h-screen p-2 bg-red-400">
-        <section className="flex h-screen bg-neutral-0 items-center justify-center">
-          <Loader />
-        </section>
-      </section>
-    );
+    return <PageLoader />;
   }
 
   return (
     <CurrentUserProvider>
-      <section className="flex flex-col h-screen p-2 bg-red-400 w-full">
-        <section className="flex h-[calc(100vh-16px)] bg-neutral-0 w-[calc(100vw-16px)] overflow-auto">
-          <AnimatePresence mode="wait">
-            <motion.aside
-              className="flex"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={sectionVariants}
-              transition={{ duration: 0.5 }}
-            >
-              <PrimarySideBar />
-              <motion.aside
-                key={eventId}
-                className="flex"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={sectionVariants}
-                transition={{ duration: 0.5 }}
-              >
-                <SecondarySideBar />
-              </motion.aside>
-            </motion.aside>
-          </AnimatePresence>
-          <Suspense fallback={<PageLoader />}>
-            <Routes location={location}>
-              <Route path="/home" element={<>Event pag {eventId}</>} />
+      <section className="flex h-screen bg-neutral-0 border-8 border-red-400 overflow-auto w-full no-scrollbar">
+        <AnimatePresence mode="wait">
+          <motion.aside
+            className="flex"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={sectionVariants}
+            transition={{ duration: 0.5 }}
+          >
+            <PrimarySideBar />
+            <SecondarySideBar />
+          </motion.aside>
+        </AnimatePresence>
+        <Suspense fallback={<PageLoader noBorder />}>
+          <Routes location={location}>
+            <Route path="/home" element={<HostEventPage />} />
 
-              <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat" element={<ChatPage />} />
 
-              <Route path="/guest-list" element={<GuestList />} />
-              <Route
-                path="/vendors"
-                element={
-                  <section className="flex items-center w-full justify-center">
-                    <Loader /> Vendors
-                  </section>
-                }
-              />
-              <Route
-                path="/expense-manager"
-                element={
-                  <section className="flex items-center w-full justify-center">
-                    <Loader /> Expense Manager
-                  </section>
-                }
-              />
+            <Route path="/guest-list" element={<GuestList />} />
+            <Route path="/vendors" element={<VendorList />} />
+            <Route path="/expense-manager" element={<ExpenseManager />} />
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </section>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </section>
     </CurrentUserProvider>
   );

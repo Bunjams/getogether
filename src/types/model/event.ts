@@ -16,7 +16,7 @@ export type CreateEventResult = {
   type: string;
 };
 
-export type AllEventResult = {
+export type EventResult = {
   uuid: string;
   primary_host: null;
   name: string;

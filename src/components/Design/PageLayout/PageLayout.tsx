@@ -4,13 +4,15 @@ const PageLayout = ({
   children,
   header,
 }: {
-  header: ReactNode;
+  header?: ReactNode;
   children: ReactNode;
 }) => {
   return (
-    <section className="pl-10 pr-4 pb-6 relative overflow-auto h-[calc(100vh-16px)] scroll-smooth">
-      <div className="sticky top-0 z-header bg-neutral-0 pt-8 ">{header}</div>
-      <div className="pt-6">{children}</div>
+    <section className="pb-6 relative overflow-auto h-[calc(100vh-16px)] scroll-smooth transform transition duration-300 ease-in-out">
+      <div className="sticky top-0 z-header bg-neutral-0 pt-8 pl-10 pr-4">
+        {header}
+      </div>
+      <div className="pt-6 pl-10 pr-4">{children}</div>
     </section>
   );
 };

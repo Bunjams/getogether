@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { motion } from "framer-motion";
 
 const Loader = ({ size = "44" }: { size?: string }) => {
@@ -51,12 +52,15 @@ const Loader = ({ size = "44" }: { size?: string }) => {
 
 export default Loader;
 
-export const PageLoader = () => {
+export const PageLoader = ({ noBorder = false }: { noBorder?: boolean }) => {
   return (
-    <section className="flex flex-col h-screen p-2 bg-red-400">
-      <section className="w-screen h-screen flex justify-center items-center bg-neutral-0">
-        <Loader />
-      </section>
+    <section
+      className={classNames("flex justify-center items-center h-screen", {
+        "border-none": noBorder,
+        "bg-neutral-0 border-8 border-red-400 w-full": !noBorder,
+      })}
+    >
+      <Loader />
     </section>
   );
 };

@@ -1,5 +1,6 @@
 export const RSVP_STATUS_COLOR = {
-  Declined: "red",
-  Approved: "green",
-  Pending: "orange",
+  REJECTED: "red",
+  ACCEPTED: "green",
+  MAYBE: "orange",
+  INITIATED: "orange",
 };

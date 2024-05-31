@@ -34,7 +34,7 @@ const Root = ({
 
   return (
     <AsyncContext.Provider value={{ isLoading, isSuccess, isEmpty }}>
-      <>{isLoading ? <LoaderComponent /> : <>{children}</>}</>
+      <>{isLoading ? <LoaderComponent noBorder={true} /> : <>{children}</>}</>
     </AsyncContext.Provider>
   );
 };

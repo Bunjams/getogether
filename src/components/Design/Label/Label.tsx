@@ -14,7 +14,8 @@ const Label = ({
     className={classNames(
       "text-footnote text-neutral-600",
       {
-        "after:font-bold after:text-red-600 after:content-['_*']": required,
+        "after:font-bold after:text-red-600 after:content-['_*'] after:text-h4 after:leading-3 after:-ml-1":
+          required,
       },
       className
     )}
