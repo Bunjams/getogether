@@ -7,10 +7,11 @@ import { lazy, Suspense } from "react";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
-const GuestList = lazy(() => import("pages/GuestList"));
-const HostEventPage = lazy(() => import("pages/HostEventPage"));
+const GuestList = lazy(() => import("pages/Host/GuestList"));
+const HostEventPage = lazy(() => import("pages/Host/EventHomePage"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
-const HostNoEventPage = lazy(() => import("pages/HostNoEventPage"));
+const HostNoEventPage = lazy(() => import("pages/Host/HostNoEventPage"));
+const VendorList = lazy(() => import("pages/Host/VendorList"));
 
 const sectionVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -93,14 +94,7 @@ const AllProtectedRoutes = () => {
               <Route path="/chat" element={<ChatPage />} />
 
               <Route path="/guest-list" element={<GuestList />} />
-              <Route
-                path="/vendors"
-                element={
-                  <section className="flex items-center w-full justify-center">
-                    <Loader /> Vendors
-                  </section>
-                }
-              />
+              <Route path="/vendors" element={<VendorList />} />
               <Route
                 path="/expense-manager"
                 element={

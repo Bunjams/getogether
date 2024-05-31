@@ -1,5 +1,5 @@
 import { PageLoader } from "components/Design/Loader/Loader";
-import CreateEvent from "pages/CreateEvent";
+import CreateEvent from "pages/Host/CreateEvent";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 

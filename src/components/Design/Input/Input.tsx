@@ -5,15 +5,15 @@ type Props = InputProps & {
   label?: string;
 };
 
-const Input = ({ label, size = "middle", ...props }: Props) => {
+const Input = ({ label, size = "middle", ...rest }: Props) => {
   return (
     <span className="relative block w-full">
       {label && (
-        <Label htmlFor={props.name} required={props.required}>
+        <Label htmlFor={rest.name} required={rest.required}>
           {label}
         </Label>
       )}
-      <AntInput {...props} size={size} />
+      <AntInput {...rest} size={size} />
     </span>
   );
 };

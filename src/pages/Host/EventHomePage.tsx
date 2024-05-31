@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { CalendarHeart, Map, UsersRound } from "lucide-react";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { useParams } from "react-router-dom";
 import { useGetEventByIdQuery } from "store/api/event";
 import { useGetGuestlistQuery } from "store/api/guest";
@@ -26,7 +26,7 @@ const DetailsItem = ({
 
   return (
     <motion.div
-      className="flex gap-2 items-center"
+      className="flex gap-2 items-center bg-whitebase rounded-lg p-3"
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
@@ -41,13 +41,25 @@ const DetailsItem = ({
   );
 };
 
-const HostEventPage = () => {
+const MapCard = () => {
+  return (
+    <div className="h-96 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
+      <iframe
+        src="https://www.google.com/maps/@12.918057,77.6167088,16z?entry=ttu"
+        className="h-full"
+      />
+    </div>
+  );
+};
+
+const MemoMap = memo(MapCard);
+
+const EventHomePage = () => {
   const { eventId = "" } = useParams<{ eventId: string }>();
   const { data, isLoading, isSuccess } = useGetEventByIdQuery(
     { eventId },
     { skip: !eventId }
   );
-  useDocumentTitle(data?.name || "Event");
 
   //   TODO: add total count, approved count in  useGetEventByIdQuery
   const { data: guestList = [] } = useGetGuestlistQuery(
@@ -61,6 +73,8 @@ const HostEventPage = () => {
   ).length;
 
   const { type, name, end_date, start_date, venue, uuid } = data || {};
+
+  useDocumentTitle(uuid ? `${type}-${name}` : "Event");
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
@@ -87,7 +101,10 @@ const HostEventPage = () => {
                 />
                 <div className="flex gap-3 flex-col mt-1">
                   <h3 className="text-h5-medium text-neutral-900">Details</h3>
-                  <div className="grid grid-cols-3 justify-between" key={uuid}>
+                  <div
+                    className="grid grid-cols-3 justify-between gap-4"
+                    key={uuid}
+                  >
                     <DetailsItem
                       icon={
                         <span className="text-red-600 p-2.5 bg-red-100 rounded-lg">
@@ -124,12 +141,7 @@ const HostEventPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-96 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
-                <iframe
-                  src="https://www.google.com/maps/@12.918057,77.6167088,16z?entry=ttu"
-                  className="h-full"
-                />
-              </div>
+              <MemoMap />
             </div>
           </PageLayout>
         </Async.Success>
@@ -138,4 +150,4 @@ const HostEventPage = () => {
   );
 };
 
-export default HostEventPage;
+export default EventHomePage;

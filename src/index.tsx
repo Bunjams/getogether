@@ -27,6 +27,17 @@ root.render(
             colorPrimary: "#EF897A",
           },
 
+          Select: {
+            colorText: "#101222",
+            colorTextPlaceholder: "#B3B5BC",
+            borderRadius: 2,
+            borderRadiusLG: 2,
+            borderRadiusSM: 2,
+            borderRadiusXS: 2,
+            borderRadiusOuter: 2,
+            colorBorder: "#F3F4F8",
+          },
+
           Input: {
             hoverBorderColor: "#F6A295",
             activeBorderColor: "#F6A295",

@@ -8,10 +8,13 @@ module.exports = {
       backgroundImage: {},
       boxShadow: {
         "button-secondary": "0px 2px 0px 0px rgba(0, 0, 0, 0.02);",
+        "modal-header": "0px -1px 0px 0px #F0F0F0 inset;",
+        "modal-footer": "0px 1px 0px 0px #F0F0F0 inset",
       },
       zIndex: {
         "primary-sideBar": "1",
         header: "2",
+        modal: "1000",
       },
     },
     colors: {
