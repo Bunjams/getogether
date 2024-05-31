@@ -4,7 +4,7 @@ import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import SecondarySideBar from "components/SideBar/SecondarySideBar";
 import { AnimatePresence, motion } from "framer-motion";
 import { lazy, Suspense } from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const GuestList = lazy(() => import("pages/Host/GuestList"));
@@ -12,6 +12,7 @@ const HostEventPage = lazy(() => import("pages/Host/EventHomePage"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
 const HostNoEventPage = lazy(() => import("pages/Host/HostNoEventPage"));
 const VendorList = lazy(() => import("pages/Host/VendorList"));
+const ExpenseManager = lazy(() => import("pages/Host/ExpenseManager"));
 
 const sectionVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -46,7 +47,6 @@ export const NoEventPage = () => {
 };
 
 const AllProtectedRoutes = () => {
-  const { eventId } = useParams<{ eventId: string }>();
   const location = useLocation();
   const { isLoading } = useGetUserProfileQuery({});
 
@@ -74,17 +74,7 @@ const AllProtectedRoutes = () => {
               transition={{ duration: 0.5 }}
             >
               <PrimarySideBar />
-              <motion.aside
-                key={eventId}
-                className="flex"
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={sectionVariants}
-                transition={{ duration: 0.5 }}
-              >
-                <SecondarySideBar />
-              </motion.aside>
+              <SecondarySideBar />
             </motion.aside>
           </AnimatePresence>
           <Suspense fallback={<PageLoader />}>
@@ -95,14 +85,7 @@ const AllProtectedRoutes = () => {
 
               <Route path="/guest-list" element={<GuestList />} />
               <Route path="/vendors" element={<VendorList />} />
-              <Route
-                path="/expense-manager"
-                element={
-                  <section className="flex items-center w-full justify-center">
-                    <Loader /> Expense Manager
-                  </section>
-                }
-              />
+              <Route path="/expense-manager" element={<ExpenseManager />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

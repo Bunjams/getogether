@@ -4,13 +4,12 @@ import Button from "components/Design/Button/Button";
 import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
-import InviteModal from "components/HostVendor/InviteModal";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useModal } from "hooks/useModal";
 import { useParams } from "react-router-dom";
-import VendorListEmpty from "static/Image/VendorListEmpty.png";
+import ExpenseManagerEmpty from "static/Image/ExpenseManagerEmpty.png";
 
-const VendorList = () => {
+const ExpenseManager = () => {
   useDocumentTitle("Vendors");
   const { eventId = "" } = useParams<{ eventId: string }>();
 
@@ -21,16 +20,15 @@ const VendorList = () => {
     isLoading: false,
     isSuccess: true,
   };
-
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
       <Async.Root isEmpty={isEmpty} isLoading={isLoading} isSuccess={isSuccess}>
         <Async.Empty>
           <EmptyScreen
-            img={VendorListEmpty}
-            title="Add Vendors"
-            subtitle="Track vendors and their services"
-            actionText="Invite"
+            img={ExpenseManagerEmpty}
+            title="Manage Expenses"
+            subtitle="Track and manage your budget and expenses"
+            actionText="Add Budget"
             onClick={open}
           />
         </Async.Empty>
@@ -39,11 +37,11 @@ const VendorList = () => {
             header={
               <Header
                 right={
-                  <Button type="primary" size="middle" onClick={open}>
-                    Add vendor
+                  <Button type="primary" size="middle">
+                    Invite
                   </Button>
                 }
-                title="Vendors"
+                title="Guest List"
               />
             }
           >
@@ -51,9 +49,9 @@ const VendorList = () => {
           </PageLayout>
         </Async.Success>
       </Async.Root>
-      <InviteModal isOpen={isOpen} close={close} />
+      {/* <InviteModal isOpen={isOpen} close={close} /> */}
     </AnimatedPage>
   );
 };
 
-export default VendorList;
+export default ExpenseManager;

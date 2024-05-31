@@ -1,12 +1,13 @@
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import Button from "components/Design/Button/Button";
+import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import StatusCard from "components/Design/StatusCard/StatusCard";
 import GuestTable from "components/GuestList/GuestTable";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GuestListEmpty from "static/Image/GuestListEmpty.png";
 import { useGetGuestlistQuery } from "store/api/guest";
 
@@ -39,22 +40,13 @@ const GuestList = () => {
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
       <Async.Root isEmpty={isEmpty} isLoading={isLoading} isSuccess={isSuccess}>
         <Async.Empty>
-          <section className="flex w-full flex-col gap-2 h-full justify-center items-center">
-            <img
-              src={GuestListEmpty}
-              className="rounded-3xl overflow-hidden w-72 h-56"
-              loading="lazy"
-            />
-            <h4 className="text-h4 font-semibold text-neutral-900">
-              Send invites
-            </h4>
-            <p className="text-body-regular text-neutral-900">
-              Invite guests and get the party started
-            </p>
-            <Button type="primary" size="large">
-              Invite
-            </Button>
-          </section>
+          <EmptyScreen
+            actionText="Invite"
+            img={GuestListEmpty}
+            onClick={() => {}}
+            subtitle="Invite guests and get the party started"
+            title="Send invites"
+          />
         </Async.Empty>
         <Async.Success>
           <PageLayout

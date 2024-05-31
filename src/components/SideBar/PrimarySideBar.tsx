@@ -1,7 +1,7 @@
 import { Avatar, Divider } from "antd";
 import Profile from "components/Profile/Profile";
 import RoleSwitcher from "components/RoleSwitcher/RoleSwitcher";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -44,28 +44,30 @@ const PrimarySideBar = () => {
     <nav className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between z-primary-sideBar h-[calc(100vh-16px)] overflow-y-auto">
       <div>
         <RoleSwitcher />
-        {role === "HOST" && (
-          <motion.div
-            className="flex flex-col items-center gap-4"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={sectionVariants}
-            transition={{ duration: 0.3 }}
-          >
-            <Divider
-              className="mt-4 mb-1 bg-whitebase"
-              style={{ height: "2px" }}
-            />
-            <EventList />
-            <Link
-              to="/create-event"
-              className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10"
+        <AnimatePresence>
+          {role === "HOST" && (
+            <motion.div
+              className="flex flex-col items-center gap-4"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={sectionVariants}
+              transition={{ duration: 0.3 }}
             >
-              <Plus size={40} strokeWidth={1.5} color="currentColor" />
-            </Link>
-          </motion.div>
-        )}
+              <Divider
+                className="mt-4 mb-1 bg-whitebase"
+                style={{ height: "2px" }}
+              />
+              <EventList />
+              <Link
+                to="/create-event"
+                className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10"
+              >
+                <Plus size={40} strokeWidth={1.5} color="currentColor" />
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="self-end">

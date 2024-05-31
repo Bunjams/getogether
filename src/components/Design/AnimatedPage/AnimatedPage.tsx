@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import { ReactNode } from "react";
 
@@ -10,7 +11,7 @@ interface MotionSectionProps extends MotionProps {
 const AnimatedPage = ({
   animation,
   children,
-  className,
+  className = "",
   ...props
 }: MotionSectionProps) => {
   const sectionVariants =
@@ -34,7 +35,10 @@ const AnimatedPage = ({
         exit="exit"
         variants={sectionVariants}
         transition={{ duration: 0.5 }}
-        className={className}
+        className={classNames(
+          "transform transition duration-300 ease-in-out",
+          [className] || ""
+        )}
         {...props}
       >
         {children}

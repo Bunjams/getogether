@@ -1,11 +1,12 @@
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
-import Button from "components/Design/Button/Button";
+import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import useDocumentTitle from "hooks/useDocumentTitle";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
 
 const HostNoEventPage = () => {
   useDocumentTitle("Getogether");
+  const navigate = useNavigate();
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -18,20 +19,13 @@ const HostNoEventPage = () => {
       variants={sectionVariants}
       className="flex items-center w-full justify-center flex-col gap-2 pt-8 pr-[18px] pl-10"
     >
-      <img
-        src={EventEmpty}
-        className="rounded-3xl overflow-hidden w-72 h-56"
-        loading="lazy"
+      <EmptyScreen
+        img={EventEmpty}
+        title="Get Started"
+        subtitle="Start by adding your first event."
+        actionText=" Create Event"
+        onClick={() => navigate("/create-event")}
       />
-      <h4 className="text-h4 font-semibold text-neutral-900">Get Started</h4>
-      <p className="text-body-regular text-neutral-900">
-        Start by adding your first event.
-      </p>
-      <Link to="/create-event">
-        <Button type="primary" size="large">
-          Create Event
-        </Button>
-      </Link>
     </AnimatedPage>
   );
 };
