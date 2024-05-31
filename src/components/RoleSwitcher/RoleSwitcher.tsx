@@ -1,12 +1,11 @@
 import { Dropdown, MenuProps } from "antd";
 import classNames from "classnames";
 import Loader from "components/Design/Loader/Loader";
+import { useCurrentUserQuery } from "hooks/useCurrentUserQuery";
 import { HandHeart, PartyPopper } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import CheckSolid from "static/Icons/CheckSolid";
-import {
-  useGetUserProfileQuery,
-  useUpdateRoleMutation,
-} from "store/api/userProfile";
+import { useUpdateRoleMutation } from "store/api/userProfile";
 
 type ProfileType = "HOST" | "VENDOR" | "GUEST";
 
@@ -64,14 +63,16 @@ const MenuIcon = ({
 };
 
 const RoleSwitcher = () => {
-  const { data, isFetching } = useGetUserProfileQuery({});
+  const { data, isFetching } = useCurrentUserQuery();
   const { role: currentProfile } = data || {};
+  const navigate = useNavigate();
 
   const [onRoleUpdate, { isLoading }] = useUpdateRoleMutation();
 
   const onProfileChange = async (profile: ProfileType) => {
     try {
       await onRoleUpdate({ role: profile }).unwrap();
+      navigate("/");
     } catch (error) {}
   };
 

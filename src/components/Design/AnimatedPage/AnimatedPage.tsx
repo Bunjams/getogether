@@ -35,10 +35,7 @@ const AnimatedPage = ({
         exit="exit"
         variants={sectionVariants}
         transition={{ duration: 0.5 }}
-        className={classNames(
-          "transform transition duration-300 ease-in-out",
-          [className] || ""
-        )}
+        className={classNames([className] || "")}
         {...props}
       >
         {children}

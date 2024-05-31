@@ -1,8 +1,10 @@
+import CurrentUserProvider from "components/Context/CurrentUser";
 import { PageLoader } from "components/Design/Loader/Loader";
+import PrimarySideBar from "components/SideBar/PrimarySideBar";
+import { useCurrentUserQuery } from "hooks/useCurrentUserQuery";
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
-import { NoEventPage } from "routes/AllProtectedRoutes";
 import OtpOutlet from "routes/OtpOutlet";
 import PrivateRoute from "routes/PrivateRoute";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
@@ -12,17 +14,106 @@ const Login = lazy(() => import("pages/Login"));
 const ErrorPage = lazy(() => import("components/ErrorBoundary/ErrorBoundary"));
 const Persona = lazy(() => import("pages/Persona"));
 const CreateEvent = lazy(() => import("routes/CreateEventRoutes"));
-const AllProtectedRoutes = lazy(() => import("routes/AllProtectedRoutes"));
+const HostRoutes = lazy(() => import("routes/HostRoutes"));
 const MagicLink = lazy(() => import("components/MagicLink/MagicLink"));
+const NotFound = lazy(() => import("components/NotFound/NotFound"));
+const VendorRoutes = lazy(() => import("routes/VendorRoutes"));
+const HostNoEventPage = lazy(() => import("pages/Host/HostNoEventPage"));
+
+const RedirectToRoleBasedRoute = () => {
+  const { data, isSuccess } = useCurrentUserQuery();
+  const { role } = data || {};
+
+  if (!isSuccess) {
+    return null;
+  }
+
+  if (role === "VENDOR") {
+    return <Navigate to="/vendor" />;
+  }
+
+  if (role === "GUEST") {
+    return <Navigate to="/guest" />;
+  }
+
+  if (role === "HOST") {
+    return <Navigate to="/host" />;
+  }
+
+  return null;
+};
+
+const HostProtected = () => {
+  const { data, isSuccess } = useCurrentUserQuery();
+  const { role } = data || {};
+
+  if (!isSuccess) {
+    return null;
+  }
+
+  switch (role) {
+    case "HOST":
+      return <Outlet />;
+    case "VENDOR":
+      return <Navigate to="/vendor" />;
+    case "GUEST":
+      return <Navigate to="/guest" />;
+    default:
+      return <Navigate to="/login" />;
+  }
+};
+
+const VendorProtected = () => {
+  const { data, isSuccess } = useCurrentUserQuery();
+  const { role } = data || {};
+
+  if (!isSuccess) {
+    return null;
+  }
+
+  switch (role) {
+    case "VENDOR":
+      return <Outlet />;
+    case "HOST":
+      return <Navigate to="/host" />;
+    case "GUEST":
+      return <Navigate to="/guest" />;
+    default:
+      return <Navigate to="/login" />;
+  }
+};
+
+const Layout = () => {
+  return (
+    <CurrentUserProvider>
+      <section className="flex h-screen bg-neutral-0 border-8  border-red-400 overflow-auto w-full no-scrollbar">
+        <PrimarySideBar />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route index element={<RedirectToRoleBasedRoute />} />
+            <Route element={<HostProtected />} errorElement={<ErrorPage />}>
+              <Route path="/create-event/*" element={<CreateEvent />} />
+              <Route path="/host" element={<HostNoEventPage />} />
+              <Route path="/host/:eventId/*" element={<HostRoutes />} />
+            </Route>
+
+            <Route element={<VendorProtected />} errorElement={<ErrorPage />}>
+              <Route path="/vendor/*" element={<VendorRoutes />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </section>
+    </CurrentUserProvider>
+  );
+};
 
 const Routing = () => {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
-          <Route path="/" element={<NoEventPage />} />
+          <Route path="/*" element={<Layout />} />
           <Route path="/create-event/*" element={<CreateEvent />} />
-          <Route path="/event/:eventId/*" element={<AllProtectedRoutes />} />
         </Route>
 
         <Route element={<AccountSetup />}>
@@ -36,6 +127,7 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/magic-link" element={<MagicLink />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

@@ -18,7 +18,7 @@ const EventList = () => {
     <div className="flex flex-col gap-4 items-center">
       {data?.map(({ uuid, name }) => (
         <Link
-          to={`/event/${uuid}/home`}
+          to={`/host/${uuid}/home`}
           key={uuid}
           className="flex items-center gap-2 cursor-pointer"
         >
@@ -41,7 +41,7 @@ const PrimarySideBar = () => {
   };
 
   return (
-    <nav className="bg-red-400 pr-3 pl-1 py-1 flex flex-col justify-between z-primary-sideBar h-[calc(100vh-16px)] overflow-y-auto">
+    <nav className="shrink-0 bg-red-400 pr-3 pl-1  items-center  flex flex-col justify-between z-primary-sideBar overflow-y-auto">
       <div>
         <RoleSwitcher />
         <AnimatePresence>
@@ -70,9 +70,7 @@ const PrimarySideBar = () => {
         </AnimatePresence>
       </div>
 
-      <div className="self-end">
-        <Profile />
-      </div>
+      <Profile />
     </nav>
   );
 };
