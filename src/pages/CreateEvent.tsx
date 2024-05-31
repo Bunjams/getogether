@@ -138,7 +138,7 @@ const EventConsole = () => {
                     </h5>
                     <div className="flex flex-wrap gap-3">
                       {eventList.map((event) => (
-                        <EventType event={event.toUpperCase()} />
+                        <EventType event={event.toUpperCase()} key={event} />
                       ))}
                     </div>
                   </div>

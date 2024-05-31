@@ -6,7 +6,7 @@ import {
   MessageSquareMore,
   Users,
 } from "lucide-react";
-import { NavLink, NavLinkProps } from "react-router-dom";
+import { NavLink, NavLinkProps, useParams } from "react-router-dom";
 import Logo from "static/Image/Logo.svg";
 
 const NavMenu = ({
@@ -35,20 +35,25 @@ const NavMenu = ({
 };
 
 const SecondarySideBar = () => {
+  const { eventId } = useParams<{ eventId: string }>();
+
   return (
     <nav className="bg-whitebase p-3 flex gap-4 flex-col w-64">
-      <NavLink to="/" className="py-1 flex items-center gap-1">
+      <NavLink
+        to={`/event/${eventId}/home`}
+        className="py-1 flex items-center gap-1"
+      >
         <img src={Logo} alt="getogether" loading="lazy" className="h-6 w-6" />
         <h4 className="text-red-600 font-bold text-h4">Getogether</h4>
       </NavLink>
       <NavMenu
-        to="/"
+        to={`/event/${eventId}/home`}
         icon={<Home size={16} strokeWidth={2} color="currentColor" />}
       >
         Home
       </NavMenu>
       <NavMenu
-        to="/chat"
+        to={`/event/${eventId}/chat`}
         icon={
           <MessageSquareMore size={16} strokeWidth={2} color="currentColor" />
         }
@@ -56,19 +61,19 @@ const SecondarySideBar = () => {
         Chat
       </NavMenu>
       <NavMenu
-        to="/guest-list"
+        to={`/event/${eventId}/guest-list`}
         icon={<ListChecks size={16} strokeWidth={2} color="currentColor" />}
       >
         Guest List
       </NavMenu>
       <NavMenu
-        to="/vendors"
+        to={`/event/${eventId}/vendors`}
         icon={<Users size={16} strokeWidth={2} color="currentColor" />}
       >
         Vendors
       </NavMenu>
       <NavMenu
-        to="/expense-manager"
+        to={`/event/${eventId}/expense-manager`}
         icon={<HandCoins size={16} strokeWidth={2} color="currentColor" />}
       >
         Expense Manager

@@ -123,7 +123,7 @@ const MultiDayEventCards = () => {
 };
 
 const Duration = () => {
-  const { values, setFieldValue, handleChange } = useFormikContext<Event>();
+  const { setFieldValue, handleChange } = useFormikContext<Event>();
 
   const onChange = (e: RadioChangeEvent) => {
     setFieldValue("date", "");
@@ -251,6 +251,7 @@ const EventConsole = () => {
               <div>
                 <Label>Cover Image</Label>
                 <img
+                  loading="lazy"
                   className="h-48 w-full object-cover rounded-lg"
                   src="https://images.unsplash.com/photo-1716903904403-20a28f5afb88?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />

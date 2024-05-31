@@ -2,6 +2,7 @@ import { PageLoader } from "components/Design/Loader/Loader";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
+import { NoEventPage } from "routes/AllProtectedRoutes";
 import OtpOutlet from "routes/OtpOutlet";
 import PrivateRoute from "routes/PrivateRoute";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
@@ -16,87 +17,27 @@ const MagicLink = lazy(() => import("components/MagicLink/MagicLink"));
 
 const Routing = () => {
   return (
-    <Routes>
-      <Route
-        element={<PrivateRoute />}
-        errorElement={
-          <Suspense fallback={<PageLoader />}>
-            <ErrorPage />
-          </Suspense>
-        }
-      >
-        <Route
-          path="/*"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <AllProtectedRoutes />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/create-event/*"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <CreateEvent />
-            </Suspense>
-          }
-        />
-      </Route>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
+          <Route path="/" element={<NoEventPage />} />
+          <Route path="/create-event/*" element={<CreateEvent />} />
+          <Route path="/event/:eventId/*" element={<AllProtectedRoutes />} />
+        </Route>
 
-      <Route element={<AccountSetup />}>
-        <Route
-          path="/persona"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <Persona />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/profile-setup"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <ProfileSetup />
-            </Suspense>
-          }
-        />
-      </Route>
+        <Route element={<AccountSetup />}>
+          <Route path="/persona" element={<Persona />} />
+          <Route path="/profile-setup" element={<ProfileSetup />} />
+        </Route>
 
-      <Route element={<OtpOutlet />}>
-        <Route
-          path="/otp"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <OTP />
-            </Suspense>
-          }
-        />
-      </Route>
-      <Route
-        path="/login"
-        element={
-          <Suspense fallback={<PageLoader />}>
-            <Login />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <Suspense fallback={<PageLoader />}>
-            <SignUp />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/magic-link"
-        element={
-          <Suspense fallback={<PageLoader />}>
-            <MagicLink />
-          </Suspense>
-        }
-      />
-    </Routes>
+        <Route element={<OtpOutlet />}>
+          <Route path="/otp" element={<OTP />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/magic-link" element={<MagicLink />} />
+      </Routes>
+    </Suspense>
   );
 };
 

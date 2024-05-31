@@ -1,24 +1,24 @@
-import EventDuration from "components/CreateEvent/EventDuration";
-import InviteCoHosts from "components/CreateEvent/InviteCoHosts";
-import Loader from "components/Design/Loader/Loader";
+import { PageLoader } from "components/Design/Loader/Loader";
 import CreateEvent from "pages/CreateEvent";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+
+const EventDuration = lazy(
+  () => import("components/CreateEvent/EventDuration")
+);
+const InviteCoHosts = lazy(
+  () => import("components/CreateEvent/InviteCoHosts")
+);
 
 const CreateEventRoutes = () => {
   return (
-    <Routes>
-      <Route
-        index
-        element={
-          <Suspense fallback={<Loader />}>
-            <CreateEvent />
-          </Suspense>
-        }
-      />
-      <Route path="/duration" element={<EventDuration />} />
-      <Route path="/invite-co-hosts" element={<InviteCoHosts />} />
-    </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route index element={<CreateEvent />} />
+        <Route path="/duration" element={<EventDuration />} />
+        <Route path="/invite-co-hosts" element={<InviteCoHosts />} />
+      </Routes>
+    </Suspense>
   );
 };
 
