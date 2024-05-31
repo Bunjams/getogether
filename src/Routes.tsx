@@ -2,7 +2,6 @@ import { PageLoader } from "components/Design/Loader/Loader";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
-import { NoEventPage } from "routes/AllProtectedRoutes";
 import OtpOutlet from "routes/OtpOutlet";
 import PrivateRoute from "routes/PrivateRoute";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
@@ -14,6 +13,7 @@ const Persona = lazy(() => import("pages/Persona"));
 const CreateEvent = lazy(() => import("routes/CreateEventRoutes"));
 const AllProtectedRoutes = lazy(() => import("routes/AllProtectedRoutes"));
 const MagicLink = lazy(() => import("components/MagicLink/MagicLink"));
+const NoEventPage = lazy(() => import("routes/AllProtectedRoutes"));
 
 const Routing = () => {
   return (
