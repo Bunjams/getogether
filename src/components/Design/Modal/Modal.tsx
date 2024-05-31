@@ -25,7 +25,7 @@ const Header = (props: HTMLAttributes<HTMLDivElement>) => {
     <div
       {...props}
       className={cx(
-        "flex flex-shrink-0 items-center justify-between border-0 border-b border-solid border-b-neutral-100 py-4 px-6 shadow-modal-header",
+        "flex flex-shrink-0 items-center justify-between border-0 border-b border-solid border-b-neutral-100 py-4 pl-6 pr-2 shadow-modal-header",
         props.className || ""
       )}
     />

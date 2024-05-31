@@ -4,6 +4,7 @@ import Button from "components/Design/Button/Button";
 import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
+import AddExpenseModal from "components/HostExpense/AddExpenseModal";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useModal } from "hooks/useModal";
 import { useParams } from "react-router-dom";
@@ -49,7 +50,7 @@ const ExpenseManager = () => {
           </PageLayout>
         </Async.Success>
       </Async.Root>
-      {/* <InviteModal isOpen={isOpen} close={close} /> */}
+      <AddExpenseModal isOpen={isOpen} close={close} />
     </AnimatedPage>
   );
 };
