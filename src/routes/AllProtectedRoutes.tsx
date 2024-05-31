@@ -3,13 +3,14 @@ import Loader, { PageLoader } from "components/Design/Loader/Loader";
 import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import SecondarySideBar from "components/SideBar/SecondarySideBar";
 import { AnimatePresence, motion } from "framer-motion";
-import ChatPage from "pages/ChatPage";
-import Home from "pages/Home";
 import { lazy, Suspense } from "react";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const GuestList = lazy(() => import("pages/GuestList"));
+const HostEventPage = lazy(() => import("pages/HostEventPage"));
+const ChatPage = lazy(() => import("pages/ChatPage"));
+const HostNoEventPage = lazy(() => import("pages/HostNoEventPage"));
 
 const sectionVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -34,7 +35,7 @@ export const NoEventPage = () => {
               <PrimarySideBar />
             </motion.aside>
             <Routes>
-              <Route index element={<Home />} />
+              <Route index element={<HostNoEventPage />} />
             </Routes>
           </AnimatePresence>
         </section>
@@ -87,7 +88,7 @@ const AllProtectedRoutes = () => {
           </AnimatePresence>
           <Suspense fallback={<PageLoader />}>
             <Routes location={location}>
-              <Route path="/home" element={<>Event pag {eventId}</>} />
+              <Route path="/home" element={<HostEventPage />} />
 
               <Route path="/chat" element={<ChatPage />} />
 

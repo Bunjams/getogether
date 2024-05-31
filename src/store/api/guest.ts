@@ -3,10 +3,13 @@ import { emptyApi } from "./emptyApi";
 
 export const userApi = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getGuestlist: builder.query<Guest[], { eventId: string }>({
-      query: ({ eventId }) => {
+    getGuestlist: builder.query<
+      Guest[],
+      { eventId: string; searchText?: string }
+    >({
+      query: ({ eventId, searchText }) => {
         return {
-          url: `events/${eventId}/rsvp/list/`,
+          url: `events/${eventId}/rsvp/list/?search_term=${searchText}`,
         };
       },
       providesTags: ["GUEST"],

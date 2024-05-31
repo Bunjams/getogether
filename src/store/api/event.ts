@@ -1,4 +1,4 @@
-import { AllEventResult, CreateEventResult } from "types/model/event";
+import { EventResult, CreateEventResult } from "types/model/event";
 import { User } from "types/model/user";
 import { emptyApi } from "./emptyApi";
 
@@ -12,13 +12,21 @@ export const userApi = emptyApi.injectEndpoints({
       },
     }),
 
-    getAllEevnts: builder.query<AllEventResult[], void>({
+    getAllEevnts: builder.query<EventResult[], void>({
       query: () => {
         return {
           url: "events/",
         };
       },
       providesTags: ["EVENTS"],
+    }),
+
+    getEventById: builder.query<EventResult, { eventId: string }>({
+      query: ({ eventId }) => {
+        return {
+          url: `events/${eventId}/`,
+        };
+      },
     }),
 
     addEvent: builder.mutation<
@@ -89,6 +97,7 @@ export const userApi = emptyApi.injectEndpoints({
 });
 export const {
   useGetAllEevntsQuery,
+  useGetEventByIdQuery,
   useAddEventMutation,
   useGetEevntTypesQuery,
   useUpdateEventMutation,

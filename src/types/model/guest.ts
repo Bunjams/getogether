@@ -1,6 +1,7 @@
 export type Guest = {
   email: string;
   message: string;
+  name: string;
   event: {
     uuid: string;
     primary_host: string;
@@ -12,8 +13,7 @@ export type Guest = {
   };
   event_id: string;
   uuid: string;
-  status: "ACCEPTED" | "INITIATED";
-  //TODO: ask vikas about more status type
+  status: "ACCEPTED" | "INITIATED" | "REJECTED" | "MAYBE";
 };
 
 export type InviteGuestResponse = {

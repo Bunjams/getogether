@@ -4,7 +4,7 @@ import useDocumentTitle from "hooks/useDocumentTitle";
 import { Link } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
 
-const Home = () => {
+const HostNoEventPage = () => {
   useDocumentTitle("Getogether");
 
   const sectionVariants = {
@@ -36,4 +36,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HostNoEventPage;

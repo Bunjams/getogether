@@ -43,15 +43,9 @@ const ChatPage = () => {
 
   if (!memoClient) return <Loader />;
 
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
-
   return (
     <AnimatedPage
-      variants={sectionVariants}
+      animation="fade"
       className="grid grid-flow-col w-full gap-2 pt-8 pl-10 overflow-auto"
     >
       <Chat client={memoClient}>
