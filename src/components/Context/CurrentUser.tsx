@@ -1,0 +1,40 @@
+import { createContext, ReactNode } from "react";
+import { useGetUserProfileQuery } from "store/api/userProfile";
+import { User } from "types/model/user";
+
+export const CurrentUserContext = createContext<{ user: User | undefined }>({
+  user: undefined,
+});
+
+const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
+  let user = JSON.parse(localStorage.getItem("authUser") || "{}") as User;
+
+  const { data } = useGetUserProfileQuery(
+    {},
+    { refetchOnMountOrArgChange: true, skip: !user.access }
+  );
+
+  const currentUser = data || {
+    first_name: "",
+    last_name: "",
+    mobile: null,
+    email: "",
+    profile_url: null,
+    uuid: "",
+    role: null,
+    refresh: [],
+    access: "",
+  };
+
+  return (
+    <CurrentUserContext.Provider
+      value={{
+        user: currentUser,
+      }}
+    >
+      {children}
+    </CurrentUserContext.Provider>
+  );
+};
+
+export default CurrentUserProvider;

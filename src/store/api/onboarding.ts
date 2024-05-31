@@ -29,20 +29,22 @@ export const onboardingApi = createApi({
       },
     }),
 
-    verifyOtp: builder.mutation<{ data: User }, { email: string; otp: string }>(
-      {
-        query: ({ email, otp }) => {
-          return {
-            url: "users/verify-profile/",
-            method: "POST",
-            body: {
-              email,
-              otp,
-            },
-          };
-        },
-      }
-    ),
+    verifyOtp: builder.mutation<
+      { data: User },
+      { email?: string; otp?: string; magicLinkHash?: string }
+    >({
+      query: ({ email, otp, magicLinkHash }) => {
+        return {
+          url: "users/verify-profile/",
+          method: "POST",
+          body: {
+            email,
+            otp,
+            payload: magicLinkHash,
+          },
+        };
+      },
+    }),
 
     resendOTP: builder.mutation<void, { email: string }>({
       query: ({ email }) => {

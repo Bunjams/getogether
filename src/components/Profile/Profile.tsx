@@ -1,8 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps } from "antd";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useGetUserProfileQuery } from "store/api/userProfile";
 
 const DropdownItem = ({
   title,
@@ -21,11 +21,8 @@ const DropdownItem = ({
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetUserProfileQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
-  const { profile_url, first_name, last_name, email = "" } = data || {};
+  const user = useCurrentUser();
+  const { profile_url, first_name, last_name, email = "" } = user || {};
 
   const signOut = () => {
     localStorage.removeItem("authUser");
@@ -70,7 +67,7 @@ const Profile = () => {
       menu={{ items }}
       placement="bottomLeft"
       trigger={["click"]}
-      disabled={isLoading}
+      disabled={!user}
     >
       <button className="all:unset cursor-pointer">
         {profile_url ? (

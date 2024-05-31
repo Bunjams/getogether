@@ -1,11 +1,12 @@
 import { Children, createContext, ReactNode, useContext } from "react";
-import Loader from "../Loader/Loader";
+import Loader, { PageLoader } from "../Loader/Loader";
 
 export type Rootprops = {
   children: ReactNode;
   isLoading: boolean;
   isSuccess: boolean;
   isEmpty: boolean;
+  loaderType?: "page" | "component";
 };
 
 const AsyncContext = createContext<Omit<Rootprops, "children">>({
@@ -14,7 +15,15 @@ const AsyncContext = createContext<Omit<Rootprops, "children">>({
   isEmpty: false,
 });
 
-const Root = ({ children, isLoading, isSuccess, isEmpty }: Rootprops) => {
+const Root = ({
+  children,
+  isLoading,
+  isSuccess,
+  isEmpty,
+  loaderType = "page",
+}: Rootprops) => {
+  const LoaderComponent = loaderType === "page" ? PageLoader : Loader;
+
   const Success = Children.toArray(children).filter(
     ({ type: { name } }: any) => name === "Success"
   )?.[0];
@@ -25,7 +34,7 @@ const Root = ({ children, isLoading, isSuccess, isEmpty }: Rootprops) => {
 
   return (
     <AsyncContext.Provider value={{ isLoading, isSuccess, isEmpty }}>
-      <>{isLoading ? <Loader /> : <>{children}</>}</>
+      <>{isLoading ? <LoaderComponent /> : <>{children}</>}</>
     </AsyncContext.Provider>
   );
 };

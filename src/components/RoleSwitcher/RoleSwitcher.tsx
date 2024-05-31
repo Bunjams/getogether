@@ -65,7 +65,6 @@ const MenuIcon = ({
 
 const RoleSwitcher = () => {
   const { data, isFetching } = useGetUserProfileQuery({});
-
   const { role: currentProfile } = data || {};
 
   const [onRoleUpdate, { isLoading }] = useUpdateRoleMutation();

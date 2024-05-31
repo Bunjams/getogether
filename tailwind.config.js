@@ -9,6 +9,10 @@ module.exports = {
       boxShadow: {
         "button-secondary": "0px 2px 0px 0px rgba(0, 0, 0, 0.02);",
       },
+      zIndex: {
+        "primary-sideBar": "1",
+        header: "2",
+      },
     },
     colors: {
       transparent: "transparent",
