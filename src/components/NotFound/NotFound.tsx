@@ -6,7 +6,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="flex items-center w-full justify-center flex-col gap-2 bg-neutral-0">
+    <section className="flex items-center w-full justify-center flex-col gap-2 bg-neutral-0 h-[calc(100vh-16px)]">
       <Result
         status="404"
         title="404"

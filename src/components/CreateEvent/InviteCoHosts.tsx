@@ -14,7 +14,7 @@ const EventConsole = () => {
 
   const onCreateEvent = async () => {
     try {
-      navigate("/");
+      navigate("/host");
     } catch (error) {
       console.error(error);
     }
@@ -30,7 +30,7 @@ const EventConsole = () => {
           <ArrowLeft />
           Go Back
         </button>
-        <Link to="/">
+        <Link to="/host">
           <Button size="small" typeof="submit">
             Skip for now
           </Button>

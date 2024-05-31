@@ -1,5 +1,5 @@
+import { useCurrentUserQuery } from "hooks/useCurrentUserQuery";
 import { createContext, ReactNode } from "react";
-import { useGetUserProfileQuery } from "store/api/userProfile";
 import { User } from "types/model/user";
 
 export const CurrentUserContext = createContext<{ user: User | undefined }>({
@@ -7,12 +7,7 @@ export const CurrentUserContext = createContext<{ user: User | undefined }>({
 });
 
 const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
-  let user = JSON.parse(localStorage.getItem("authUser") || "{}") as User;
-
-  const { data } = useGetUserProfileQuery(
-    {},
-    { refetchOnMountOrArgChange: true, skip: !user.access }
-  );
+  const { data } = useCurrentUserQuery();
 
   const currentUser = data || {
     first_name: "",

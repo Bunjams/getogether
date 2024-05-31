@@ -1,15 +1,9 @@
 import classNames from "classnames";
-import {
-  HandCoins,
-  Home,
-  ListChecks,
-  MessageSquareMore,
-  Users,
-} from "lucide-react";
-import { NavLink, NavLinkProps, useParams } from "react-router-dom";
+import { ReactNode } from "react";
+import { NavLink, NavLinkProps } from "react-router-dom";
 import Logo from "static/Image/Logo.svg";
 
-const NavMenu = ({
+export const NavMenu = ({
   children,
   icon,
   ...props
@@ -34,50 +28,20 @@ const NavMenu = ({
   );
 };
 
-const SecondarySideBar = () => {
-  const { eventId } = useParams<{ eventId: string }>();
-
+const SecondarySideBar = ({
+  children,
+  baseRoute,
+}: {
+  children: ReactNode;
+  baseRoute: string;
+}) => {
   return (
-    <nav className="bg-whitebase p-3 flex gap-4 flex-col w-64 h-[calc(100vh-16px)] overflow-y-auto">
-      <NavLink
-        to={`/event/${eventId}/home`}
-        className="py-1 flex items-center gap-1"
-      >
+    <nav className="shrink-0 bg-whitebase p-3 flex gap-4 flex-col w-64 h-[calc(100vh-16px)] overflow-y-auto">
+      <NavLink to={baseRoute} className="py-1 flex items-center gap-1">
         <img src={Logo} alt="getogether" loading="lazy" className="h-6 w-6" />
         <h4 className="text-red-600 font-bold text-h4">Getogether</h4>
       </NavLink>
-      <NavMenu
-        to={`/event/${eventId}/home`}
-        icon={<Home size={16} strokeWidth={2} color="currentColor" />}
-      >
-        Home
-      </NavMenu>
-      <NavMenu
-        to={`/event/${eventId}/chat`}
-        icon={
-          <MessageSquareMore size={16} strokeWidth={2} color="currentColor" />
-        }
-      >
-        Chat
-      </NavMenu>
-      <NavMenu
-        to={`/event/${eventId}/guest-list`}
-        icon={<ListChecks size={16} strokeWidth={2} color="currentColor" />}
-      >
-        Guest List
-      </NavMenu>
-      <NavMenu
-        to={`/event/${eventId}/vendors`}
-        icon={<Users size={16} strokeWidth={2} color="currentColor" />}
-      >
-        Vendors
-      </NavMenu>
-      <NavMenu
-        to={`/event/${eventId}/expense-manager`}
-        icon={<HandCoins size={16} strokeWidth={2} color="currentColor" />}
-      >
-        Expense Manager
-      </NavMenu>
+      {children}
     </nav>
   );
 };
