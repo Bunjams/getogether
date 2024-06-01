@@ -5,6 +5,11 @@ export const RSVP_STATUS_COLOR = {
   INITIATED: "orange",
 };
 
+export const CO_HOST_STATUS_COLOR = {
+  ACCEPTED: "green",
+  PENDING: "orange",
+};
+
 export const VENDOR_EVENT_STATUS_COLOR = {
   NOT_STARTED: "red",
   IN_PROGRESS: "orange",

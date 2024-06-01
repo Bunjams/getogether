@@ -45,4 +45,5 @@ export type EventCoHost = {
     is_primary_host: true;
     member: User;
   }[];
+  invited_team_members: { name: string; email: string }[];
 };
