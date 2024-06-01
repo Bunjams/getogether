@@ -6,7 +6,9 @@ import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import StatusCard from "components/Design/StatusCard/StatusCard";
 import GuestTable from "components/HostGuestList/GuestTable";
+import InviteGuest from "components/HostGuestList/InviteGuestModal";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { useModal } from "hooks/useModal";
 import { useParams } from "react-router-dom";
 import GuestListEmpty from "static/Image/GuestListEmpty.png";
 import { useGetGuestlistQuery } from "store/api/hostguest";
@@ -21,6 +23,7 @@ const GuestList = () => {
   } = useGetGuestlistQuery({ eventId }, { skip: !eventId });
 
   const isEmpty = data.length === 0;
+  const { close, isOpen, open } = useModal();
 
   const { accepted, declined, pending } = data.reduce(
     (acc, { status }) => {
@@ -43,7 +46,7 @@ const GuestList = () => {
           <EmptyScreen
             actionText="Invite"
             img={GuestListEmpty}
-            onClick={() => {}}
+            onClick={open}
             subtitle="Invite guests and get the party started"
             title="Send invites"
           />
@@ -53,7 +56,7 @@ const GuestList = () => {
             header={
               <Header
                 right={
-                  <Button type="primary" size="middle">
+                  <Button type="primary" size="middle" onClick={open}>
                     Invite
                   </Button>
                 }
@@ -77,6 +80,7 @@ const GuestList = () => {
           </PageLayout>
         </Async.Success>
       </Async.Root>
+      {isOpen && <InviteGuest isOpen={isOpen} close={close} />}
     </AnimatedPage>
   );
 };

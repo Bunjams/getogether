@@ -26,6 +26,7 @@ export const hostEvent = emptyApi.injectEndpoints({
           url: `events/${eventId}/`,
         };
       },
+      providesTags: ["HOST_EVENTS", "GUEST"],
     }),
 
     getEventTeam: builder.query<EventCoHost, { eventId: string }>({
