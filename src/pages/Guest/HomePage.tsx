@@ -11,14 +11,13 @@ import { CalendarHeart, Map, UsersRound } from "lucide-react";
 import { MapCard } from "pages/Host/EventHomePage";
 import { memo } from "react";
 import { useParams } from "react-router-dom";
-import { useGetEventByIdQuery } from "store/api/hostEvent";
+import { useGetEventByIdForGuestQuery } from "store/api/guest";
 
 const MemoMap = memo(MapCard);
 
 const HomePage = () => {
-  // TODO: Add guest api
   const { eventId = "" } = useParams<{ eventId: string }>();
-  const { data, isLoading, isSuccess } = useGetEventByIdQuery(
+  const { data, isLoading, isSuccess } = useGetEventByIdForGuestQuery(
     { eventId },
     { skip: !eventId }
   );
@@ -31,8 +30,8 @@ const HomePage = () => {
     venue,
     uuid,
     primary_host,
-    subevents = [],
     multi_event,
+    guest_subevents = [],
   } = data || {};
 
   useDocumentTitle(uuid ? `${type} - ${name}` : "Event");
@@ -103,7 +102,7 @@ const HomePage = () => {
                     )}
                     {multi_event && (
                       <div className="col-span-3 flex gap-3 flex-col">
-                        {subevents.map(
+                        {guest_subevents.map(
                           ({ name, end_date, start_date, uuid, venue }) => (
                             <SubEventCard
                               key={uuid}

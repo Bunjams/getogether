@@ -26,7 +26,7 @@ const Rating = ({ rating, vendorId }: { rating: number; vendorId: string }) => {
 
   const onChange = debounce(async (value: number) => {
     try {
-      addVendorRating({ eventId, rating: value, vendorId }).unwrap();
+      await addVendorRating({ eventId, rating: value, vendorId }).unwrap();
       success({ message: "Rating added successfully" });
     } catch (error) {
       alert({ message: (error as BackendError).data.error.message });

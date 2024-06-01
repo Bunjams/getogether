@@ -3,16 +3,15 @@ import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
-import { useGetAllEevntsQuery } from "store/api/hostEvent";
+import { useGetAllEventForGuestQuery } from "store/api/guest";
 import { setCurrentEventId } from "store/slices/currentEvent";
 
 const NoInvites = () => {
   useDocumentTitle("Getogether");
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data = [], isSuccess, isLoading } = useGetAllEevntsQuery();
+  const { data = [], isSuccess } = useGetAllEventForGuestQuery();
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -35,12 +34,12 @@ const NoInvites = () => {
       variants={sectionVariants}
       className="flex items-center w-full justify-center flex-col gap-2 pt-8 pr-[18px] pl-10"
     >
+      {/* TODO: fix this copy */}
       <EmptyScreen
         img={EventEmpty}
-        title="Get Started"
+        title="No Invitaion yet!"
         subtitle="Start by adding your first event."
-        actionText=" Create Event"
-        onClick={() => {}}
+        noAction
       />
     </AnimatedPage>
   );

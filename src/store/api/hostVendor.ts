@@ -64,7 +64,7 @@ export const hostVendor = emptyApi.injectEndpoints({
           url: `vendors/event/${eventId}/vendor/${vendorId}/`,
           method: "POST",
           body: {
-            rating,
+            rating: rating.toString(),
           },
         };
       },

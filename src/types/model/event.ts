@@ -48,3 +48,13 @@ export type EventCoHost = {
   }[];
   invited_team_members: { name: string; email: string }[];
 };
+
+export type GuestInitedEvent = {
+  guest_subevents?: {
+    uuid: string;
+    name: string;
+    venue: Venu;
+    start_date: string;
+    end_date: string;
+  }[];
+} & EventResult;

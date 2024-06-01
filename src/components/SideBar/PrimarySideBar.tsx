@@ -10,12 +10,19 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useGetAllEventForGuestQuery } from "store/api/guest";
 import { useGetAllEevntsQuery } from "store/api/hostEvent";
 import { setCurrentEventId } from "store/slices/currentEvent";
+import { EventResult } from "types/model/event";
 
-const EventList = () => {
+const EventList = ({
+  eventList: data,
+  isSuccess,
+}: {
+  eventList: EventResult[];
+  isSuccess: boolean;
+}) => {
   const { role } = useCurrentUser();
-  const { data = [], isSuccess } = useGetAllEevntsQuery();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { eventId: currentEventId } = useAppSelector(
@@ -73,27 +80,36 @@ const EventList = () => {
   );
 };
 
+const HostEventList = () => {
+  const { data = [], isSuccess } = useGetAllEevntsQuery();
+  return (
+    <>
+      <EventList eventList={data} isSuccess={isSuccess} />
+      <Link
+        to="/create-event"
+        className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10 sticky bottom-12"
+      >
+        <Tooltip placement="right" title="Create event">
+          <Plus size={40} strokeWidth={1.5} color="currentColor" />
+        </Tooltip>
+      </Link>
+    </>
+  );
+};
+
+const GuestEventList = () => {
+  const { data = [], isSuccess } = useGetAllEventForGuestQuery();
+  return <EventList eventList={data} isSuccess={isSuccess} />;
+};
+
 const EventListSection = () => {
   const { role } = useCurrentUser();
 
   switch (role) {
     case "HOST":
-      return (
-        <>
-          <EventList />
-          <Link
-            to="/create-event"
-            className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10 sticky bottom-12"
-          >
-            <Tooltip placement="right" title="Create event">
-              <Plus size={40} strokeWidth={1.5} color="currentColor" />
-            </Tooltip>
-          </Link>
-        </>
-      );
+      return <HostEventList />;
     case "GUEST":
-      // TODO: Add guest api
-      return <EventList />;
+      return <GuestEventList />;
 
     case "HOST":
       return null;

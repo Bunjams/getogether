@@ -1,43 +1,26 @@
-import { Guest, InviteGuestResponse } from "types/model/guest";
+import { EventResult, GuestInitedEvent } from "types/model/event";
 import { emptyApi } from "./emptyApi";
 
-export const hostGuest = emptyApi.injectEndpoints({
+export const guestAPI = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getGuestlist: builder.query<
-      Guest[],
-      { eventId: string; searchText?: string }
-    >({
-      query: ({ eventId, searchText }) => {
+    getAllEventForGuest: builder.query<EventResult[], void>({
+      query: () => {
         return {
-          url: `events/${eventId}/rsvp/list/?search_term=${searchText || ""}`,
+          url: `events/guest/`,
         };
       },
-      providesTags: ["GUEST"],
+      providesTags: ["GUEST_VIEW"],
     }),
 
-    inviteGuest: builder.mutation<
-      InviteGuestResponse,
-      {
-        eventId: string;
-        rsvp_invites: {
-          name: string;
-          email: string;
-          sub_event_ids: string[];
-          message: string;
-        }[];
-      }
-    >({
-      query: ({ eventId, rsvp_invites }) => {
+    getEventByIdForGuest: builder.query<GuestInitedEvent, { eventId: string }>({
+      query: ({ eventId }) => {
         return {
-          url: `events/${eventId}/rsvp/create/`,
-          method: "POST",
-          body: {
-            rsvp_invites: rsvp_invites,
-          },
+          url: `events/guest/${eventId}/`,
         };
       },
-      invalidatesTags: ["GUEST"],
+      providesTags: ["GUEST_VIEW"],
     }),
   }),
 });
-export const { useGetGuestlistQuery, useInviteGuestMutation } = hostGuest;
+export const { useGetAllEventForGuestQuery, useGetEventByIdForGuestQuery } =
+  guestAPI;
