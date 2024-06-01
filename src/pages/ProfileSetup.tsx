@@ -70,7 +70,7 @@ const ProfileSetup = () => {
             <Formik
               initialValues={{
                 name: user?.name || "",
-                profile_url: "",
+                profile_url: user?.profile_url || "",
                 mobile: "",
               }}
               onSubmit={handleAddUserData}
@@ -80,11 +80,12 @@ const ProfileSetup = () => {
                 submitForm,
                 handleChange,
                 setFieldValue,
-                values: { name },
+                values: { name, profile_url },
               }) => {
                 return (
                   <Form className="flex gap-4 flex-col">
                     <UploadAvatar
+                      src={profile_url}
                       acceptFileType={{
                         "image/*": [".png", ".jpeg", ".jpg", ".webp", ".avif"],
                       }}
