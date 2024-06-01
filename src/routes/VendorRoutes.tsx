@@ -1,33 +1,15 @@
 import { PageLoader } from "components/Design/Loader/Loader";
 import VendorNavigation from "components/Navigation/VendorNavigation";
-import { AnimatePresence, motion } from "framer-motion";
 import Home from "pages/Vendor/Home";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
 
-const sectionVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -50 },
-};
-
 const VendorRoutes = () => {
   return (
     <section className="flex w-full">
-      <AnimatePresence mode="wait">
-        <motion.aside
-          className="flex"
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={sectionVariants}
-          transition={{ duration: 0.5 }}
-        >
-          <VendorNavigation />
-        </motion.aside>
-      </AnimatePresence>
+      <VendorNavigation />
       <Suspense
         fallback={
           <section className="flex items-center w-full justify-center">

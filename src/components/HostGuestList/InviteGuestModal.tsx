@@ -50,8 +50,7 @@ const GuestCard = ({ title, index }: { title: string; index: number }) => {
     );
   };
 
-  const { subevents = [] } = data || {};
-  const noSubevents = subevents?.length === 0;
+  const { subevents = [], multi_event: noSubevents } = data || {};
 
   const options = subevents?.map(({ name, uuid }) => ({
     label: name,
@@ -162,8 +161,7 @@ const InviteGuest = ({ isOpen, close }: ModalProps) => {
   const [inviteGuest] = useInviteGuestMutation();
 
   const { data } = useGetEventByIdQuery({ eventId }, { skip: !eventId });
-  const { subevents = [] } = data || {};
-  const noSubevents = subevents?.length === 0;
+  const { multi_event: noSubevents } = data || {};
 
   const onSubmit = async ({ rsvp_invites }: Pick<Invite, "rsvp_invites">) => {
     try {

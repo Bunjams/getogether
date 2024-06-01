@@ -26,6 +26,7 @@ export type EventResult = {
   start_date: string;
   end_date: string;
   type: string;
+  multi_event: boolean;
   guests_info: {
     invited_count: number;
     accepted_count: number;
@@ -46,4 +47,23 @@ export type EventCoHost = {
     member: User;
   }[];
   invited_team_members: { name: string; email: string }[];
+};
+
+export type GuestInitedEvent = {
+  guest_subevents?: {
+    uuid: string;
+    name: string;
+    venue: Venu;
+    start_date: string;
+    end_date: string;
+  }[];
+} & EventResult;
+
+export type GuestInviteMagicLinkResponse = {
+  email: string;
+  message: string;
+  event: EventResult;
+  event_id: string;
+  uuid: string;
+  status: "ACCEPTED" | "INITIATED" | "REJECTED" | "MAYBE";
 };

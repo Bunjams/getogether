@@ -19,6 +19,9 @@ const MagicLink = lazy(() => import("components/MagicLink/MagicLink"));
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const VendorRoutes = lazy(() => import("routes/VendorRoutes"));
 const HostNoEventPage = lazy(() => import("pages/Host/HostNoEventPage"));
+const GuestRoutes = lazy(() => import("routes/GuestRoutes"));
+const NoInvites = lazy(() => import("pages/Guest/NoInvites"));
+const MagicInvite = lazy(() => import("components/MagicInvite/MagicInvite"));
 
 const RedirectToRoleBasedRoute = () => {
   const { data, isSuccess } = useCurrentUserQuery();
@@ -83,6 +86,26 @@ const VendorProtected = () => {
   }
 };
 
+const GuestProtected = () => {
+  const { data, isSuccess } = useCurrentUserQuery();
+  const { role } = data || {};
+
+  if (!isSuccess) {
+    return null;
+  }
+
+  switch (role) {
+    case "GUEST":
+      return <Outlet />;
+    case "HOST":
+      return <Navigate to="/host" />;
+    case "VENDOR":
+      return <Navigate to="/vendor" />;
+    default:
+      return <Navigate to="/login" />;
+  }
+};
+
 const Layout = () => {
   return (
     <CurrentUserProvider>
@@ -94,6 +117,12 @@ const Layout = () => {
             <Route element={<HostProtected />} errorElement={<ErrorPage />}>
               <Route path="/host" element={<HostNoEventPage />} />
               <Route path="/host/:eventId/*" element={<HostRoutes />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+
+            <Route element={<GuestProtected />} errorElement={<ErrorPage />}>
+              <Route path="/guest" element={<NoInvites />} />
+              <Route path="/guest/:eventId/*" element={<GuestRoutes />} />
               <Route path="*" element={<NotFound />} />
             </Route>
 
@@ -129,6 +158,7 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/magic-link" element={<MagicLink />} />
+        <Route path="/magic-invite" element={<MagicInvite />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

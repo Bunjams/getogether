@@ -1,7 +1,14 @@
 import classNames from "classnames";
+import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import Logo from "static/Image/Logo.svg";
+
+const sectionVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -50 },
+};
 
 export const NavMenu = ({
   children,
@@ -9,22 +16,33 @@ export const NavMenu = ({
   ...props
 }: NavLinkProps & { icon: JSX.Element }) => {
   return (
-    <NavLink
-      {...props}
-      className={({ isActive }) =>
-        classNames(
-          "flex gap-2 items-center px-4 py-1 rounded border-l-4 transform transition duration-300 ease-in-out",
-          {
-            "bg-neutral-0 text-red-600 text-body-bold border-red-400": isActive,
-            "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent hover:bg-neutral-0":
-              !isActive,
+    <AnimatePresence>
+      <motion.aside
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={sectionVariants}
+        transition={{ duration: 0.5 }}
+      >
+        <NavLink
+          {...props}
+          className={({ isActive }) =>
+            classNames(
+              "flex gap-2 items-center px-4 py-1 rounded border-l-4 transform transition duration-300 ease-in-out",
+              {
+                "bg-neutral-0 text-red-600 text-body-bold border-red-400":
+                  isActive,
+                "bg-whitebase text-body-regular font-medium text-neutral-700 border-transparent hover:bg-neutral-0":
+                  !isActive,
+              }
+            )
           }
-        )
-      }
-    >
-      <span className="shrink-0">{icon}</span>
-      <>{children}</>
-    </NavLink>
+        >
+          <span className="shrink-0">{icon}</span>
+          <>{children}</>
+        </NavLink>
+      </motion.aside>
+    </AnimatePresence>
   );
 };
 

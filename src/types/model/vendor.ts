@@ -20,4 +20,5 @@ export type InvitedVendor = {
   services: VendorService[];
   rating: number;
   channel_utl: string | null;
+  vendor_id?: string;
 };

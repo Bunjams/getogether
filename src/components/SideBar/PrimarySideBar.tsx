@@ -10,11 +10,19 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useGetAllEventForGuestQuery } from "store/api/guest";
 import { useGetAllEevntsQuery } from "store/api/hostEvent";
 import { setCurrentEventId } from "store/slices/currentEvent";
+import { EventResult } from "types/model/event";
 
-const EventList = () => {
-  const { data = [], isSuccess } = useGetAllEevntsQuery();
+const EventList = ({
+  eventList: data,
+  isSuccess,
+}: {
+  eventList: EventResult[];
+  isSuccess: boolean;
+}) => {
+  const { role } = useCurrentUser();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { eventId: currentEventId } = useAppSelector(
@@ -31,7 +39,14 @@ const EventList = () => {
 
   const onClick = ({ uuid }: { uuid: string }) => {
     dispatch(setCurrentEventId(uuid));
-    navigate(`/host/${uuid}/home`, {});
+    if (role === "HOST") {
+      navigate(`/host/${uuid}/home`, {});
+      return;
+    }
+    if (role === "GUEST") {
+      navigate(`/guest/${uuid}/home`, {});
+      return;
+    }
   };
 
   if (!isSuccess) {
@@ -65,6 +80,45 @@ const EventList = () => {
   );
 };
 
+const HostEventList = () => {
+  const { data = [], isSuccess } = useGetAllEevntsQuery();
+  return (
+    <>
+      <EventList eventList={data} isSuccess={isSuccess} />
+      <Link
+        to="/create-event"
+        className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10 sticky bottom-12"
+      >
+        <Tooltip placement="right" title="Create event">
+          <Plus size={40} strokeWidth={1.5} color="currentColor" />
+        </Tooltip>
+      </Link>
+    </>
+  );
+};
+
+const GuestEventList = () => {
+  const { data = [], isSuccess } = useGetAllEventForGuestQuery();
+  return <EventList eventList={data} isSuccess={isSuccess} />;
+};
+
+const EventListSection = () => {
+  const { role } = useCurrentUser();
+
+  switch (role) {
+    case "HOST":
+      return <HostEventList />;
+    case "GUEST":
+      return <GuestEventList />;
+
+    case "HOST":
+      return null;
+
+    default:
+      return null;
+  }
+};
+
 const PrimarySideBar = () => {
   const { role } = useCurrentUser();
 
@@ -73,7 +127,6 @@ const PrimarySideBar = () => {
     visible: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -100 },
   };
-  const text = <span>prompt text</span>;
 
   return (
     <nav className="shrink-0 bg-red-400 pr-3 pl-1  items-center  flex flex-col justify-between z-primary-sideBar overflow-y-auto">
@@ -82,7 +135,7 @@ const PrimarySideBar = () => {
           <RoleSwitcher />
         </div>
         <AnimatePresence>
-          {role === "HOST" && (
+          {role !== "VENDOR" && (
             <motion.div
               className="flex flex-col items-center gap-4 pb-2"
               initial="hidden"
@@ -95,15 +148,7 @@ const PrimarySideBar = () => {
                 className="mt-4 mb-1 bg-whitebase"
                 style={{ height: "2px" }}
               />
-              <EventList />
-              <Link
-                to="/create-event"
-                className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10 sticky bottom-12"
-              >
-                <Tooltip placement="right" title="Create event">
-                  <Plus size={40} strokeWidth={1.5} color="currentColor" />
-                </Tooltip>
-              </Link>
+              <EventListSection />
             </motion.div>
           )}
         </AnimatePresence>

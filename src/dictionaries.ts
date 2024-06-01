@@ -16,6 +16,11 @@ export const VENDOR_EVENT_STATUS_COLOR = {
   COMPLETED: "green",
 };
 
+export const VENDOR_EVENT_INVITE_STATUS_COLOR = {
+  INVITED: "orange",
+  JOINED: "green",
+};
+
 export const EVENT_IMG_LINK = {
   WEDDING:
     "https://images.unsplash.com/photo-1621801306185-8c0ccf9c8eb8?q=80&w=6270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

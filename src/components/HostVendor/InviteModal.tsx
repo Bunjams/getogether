@@ -155,7 +155,7 @@ const InviteModal = ({ isOpen, close }: ModalProps) => {
         eventId,
         serviceIds: service,
       }).unwrap();
-      success({ message: "Co-host invited" });
+      success({ message: "Vendor invitation sent" });
       close();
     } catch (error) {
       alert({ message: (error as BackendError).data.error.message });

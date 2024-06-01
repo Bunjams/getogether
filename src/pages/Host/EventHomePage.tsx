@@ -2,7 +2,9 @@ import { Avatar } from "antd";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import Button from "components/Design/Button/Button";
+import EventInfoCard from "components/Design/EventInfoCard/EventInfoCard";
 import PageLayout from "components/Design/PageLayout/PageLayout";
+import SubEventCard from "components/Design/SubEventCard/SubEventCard";
 import Tag from "components/Design/Tag/Tag";
 import dayjs from "dayjs";
 import { CO_HOST_STATUS_COLOR, EVENT_IMG_LINK } from "dictionaries";
@@ -22,32 +24,6 @@ import InviteCoHost from "./InviteCoHost";
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0 },
-};
-
-const DetailsItem = ({
-  icon,
-  title,
-  subtitle,
-}: {
-  title: ReactNode;
-  subtitle: ReactNode;
-  icon: ReactNode;
-}) => {
-  return (
-    <motion.div
-      className="flex gap-2 items-center bg-whitebase rounded-lg p-3"
-      initial="hidden"
-      animate="visible"
-      variants={sectionVariants}
-      transition={{ duration: 0.5 }}
-    >
-      {icon}
-      <div>
-        <div className="text-h4 text-neutral-900">{title}</div>
-        <div className="text-body-regular text-neutral-500">{subtitle}</div>
-      </div>
-    </motion.div>
-  );
 };
 
 const Cohost = ({
@@ -83,7 +59,7 @@ const Cohost = ({
   );
 };
 
-const MapCard = () => {
+export const MapCard = () => {
   return (
     <div className="h-96 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
       <iframe
@@ -110,7 +86,7 @@ const TeamList = () => {
     <div className="rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
       <div className="flex justify-between">
         <h3 className="text-h5-medium text-neutral-900">Team</h3>
-        <Button type="primary" size="small" onClick={open}>
+        <Button type="primary" size="middle" onClick={open}>
           Invite
         </Button>
       </div>
@@ -170,11 +146,21 @@ const EventHomePage = () => {
     { skip: !eventId }
   );
 
-  const { type, name, end_date, start_date, venue, uuid, guests_info } =
-    data || {};
+  const {
+    type,
+    name,
+    end_date,
+    start_date,
+    venue,
+    uuid,
+    guests_info,
+    subevents = [],
+    multi_event,
+    primary_host,
+  } = data || {};
 
   const { accepted_count, invited_count } = guests_info || {};
-  useDocumentTitle(uuid ? `${type}-${name}` : "Event");
+  useDocumentTitle(uuid ? `${type} - ${name}` : "Event");
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
@@ -204,21 +190,23 @@ const EventHomePage = () => {
                     className="grid grid-cols-3 justify-between gap-4"
                     key={uuid}
                   >
-                    <DetailsItem
-                      icon={
-                        <span className="text-red-600 p-2.5 bg-red-100 rounded-lg">
-                          <CalendarHeart size={32} color="currentColor" />
-                        </span>
-                      }
-                      title={<>{dayjs(start_date).format("dddd")}</>}
-                      subtitle={
-                        <>
-                          {dayjs(start_date).format("DD-MMM-YYYY")} -
-                          {dayjs(end_date).format("DD-MMM-YYYY")}
-                        </>
-                      }
-                    />
-                    <DetailsItem
+                    {!multi_event && (
+                      <EventInfoCard
+                        icon={
+                          <span className="text-red-600 p-2.5 bg-red-100 rounded-lg">
+                            <CalendarHeart size={32} color="currentColor" />
+                          </span>
+                        }
+                        title={<>{dayjs(start_date).format("dddd")}</>}
+                        subtitle={
+                          <>
+                            {dayjs(start_date).format("DD-MMM-YYYY")} -
+                            {dayjs(end_date).format("DD-MMM-YYYY")}
+                          </>
+                        }
+                      />
+                    )}
+                    <EventInfoCard
                       icon={
                         <span className="text-green-600 p-2.5 bg-green-100 rounded-lg">
                           <UsersRound size={32} color="currentColor" />
@@ -228,15 +216,38 @@ const EventHomePage = () => {
                       subtitle={<>{accepted_count || 0} accepted</>}
                     />
 
-                    <DetailsItem
-                      icon={
-                        <span className="text-blue-600 p-2.5 bg-blue-100 rounded-lg">
-                          <Map size={32} color="currentColor" />
-                        </span>
-                      }
-                      title="Venue"
-                      subtitle={venue?.name}
-                    />
+                    {!multi_event && (
+                      <EventInfoCard
+                        icon={
+                          <span className="text-blue-600 p-2.5 bg-blue-100 rounded-lg">
+                            <Map size={32} color="currentColor" />
+                          </span>
+                        }
+                        title="Venue"
+                        subtitle={venue?.name}
+                      />
+                    )}
+                    {multi_event && (
+                      <div className="col-span-3 flex gap-3 flex-col">
+                        {subevents.map(
+                          ({ name, end_date, start_date, uuid, venue }) => (
+                            <SubEventCard
+                              key={uuid}
+                              date={
+                                <>
+                                  {dayjs(start_date).format("dddd")} -{" "}
+                                  {dayjs(start_date).format("DD-MMM-YYYY")} -{" "}
+                                  {""}
+                                  {dayjs(end_date).format("DD-MMM-YYYY")}
+                                </>
+                              }
+                              name={name}
+                              venue={venue.name}
+                            />
+                          )
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
