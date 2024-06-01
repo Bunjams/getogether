@@ -5,7 +5,7 @@ import useDocumentTitle from "hooks/useDocumentTitle";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
-import { useGetAllEevntsQuery } from "store/api/event";
+import { useGetAllEevntsQuery } from "store/api/hostEvent";
 import { setCurrentEventId } from "store/slices/currentEvent";
 
 const HostNoEventPage = () => {

@@ -1,7 +1,7 @@
 import { CreateEventResult, EventCoHost, EventResult } from "types/model/event";
 import { emptyApi } from "./emptyApi";
 
-export const userApi = emptyApi.injectEndpoints({
+export const hostEvent = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
     getEevntTypes: builder.query<string[], void>({
       query: () => {
@@ -17,7 +17,7 @@ export const userApi = emptyApi.injectEndpoints({
           url: "events/",
         };
       },
-      providesTags: ["EVENTS"],
+      providesTags: ["HOST_EVENTS"],
     }),
 
     getEventById: builder.query<EventResult, { eventId: string }>({
@@ -34,7 +34,7 @@ export const userApi = emptyApi.injectEndpoints({
           url: `events/${eventId}/team/`,
         };
       },
-      providesTags: ["EVENTS"],
+      providesTags: ["HOST_EVENTS"],
     }),
 
     inviteCoHost: builder.mutation<
@@ -51,7 +51,7 @@ export const userApi = emptyApi.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ["EVENTS"],
+      invalidatesTags: ["HOST_EVENTS"],
     }),
 
     addEvent: builder.mutation<
@@ -116,7 +116,7 @@ export const userApi = emptyApi.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ["EVENTS"],
+      invalidatesTags: ["HOST_EVENTS"],
     }),
   }),
 });
@@ -128,4 +128,4 @@ export const {
   useUpdateEventMutation,
   useInviteCoHostMutation,
   useGetEventTeamQuery,
-} = userApi;
+} = hostEvent;

@@ -1,39 +1,23 @@
 import classNames from "classnames";
+import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
+import Async from "components/Design/Async/Async";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import TextArea from "components/Design/TextArea/TextArea";
 import { Form, Formik, useFormikContext } from "formik";
+import { motion } from "framer-motion";
+import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep1.png";
-import { AnimatePresence, motion } from "framer-motion";
-import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
-import useDocumentTitle from "hooks/useDocumentTitle";
-import { useAddEventMutation, useGetEevntTypesQuery } from "store/api/event";
+import {
+  useAddEventMutation,
+  useGetEevntTypesQuery,
+} from "store/api/hostEvent";
 import { BackendError } from "types/utils/backendError";
 import { object, string } from "yup";
-import Async from "components/Design/Async/Async";
-
-// const eventList = [
-//   "WEDDING",
-//   "PARTY",
-//   "BIRTHDAY",
-//   "SEMINAR",
-//   "CONCERT",
-//   "STANDUP",
-//   "ENGAGEMENT",
-//   "OFFICE EVENT",
-//   "DINNER",
-//   "LUNCH",
-//   "BREAKFAST",
-//   "MIXER",
-//   "MEETUP",
-//   "CONFERENCE",
-//   "WORKSHOP",
-//   "TRAINING",
-// ];
 
 type Event = { eventType: string; eventName: string; venue: string };
 

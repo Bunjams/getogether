@@ -8,6 +8,11 @@ export type User = {
   role: "HOST" | "VENDOR" | "GUEST" | null;
   refresh: string[];
   access: string;
+  member: {
+    uuid: string;
+    access_token: string;
+    member_id: string;
+  };
 };
 
 // Example of a user object

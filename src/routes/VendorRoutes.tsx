@@ -5,6 +5,7 @@ import Home from "pages/Vendor/Home";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
+const ChatPage = lazy(() => import("pages/ChatPage"));
 
 const sectionVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -45,15 +46,7 @@ const VendorRoutes = () => {
             }
           />
           <Route path="/event" element={<>event</>} />
-          <Route
-            path="/chat"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                chat
-              </section>
-            }
-          />
+          <Route path="/chat" element={<ChatPage />} />
           <Route
             path="/services"
             element={

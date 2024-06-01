@@ -5,22 +5,24 @@ import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import InviteModal from "components/HostVendor/InviteModal";
+import VendorTable from "components/HostVendor/VendorTable";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useModal } from "hooks/useModal";
 import { useParams } from "react-router-dom";
 import VendorListEmpty from "static/Image/VendorListEmpty.png";
+import { useGetInvitedVendorsQuery } from "store/api/hostVendor";
 
 const VendorList = () => {
   useDocumentTitle("Vendors");
   const { eventId = "" } = useParams<{ eventId: string }>();
+  const {
+    data = [],
+    isLoading,
+    isSuccess,
+  } = useGetInvitedVendorsQuery({ eventId }, { skip: !eventId });
 
   const { close, isOpen, open } = useModal();
-
-  const { isEmpty, isLoading, isSuccess } = {
-    isEmpty: true,
-    isLoading: false,
-    isSuccess: true,
-  };
+  const isEmpty = data.length === 0;
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
@@ -47,7 +49,7 @@ const VendorList = () => {
               />
             }
           >
-            <></>
+            <VendorTable />
           </PageLayout>
         </Async.Success>
       </Async.Root>

@@ -5,7 +5,7 @@ import { ErrorMessage, Form, Formik } from "formik";
 import { coHostInviteValidation } from "FormSchema/coHostInvite";
 import { useToast } from "hooks/useNotification";
 import { useParams } from "react-router-dom";
-import { useInviteCoHostMutation } from "store/api/event";
+import { useInviteCoHostMutation } from "store/api/hostEvent";
 import { BackendError } from "types/utils/backendError";
 import { ModalProps } from "types/utils/modal";
 

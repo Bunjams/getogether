@@ -9,7 +9,7 @@ import { useToast } from "hooks/useNotification";
 import { ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep3.png";
-import { useInviteCoHostMutation } from "store/api/event";
+import { useInviteCoHostMutation } from "store/api/hostEvent";
 import { BackendError } from "types/utils/backendError";
 
 const EventConsole = () => {

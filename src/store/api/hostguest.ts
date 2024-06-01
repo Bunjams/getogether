@@ -1,7 +1,7 @@
 import { Guest, InviteGuestResponse } from "types/model/guest";
 import { emptyApi } from "./emptyApi";
 
-export const userApi = emptyApi.injectEndpoints({
+export const hostGuest = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
     getGuestlist: builder.query<
       Guest[],
@@ -9,7 +9,7 @@ export const userApi = emptyApi.injectEndpoints({
     >({
       query: ({ eventId, searchText }) => {
         return {
-          url: `events/${eventId}/rsvp/list/?search_term=${searchText}`,
+          url: `events/${eventId}/rsvp/list/?search_term=${searchText || ""}`,
         };
       },
       providesTags: ["GUEST"],
@@ -39,4 +39,4 @@ export const userApi = emptyApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetGuestlistQuery } = userApi;
+export const { useGetGuestlistQuery } = hostGuest;

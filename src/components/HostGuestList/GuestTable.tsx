@@ -7,7 +7,7 @@ import { RSVP_STATUS_COLOR } from "dictionaries";
 import { Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetGuestlistQuery } from "store/api/guest";
+import { useGetGuestlistQuery } from "store/api/hostguest";
 import { Guest } from "types/model/guest";
 import { debounce } from "utils/debouncing";
 
@@ -24,23 +24,26 @@ const GuestTable = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      width: "30%",
       render: (text) => text || "-",
     },
     {
       title: "Contact details",
       dataIndex: "email",
       key: "email",
+      width: "50%",
       render: (text) => text || "-",
     },
     {
       title: "Status",
       key: "status",
       dataIndex: "status",
+      width: "20%",
       render: (text) => (
         <Tag
           tagColor={RSVP_STATUS_COLOR[text as keyof typeof RSVP_STATUS_COLOR]}
         >
-          {text.toUpperCase()}
+          <div className="lowercase first-letter:uppercase ">{text}</div>
         </Tag>
       ),
     },

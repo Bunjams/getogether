@@ -10,7 +10,7 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetAllEevntsQuery } from "store/api/event";
+import { useGetAllEevntsQuery } from "store/api/hostEvent";
 import { setCurrentEventId } from "store/slices/currentEvent";
 
 const EventList = () => {
@@ -47,9 +47,9 @@ const EventList = () => {
           <Tooltip placement="right" title={name}>
             <Avatar
               src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
-              className={classNames("!border-solid !border-4 h-10 w-10", {
-                "!border-orange-300 scale-110": currentEventId === uuid,
-                "!border-red-300": currentEventId !== uuid,
+              className={classNames("h-10 w-10", {
+                "!border-green-100 !border-solid !border-4":
+                  currentEventId === uuid,
               })}
             />
           </Tooltip>

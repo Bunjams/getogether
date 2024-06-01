@@ -17,7 +17,10 @@ import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import randomBytes from "randombytes";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep2.png";
-import { useGetEventByIdQuery, useUpdateEventMutation } from "store/api/event";
+import {
+  useGetEventByIdQuery,
+  useUpdateEventMutation,
+} from "store/api/hostEvent";
 import { BackendError } from "types/utils/backendError";
 
 type EventType = {

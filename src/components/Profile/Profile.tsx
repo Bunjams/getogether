@@ -1,6 +1,6 @@
-import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps } from "antd";
 import { useCurrentUser } from "hooks/useCurrentUser";
+import { useRandomProfile } from "hooks/useRandomProfile";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +23,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const user = useCurrentUser();
   const { profile_url, first_name, last_name, email = "" } = user || {};
+  const profileUrl = useRandomProfile();
 
   const signOut = () => {
     localStorage.removeItem("authUser");
@@ -37,13 +38,7 @@ const Profile = () => {
       ),
       icon: (
         <span className="ml-2">
-          {profile_url ? (
-            <Avatar size="large" shape="circle" src={profile_url} />
-          ) : (
-            <div className="text-red-400 bg-neutral-0 rounded-full flex items-center justify-center h-10 w-10">
-              <UserOutlined size={40} color="currentColor" />
-            </div>
-          )}
+          <Avatar size="large" shape="circle" src={profile_url || profileUrl} />
         </span>
       ),
     },
@@ -70,13 +65,7 @@ const Profile = () => {
       disabled={!user}
     >
       <button className="all:unset cursor-pointer">
-        {profile_url ? (
-          <Avatar size={40} shape="circle" src={profile_url} />
-        ) : (
-          <div className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10">
-            <UserOutlined size={40} color="currentColor" />
-          </div>
-        )}
+        <Avatar size={40} shape="circle" src={profile_url || profileUrl} />
       </button>
     </Dropdown>
   );

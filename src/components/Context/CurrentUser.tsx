@@ -19,6 +19,11 @@ const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     role: null,
     refresh: [],
     access: "",
+    member: {
+      member_id: "",
+      access_token: "",
+      uuid: "",
+    },
   };
 
   return (

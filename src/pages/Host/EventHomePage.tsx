@@ -8,10 +8,14 @@ import { EVENT_IMG_LINK } from "dictionaries";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useModal } from "hooks/useModal";
+import { useRandomProfile } from "hooks/useRandomProfile";
 import { CalendarHeart, Map, UsersRound } from "lucide-react";
 import { memo, ReactNode } from "react";
 import { useParams } from "react-router-dom";
-import { useGetEventByIdQuery, useGetEventTeamQuery } from "store/api/event";
+import {
+  useGetEventByIdQuery,
+  useGetEventTeamQuery,
+} from "store/api/hostEvent";
 import InviteCoHost from "./InviteCoHost";
 
 const sectionVariants = {
@@ -86,13 +90,14 @@ const MapCard = () => {
 
 const TeamList = () => {
   const { eventId = "" } = useParams<{ eventId: string }>();
+  const profileUrl = useRandomProfile();
 
   const { data: coHost } = useGetEventTeamQuery(
     { eventId },
     { skip: !eventId }
   );
-  const { team = [] } = coHost || {};
 
+  const { team = [] } = coHost || {};
   const { close, isOpen, open } = useModal();
 
   return (
@@ -115,7 +120,7 @@ const TeamList = () => {
                 <Avatar
                   shape="circle"
                   size={44}
-                  src={profile_url || `https://robohash.org/${first_name}.png`}
+                  src={profile_url || profileUrl}
                 />
               }
               title={`${first_name} ${last_name}`}

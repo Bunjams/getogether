@@ -8,7 +8,7 @@ import { Form, Formik, useFormikContext } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
-import { Suspense, lazy, memo } from "react";
+import { lazy, memo, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfileSetup from "static/Image/UserProfileSetup.jpg";
 import { useUpdateRoleMutation } from "store/api/userProfile";
@@ -24,7 +24,15 @@ type FieldType = {
   persona: "HOST" | "VENDOR" | "GUEST";
 };
 
-const PersonaCard = ({ personaType }: { personaType: "HOST" | "VENDOR" }) => {
+const PersonaCard = ({
+  personaType,
+  title,
+  discription,
+}: {
+  personaType: "HOST" | "VENDOR";
+  title: string;
+  discription: string;
+}) => {
   const { values, setFieldValue } = useFormikContext<FieldType>();
   const { persona } = values;
 
@@ -44,10 +52,8 @@ const PersonaCard = ({ personaType }: { personaType: "HOST" | "VENDOR" }) => {
       )}
       htmlFor={personaType}
     >
-      <h4 className="text-h4 text-neutral-900">Organize an event</h4>
-      <p className="text-body-regular text-neutral-500">
-        Host events, invite guests and keep everything on track
-      </p>
+      <h4 className="text-h4 text-neutral-900">{title}</h4>
+      <p className="text-body-regular text-neutral-500">{discription}</p>
       <Input
         type="radio"
         className="hidden"
@@ -92,8 +98,16 @@ const Persona = () => {
               {({ isSubmitting, submitForm }) => {
                 return (
                   <Form className="all:unset flex gap-4 flex-col">
-                    <PersonaCard personaType="HOST" />
-                    <PersonaCard personaType="VENDOR" />
+                    <PersonaCard
+                      personaType="HOST"
+                      title="Organize an event"
+                      discription="Host events, invite guests and keep everything on track"
+                    />
+                    <PersonaCard
+                      personaType="VENDOR"
+                      title="Provide Services"
+                      discription="Provide services and keep track of all your events"
+                    />
 
                     <Button
                       size="large"

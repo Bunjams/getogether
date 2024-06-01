@@ -116,7 +116,7 @@ const baseQuery: BaseQueryFn<
 };
 
 export const emptyApi = createApi({
-  tagTypes: ["USER_PROFILE", "EVENTS", "GUEST"],
+  tagTypes: ["USER_PROFILE", "HOST_EVENTS", "HOST_VENODRS", "GUEST"],
   baseQuery: baseQuery,
   endpoints: () => ({}),
 });

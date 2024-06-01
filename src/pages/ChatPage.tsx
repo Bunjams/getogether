@@ -1,5 +1,8 @@
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
+import Async from "components/Design/Async/Async";
+import Header from "components/Design/Header/Header";
 import Loader from "components/Design/Loader/Loader";
+import PageLayout from "components/Design/PageLayout/PageLayout";
 import { useStreamClient } from "hooks/useStreamClient";
 import React from "react";
 import {
@@ -44,27 +47,39 @@ const ChatPage = () => {
   if (!memoClient) return <Loader />;
 
   return (
-    <AnimatedPage
-      animation="fade"
-      className="grid grid-flow-col w-full gap-2 pt-8 pl-10 overflow-auto"
-    >
-      <Chat client={memoClient}>
-        <ChannelList />
-        <section className="grid grid-flow-col w-full gap-2 overflow-auto h-[calc(100vh-64px)]">
-          <Channel>
-            <Window>
-              <span className="sticky top-0 z-50">
-                <ChannelHeader />
-              </span>
-              <MessageList />
-              <span className="sticky bottom-0 z-50">
-                <MessageInput />
-              </span>
-            </Window>
-            <Thread />
-          </Channel>
-        </section>
-      </Chat>
+    <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
+      <Async.Root
+        isEmpty={false}
+        isLoading={!memoClient}
+        isSuccess={Boolean(memoClient)}
+      >
+        <Async.Empty>
+          <></>
+        </Async.Empty>
+        <Async.Success>
+          <PageLayout header={<Header title="Chat" />}>
+            <section className="grid grid-flow-col w-full gap-2 overflow-auto h-[calc(100vh-140px)]">
+              <Chat client={memoClient}>
+                <ChannelList />
+                <section className="grid grid-flow-col w-full gap-2 overflow-auto ">
+                  <Channel>
+                    <Window>
+                      <span className="sticky top-0 z-50">
+                        <ChannelHeader />
+                      </span>
+                      <MessageList />
+                      <span className="sticky bottom-0 z-50">
+                        <MessageInput />
+                      </span>
+                    </Window>
+                    <Thread />
+                  </Channel>
+                </section>
+              </Chat>
+            </section>
+          </PageLayout>
+        </Async.Success>
+      </Async.Root>
     </AnimatedPage>
   );
 };
