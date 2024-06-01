@@ -26,6 +26,7 @@ const ProfileSetup = () => {
   const navigate = useNavigate();
   const [addUserData] = useUpdateUserMutation();
   const { alert } = useToast();
+  let user = JSON.parse(localStorage.getItem("authUser") || "{}");
 
   const handleAddUserData = async ({
     mobile,
@@ -67,7 +68,11 @@ const ProfileSetup = () => {
             </span>
 
             <Formik
-              initialValues={{ name: "", profile_url: "", mobile: "" }}
+              initialValues={{
+                name: user?.name || "",
+                profile_url: "",
+                mobile: "",
+              }}
               onSubmit={handleAddUserData}
             >
               {({ isSubmitting, submitForm, handleChange, setFieldValue }) => {

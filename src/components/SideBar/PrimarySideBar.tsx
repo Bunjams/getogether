@@ -21,6 +21,8 @@ const EventList = () => {
     (state) => state.currerntEvent
   );
 
+  const noEvents = data.length === 0;
+
   useEffect(() => {
     if (isSuccess && data.length > 0) {
       dispatch(setCurrentEventId(data[0].uuid));
@@ -33,6 +35,10 @@ const EventList = () => {
   };
 
   if (!isSuccess) {
+    return null;
+  }
+
+  if (noEvents) {
     return null;
   }
 
@@ -78,7 +84,7 @@ const PrimarySideBar = () => {
         <AnimatePresence>
           {role === "HOST" && (
             <motion.div
-              className="flex flex-col items-center gap-4 py-2"
+              className="flex flex-col items-center gap-4 pb-2"
               initial="hidden"
               animate="visible"
               exit="exit"

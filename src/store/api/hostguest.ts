@@ -19,19 +19,20 @@ export const hostGuest = emptyApi.injectEndpoints({
       InviteGuestResponse,
       {
         eventId: string;
-        list: {
+        rsvp_invites: {
+          name: string;
           email: string;
           sub_event_ids: string[];
           message: string;
         }[];
       }
     >({
-      query: ({ eventId, list }) => {
+      query: ({ eventId, rsvp_invites }) => {
         return {
           url: `events/${eventId}/rsvp/create/`,
           method: "POST",
           body: {
-            rsvp_invites: list,
+            rsvp_invites: rsvp_invites,
           },
         };
       },
@@ -39,4 +40,4 @@ export const hostGuest = emptyApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetGuestlistQuery } = hostGuest;
+export const { useGetGuestlistQuery, useInviteGuestMutation } = hostGuest;
