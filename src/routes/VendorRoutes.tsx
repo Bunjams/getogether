@@ -1,6 +1,7 @@
 import { PageLoader } from "components/Design/Loader/Loader";
 import VendorNavigation from "components/Navigation/VendorNavigation";
 import { AnimatePresence, motion } from "framer-motion";
+import Home from "pages/Vendor/Home";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
@@ -39,20 +40,11 @@ const VendorRoutes = () => {
             path="/home"
             element={
               <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                home
+                <Home />
               </section>
             }
           />
-          <Route
-            path="/event"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                event
-              </section>
-            }
-          />
+          <Route path="/event" element={<>event</>} />
           <Route
             path="/chat"
             element={

@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import ExpenseManagerEmpty from "static/Image/ExpenseManagerEmpty.png";
 
 const ExpenseManager = () => {
-  useDocumentTitle("Vendors");
+  useDocumentTitle("Expense Manager");
   const { eventId = "" } = useParams<{ eventId: string }>();
 
   const { close, isOpen, open } = useModal();

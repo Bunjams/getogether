@@ -1,7 +1,9 @@
+import { Avatar } from "antd";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import dayjs from "dayjs";
+import { EVENT_IMG_LINK } from "dictionaries";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { CalendarHeart, Map, UsersRound } from "lucide-react";
@@ -88,16 +90,15 @@ const EventHomePage = () => {
               <div className="rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
                 <div>
                   <h3 className="text-h3 text-neutral-900 first-letter:uppercase lowercase">
-                    {type}
+                    {name}
                   </h3>
                   <span className="text-body-regular text-neutral-600">
-                    {name}
+                    {type}
                   </span>
                 </div>
-                <img
-                  loading="lazy"
+                <Avatar
+                  src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
                   className="h-80 w-full object-cover rounded-lg"
-                  src="https://images.unsplash.com/photo-1716903904403-20a28f5afb88?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />
                 <div className="flex gap-3 flex-col mt-1">
                   <h3 className="text-h5-medium text-neutral-900">Details</h3>

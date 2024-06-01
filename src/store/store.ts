@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { emptyApi } from "./api/emptyApi";
 import { onboardingApi } from "./api/onboarding";
+import currerntEvent from "./slices/currentEvent";
 
 const rootReducer = combineReducers({
   [emptyApi.reducerPath]: emptyApi.reducer,
   [onboardingApi.reducerPath]: onboardingApi.reducer,
+  currerntEvent,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {

@@ -6,7 +6,6 @@ import { ModalProps } from "types/utils/modal";
 
 const AddExpenseModal = ({ close, isOpen }: ModalProps) => {
   const onSubmit = async (values: { budget: string }) => {
-    console.log(values);
     alert(JSON.stringify(values, null, 2));
     close();
   };

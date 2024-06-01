@@ -1,14 +1,36 @@
-import { Avatar, Divider } from "antd";
+import { Avatar, Divider, Tooltip } from "antd";
+import classNames from "classnames";
 import Profile from "components/Profile/Profile";
 import RoleSwitcher from "components/RoleSwitcher/RoleSwitcher";
+import { EVENT_IMG_LINK } from "dictionaries";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppSelector } from "hooks/useAppSelector";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetAllEevntsQuery } from "store/api/event";
+import { setCurrentEventId } from "store/slices/currentEvent";
 
 const EventList = () => {
   const { data = [], isSuccess } = useGetAllEevntsQuery();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { eventId: currentEventId } = useAppSelector(
+    (state) => state.currerntEvent
+  );
+
+  useEffect(() => {
+    if (isSuccess && data.length > 0) {
+      dispatch(setCurrentEventId(data[0].uuid));
+    }
+  }, [isSuccess]);
+
+  const onClick = ({ uuid }: { uuid: string }) => {
+    dispatch(setCurrentEventId(uuid));
+    navigate(`/host/${uuid}/home`, {});
+  };
 
   if (!isSuccess) {
     return null;
@@ -16,16 +38,22 @@ const EventList = () => {
 
   return (
     <div className="flex flex-col gap-4 items-center">
-      {data?.map(({ uuid, name }) => (
-        <Link
-          to={`/host/${uuid}/home`}
+      {data?.map(({ uuid, type, name }) => (
+        <button
           key={uuid}
-          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => onClick({ uuid })}
+          className="flex items-center gap-2 cursor-pointe focus-visible:scale-125 hover:scale-125 transform transition duration-300 ease-in-out"
         >
-          <Avatar className="!border-solid !border-4 !border-red-300 h-10 w-10">
-            {name[0]}
-          </Avatar>
-        </Link>
+          <Tooltip placement="right" title={name}>
+            <Avatar
+              src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
+              className={classNames("!border-solid !border-4 h-10 w-10", {
+                "!border-green-500": currentEventId === uuid,
+                "!border-red-300": currentEventId !== uuid,
+              })}
+            />
+          </Tooltip>
+        </button>
       ))}
     </div>
   );
@@ -39,15 +67,18 @@ const PrimarySideBar = () => {
     visible: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -100 },
   };
+  const text = <span>prompt text</span>;
 
   return (
     <nav className="shrink-0 bg-red-400 pr-3 pl-1  items-center  flex flex-col justify-between z-primary-sideBar overflow-y-auto">
       <div>
-        <RoleSwitcher />
+        <div className="sticky top-0 z-10">
+          <RoleSwitcher />
+        </div>
         <AnimatePresence>
           {role === "HOST" && (
             <motion.div
-              className="flex flex-col items-center gap-4"
+              className="flex flex-col items-center gap-4 py-2"
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -61,16 +92,20 @@ const PrimarySideBar = () => {
               <EventList />
               <Link
                 to="/create-event"
-                className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10"
+                className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10 sticky bottom-12"
               >
-                <Plus size={40} strokeWidth={1.5} color="currentColor" />
+                <Tooltip placement="right" title="Create event">
+                  <Plus size={40} strokeWidth={1.5} color="currentColor" />
+                </Tooltip>
               </Link>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <Profile />
+      <div className="sticky bottom-0">
+        <Profile />
+      </div>
     </nav>
   );
 };

@@ -1,4 +1,4 @@
-import { RadioChangeEvent } from "antd";
+import { Avatar, RadioChangeEvent } from "antd";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import DatePciker from "components/Design/DatePicker/DatePicker";
@@ -7,6 +7,7 @@ import Input from "components/Design/Input/Input";
 import Label from "components/Design/Label/Label";
 import RadioButton from "components/Design/Radio/RadioButton";
 import RadioGroup from "components/Design/Radio/RadioGroup";
+import { EVENT_IMG_LINK } from "dictionaries";
 import { Form, Formik, useFormikContext } from "formik";
 import { addEventSchema } from "FormSchema/addEventSchema";
 import { motion } from "framer-motion";
@@ -14,11 +15,10 @@ import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import randomBytes from "randombytes";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep2.png";
-import { useUpdateEventMutation } from "store/api/event";
+import { useGetEventByIdQuery, useUpdateEventMutation } from "store/api/event";
 import { BackendError } from "types/utils/backendError";
-import { array, object, string } from "yup";
 
 type EventType = {
   eventName: string;
@@ -158,6 +158,8 @@ const EventConsole = () => {
   const [updateEvent] = useUpdateEventMutation();
   const location = useLocation();
   const { eventId } = location.state || {};
+  const { data } = useGetEventByIdQuery({ eventId }, { skip: !eventId });
+  const { type } = data || {};
 
   const onCreateEvent = async ({ date, duration, eventList }: Event) => {
     const multiEvent = duration === "MULTI_DAY";
@@ -250,10 +252,9 @@ const EventConsole = () => {
 
               <div>
                 <Label>Cover Image</Label>
-                <img
-                  loading="lazy"
+                <Avatar
+                  src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
                   className="h-48 w-full object-cover rounded-lg"
-                  src="https://images.unsplash.com/photo-1716903904403-20a28f5afb88?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />
               </div>
               <Duration />
