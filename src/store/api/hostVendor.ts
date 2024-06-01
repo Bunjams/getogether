@@ -54,6 +54,22 @@ export const hostVendor = emptyApi.injectEndpoints({
       },
       invalidatesTags: ["HOST_VENODRS"],
     }),
+
+    addVendorRating: builder.mutation<
+      { rating: number; vendor_id: string },
+      { eventId: string; rating: number; vendorId: string }
+    >({
+      query: ({ eventId, rating, vendorId }) => {
+        return {
+          url: `vendors/event/${eventId}/vendor/${vendorId}/`,
+          method: "POST",
+          body: {
+            rating,
+          },
+        };
+      },
+      invalidatesTags: ["HOST_VENODRS"],
+    }),
   }),
 });
 export const {
@@ -61,4 +77,5 @@ export const {
   useGetAvailableVendorsQuery,
   useInviteVendorMutation,
   useGetInvitedVendorsQuery,
+  useAddVendorRatingMutation,
 } = hostVendor;
