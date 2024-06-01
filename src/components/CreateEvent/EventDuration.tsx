@@ -199,7 +199,7 @@ const EventConsole = () => {
       await updateEvent({
         ...payload,
       }).unwrap();
-      navigate("/create-event/invite-co-hosts", { state: { eventId: null } });
+      navigate("/create-event/invite-co-host", { state: { eventId: eventId } });
     } catch (error) {
       alert({ message: (error as BackendError).data.error.message });
     }

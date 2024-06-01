@@ -48,7 +48,7 @@ const EventList = () => {
             <Avatar
               src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
               className={classNames("!border-solid !border-4 h-10 w-10", {
-                "!border-green-500": currentEventId === uuid,
+                "!border-orange-300 scale-110": currentEventId === uuid,
                 "!border-red-300": currentEventId !== uuid,
               })}
             />

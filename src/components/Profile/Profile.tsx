@@ -71,7 +71,7 @@ const Profile = () => {
     >
       <button className="all:unset cursor-pointer">
         {profile_url ? (
-          <Avatar size="large" shape="circle" src={profile_url} />
+          <Avatar size={40} shape="circle" src={profile_url} />
         ) : (
           <div className="text-red-400 bg-whitebase rounded-full flex items-center justify-center h-10 w-10">
             <UserOutlined size={40} color="currentColor" />

@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 type Venu = {
   name: string;
   street_address: string;
@@ -24,11 +26,23 @@ export type EventResult = {
   start_date: string;
   end_date: string;
   type: string;
+  guests_info: {
+    invited_count: number;
+    accepted_count: number;
+  };
   subevents?: {
     uuid: string;
     name: string;
     venue: Venu;
     start_date: string;
     end_date: string;
+  }[];
+};
+
+export type EventCoHost = {
+  event: EventResult;
+  team: {
+    is_primary_host: true;
+    member: User;
   }[];
 };

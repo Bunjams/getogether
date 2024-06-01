@@ -16,7 +16,7 @@ const CreateEventRoutes = () => {
       <Routes>
         <Route index element={<CreateEvent />} />
         <Route path="/duration" element={<EventDuration />} />
-        <Route path="/invite-co-hosts" element={<InviteCoHosts />} />
+        <Route path="/invite-co-host" element={<InviteCoHosts />} />
       </Routes>
     </Suspense>
   );
