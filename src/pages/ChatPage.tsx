@@ -1,7 +1,7 @@
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import Header from "components/Design/Header/Header";
-import Loader from "components/Design/Loader/Loader";
+import { PageLoader } from "components/Design/Loader/Loader";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import { useStreamClient } from "hooks/useStreamClient";
 import React from "react";
@@ -18,8 +18,22 @@ import {
   useMessageContext,
   MessageSimple,
   Message,
+  useChatContext,
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/v2/index.css";
+
+const ChannelFilteredList = () => {
+  const { client } = useChatContext();
+
+  return (
+    <ChannelList
+      filters={{
+        type: "messaging",
+        members: { $in: [client.userID!] },
+      }}
+    />
+  );
+};
 
 // const MM = <
 //   StreamChatGenerics extends
@@ -44,7 +58,7 @@ const ChatPage = () => {
 
   const memoClient = React.useMemo(() => client, [client]);
 
-  if (!memoClient) return <Loader />;
+  if (!memoClient) return <PageLoader noBorder block />;
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
@@ -60,7 +74,7 @@ const ChatPage = () => {
           <PageLayout header={<Header title="Chat" />}>
             <section className="grid grid-flow-col w-full gap-2 overflow-auto h-[calc(100vh-140px)]">
               <Chat client={memoClient}>
-                <ChannelList />
+                <ChannelFilteredList />
                 <section className="grid grid-flow-col w-full gap-2 overflow-auto ">
                   <Channel>
                     <Window>

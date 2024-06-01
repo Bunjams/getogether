@@ -52,12 +52,19 @@ const Loader = ({ size = "44" }: { size?: string }) => {
 
 export default Loader;
 
-export const PageLoader = ({ noBorder = false }: { noBorder?: boolean }) => {
+export const PageLoader = ({
+  noBorder = false,
+  block,
+}: {
+  noBorder?: boolean;
+  block?: boolean;
+}) => {
   return (
     <section
       className={classNames("flex justify-center items-center h-screen", {
         "border-none": noBorder,
         "bg-neutral-0 border-8 border-red-400 w-full": !noBorder,
+        "w-full": block,
       })}
     >
       <Loader />

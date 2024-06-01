@@ -3,8 +3,9 @@ import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import Button from "components/Design/Button/Button";
 import PageLayout from "components/Design/PageLayout/PageLayout";
+import Tag from "components/Design/Tag/Tag";
 import dayjs from "dayjs";
-import { EVENT_IMG_LINK } from "dictionaries";
+import { CO_HOST_STATUS_COLOR, EVENT_IMG_LINK } from "dictionaries";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useModal } from "hooks/useModal";
@@ -54,25 +55,30 @@ const Cohost = ({
   title,
   email,
   index,
+  tag,
 }: {
   title: ReactNode;
   email: ReactNode;
   icon: ReactNode;
   index: number;
+  tag: ReactNode;
 }) => {
   return (
     <motion.div
-      className="flex gap-3 items-center bg-whitebase rounded-lg p-3"
+      className="flex items-center bg-whitebase rounded-lg p-3 flex-wrap justify-between"
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
       transition={{ duration: index + 1 * 0.5 }}
     >
-      {icon}
-      <div>
-        <div className="text-h5-medium text-neutral-900">{title}</div>
-        <div className="text-footnote text-neutral-500">{email}</div>
+      <div className="flex gap-3 items-center flex-wrap">
+        {icon}
+        <div>
+          <div className="text-h5-medium text-neutral-900">{title}</div>
+          <div className="text-footnote text-neutral-500">{email}</div>
+        </div>
       </div>
+      {tag}
     </motion.div>
   );
 };
@@ -97,7 +103,7 @@ const TeamList = () => {
     { skip: !eventId }
   );
 
-  const { team = [] } = coHost || {};
+  const { team = [], invited_team_members } = coHost || {};
   const { close, isOpen, open } = useModal();
 
   return (
@@ -125,9 +131,29 @@ const TeamList = () => {
               }
               title={`${first_name} ${last_name}`}
               email={email}
+              tag={
+                <Tag tagColor={CO_HOST_STATUS_COLOR["ACCEPTED"]}>
+                  <div className="lowercase first-letter:uppercase">
+                    ACCEPTED
+                  </div>
+                </Tag>
+              }
             />
           )
         )}
+        {invited_team_members?.map(({ email, name }, index) => (
+          <Cohost
+            index={index}
+            icon={<Avatar shape="circle" size={44} src={profileUrl} />}
+            title={name}
+            email={email}
+            tag={
+              <Tag tagColor={CO_HOST_STATUS_COLOR["PENDING"]}>
+                <div className="lowercase first-letter:uppercase">PENDING</div>
+              </Tag>
+            }
+          />
+        ))}
       </div>
       <InviteCoHost close={close} isOpen={isOpen} />
     </div>
