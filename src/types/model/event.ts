@@ -58,3 +58,12 @@ export type GuestInitedEvent = {
     end_date: string;
   }[];
 } & EventResult;
+
+export type GuestInviteMagicLinkResponse = {
+  email: string;
+  message: string;
+  event: EventResult;
+  event_id: string;
+  uuid: string;
+  status: "ACCEPTED" | "INITIATED" | "REJECTED" | "MAYBE";
+};

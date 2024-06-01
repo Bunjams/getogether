@@ -15,7 +15,7 @@ export const guestAPI = emptyApi.injectEndpoints({
     getEventByIdForGuest: builder.query<GuestInitedEvent, { eventId: string }>({
       query: ({ eventId }) => {
         return {
-          url: `events/guest/${eventId}/`,
+          url: `events/${eventId}/guest/`,
         };
       },
       providesTags: ["GUEST_VIEW"],

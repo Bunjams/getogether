@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { emptyApi } from "./api/emptyApi";
+import { guestInvitePublicApi } from "./api/guestInvitePublicAPI";
 import { onboardingApi } from "./api/onboarding";
 import currerntEvent from "./slices/currentEvent";
 
 const rootReducer = combineReducers({
   [emptyApi.reducerPath]: emptyApi.reducer,
   [onboardingApi.reducerPath]: onboardingApi.reducer,
+  [guestInvitePublicApi.reducerPath]: guestInvitePublicApi.reducer,
   currerntEvent,
 });
 
@@ -16,7 +18,8 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(emptyApi.middleware)
-        .concat(onboardingApi.middleware),
+        .concat(onboardingApi.middleware)
+        .concat(guestInvitePublicApi.middleware),
   });
 };
 

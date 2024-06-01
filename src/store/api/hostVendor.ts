@@ -62,7 +62,7 @@ export const hostVendor = emptyApi.injectEndpoints({
       query: ({ eventId, rating, vendorId }) => {
         return {
           url: `vendors/event/${eventId}/vendor/${vendorId}/`,
-          method: "POST",
+          method: "PUT",
           body: {
             rating: rating.toString(),
           },

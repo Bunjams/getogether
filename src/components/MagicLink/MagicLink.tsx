@@ -1,6 +1,6 @@
 import { PageLoader } from "components/Design/Loader/Loader";
 import { useToast } from "hooks/useNotification";
-import React, { ReactNode, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useVerifyOtpMutation } from "store/api/onboarding";
 import { BackendError } from "types/utils/backendError";
@@ -8,8 +8,8 @@ import { BackendError } from "types/utils/backendError";
 const MagicLink = () => {
   const navigate = useNavigate();
   const { hash, pathname } = useLocation();
-  const { alert, success } = useToast();
-  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const { alert } = useToast();
+  const [verifyOtp] = useVerifyOtpMutation();
 
   const onVerifyOtp = async ({ hash }: { hash: string }) => {
     try {
