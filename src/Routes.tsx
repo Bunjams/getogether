@@ -92,13 +92,14 @@ const Layout = () => {
           <Routes>
             <Route index element={<RedirectToRoleBasedRoute />} />
             <Route element={<HostProtected />} errorElement={<ErrorPage />}>
-              <Route path="/create-event/*" element={<CreateEvent />} />
               <Route path="/host" element={<HostNoEventPage />} />
               <Route path="/host/:eventId/*" element={<HostRoutes />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
 
             <Route element={<VendorProtected />} errorElement={<ErrorPage />}>
               <Route path="/vendor/*" element={<VendorRoutes />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </Suspense>
@@ -114,6 +115,7 @@ const Routing = () => {
         <Route element={<PrivateRoute />} errorElement={<ErrorPage />}>
           <Route path="/*" element={<Layout />} />
           <Route path="/create-event/*" element={<CreateEvent />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         <Route element={<AccountSetup />}>

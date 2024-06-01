@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
-import { Suspense, lazy, memo, useState } from "react";
+import { lazy, memo, Suspense, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useLocation, useNavigate } from "react-router-dom";
 import SignInSignUpSide from "static/Image/SignInSignUpSide.jpg";

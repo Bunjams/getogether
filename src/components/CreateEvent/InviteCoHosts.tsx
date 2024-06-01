@@ -2,21 +2,42 @@ import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Button from "components/Design/Button/Button";
 import Input from "components/Design/Input/Input";
 import { ErrorMessage, Form, Formik } from "formik";
-import { emailValidation } from "FormSchema/emailValidation";
+import { coHostInviteValidation } from "FormSchema/coHostInvite";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { useToast } from "hooks/useNotification";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CreateEventImg from "static/Image/CreateEventStep3.png";
+import { useInviteCoHostMutation } from "store/api/hostEvent";
+import { BackendError } from "types/utils/backendError";
 
 const EventConsole = () => {
+  const { alert, success } = useToast();
   const navigate = useNavigate();
+  const [inviteCoHost] = useInviteCoHostMutation();
+  const location = useLocation();
+  const { eventId } = location.state || {};
 
-  const onCreateEvent = async () => {
+  const onCreateEvent = async ({
+    eventId,
+    email,
+    name,
+  }: {
+    name: string;
+    email: string;
+    eventId: string;
+  }) => {
     try {
-      navigate("/host");
+      await inviteCoHost({
+        email,
+        name,
+        eventId,
+      }).unwrap();
+      success({ message: "Co-host invited" });
+      navigate("/host", { state: { eventId: null } });
     } catch (error) {
-      console.error(error);
+      alert({ message: (error as BackendError).data.error.message });
     }
   };
 
@@ -30,22 +51,25 @@ const EventConsole = () => {
           <ArrowLeft />
           Go Back
         </button>
-        <Link to="/host">
-          <Button size="small" typeof="submit">
-            Skip for now
-          </Button>
-        </Link>
       </div>
 
       <Formik
         initialValues={{
+          name: "",
           email: "",
+          eventId,
         }}
         onSubmit={onCreateEvent}
-        validationSchema={emailValidation}
+        validationSchema={coHostInviteValidation}
         validateOnChange
       >
-        {({ isSubmitting, submitForm, handleChange, errors: { email } }) => {
+        {({
+          isSubmitting,
+          submitForm,
+          handleChange,
+          errors: { email, name },
+          isValid,
+        }) => {
           return (
             <Form className="flex flex-col gap-4 h-full">
               <div className="flex flex-col gap-1">
@@ -61,33 +85,63 @@ const EventConsole = () => {
                 </p>
               </div>
               <div className="flex w-full flex-col">
-                <div className="flex gap-4 w-full">
-                  <Input
-                    name="email"
-                    onChange={handleChange}
-                    status={email ? "error" : undefined}
-                    placeholder="Enter event name"
-                    label="Co-host email"
-                    required
-                    size="large"
-                  />
-                  <div className="self-end">
-                    <Button
+                <div className="flex gap-4 w-full flex-col">
+                  <div>
+                    <Input
+                      name="name"
+                      onChange={handleChange}
+                      status={name ? "error" : undefined}
+                      placeholder="Enter co-host name"
+                      label="Name"
+                      required
                       size="large"
-                      disabled={isSubmitting}
-                      onClick={submitForm}
-                      loading={isSubmitting}
-                      typeof="submit"
-                    >
-                      Invite
-                    </Button>
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-red-500 text-footnote"
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      name="email"
+                      onChange={handleChange}
+                      status={email ? "error" : undefined}
+                      placeholder="Enter co-host email"
+                      label="Email Address"
+                      required
+                      size="large"
+                    />
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="text-red-500 text-footnote"
+                    />
                   </div>
                 </div>
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500 text-footnote"
-                />
+              </div>
+              <div className="self-end flex gap-2">
+                <Button
+                  size="large"
+                  type="text"
+                  disabled={isSubmitting}
+                  onClick={() =>
+                    navigate("/host", { state: { eventId: null } })
+                  }
+                  typeof="submit"
+                >
+                  Skip for now
+                </Button>
+                <Button
+                  size="large"
+                  type="primary"
+                  disabled={isSubmitting || !isValid}
+                  onClick={submitForm}
+                  loading={isSubmitting}
+                  typeof="submit"
+                >
+                  Invite
+                </Button>
               </div>
             </Form>
           );

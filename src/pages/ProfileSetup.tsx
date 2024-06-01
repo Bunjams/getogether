@@ -9,7 +9,7 @@ import { Form, Formik } from "formik";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useToast } from "hooks/useNotification";
 import { LoaderCircle } from "lucide-react";
-import { Suspense, lazy, memo } from "react";
+import { lazy, memo, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfileSetup from "static/Image/UserProfileSetup.jpg";
 import { useUpdateUserMutation } from "store/api/userProfile";
@@ -44,7 +44,12 @@ const ProfileSetup = () => {
         profile_url,
       }).unwrap();
       localStorage.setItem("authUser", JSON.stringify(user));
-      navigate("/persona", { replace: true });
+
+      if (!user.role) {
+        navigate("/persona", { replace: true });
+        return;
+      }
+      navigate("/", { replace: true });
     } catch (error) {
       alert({ message: (error as BackendError).data.error.message });
     }

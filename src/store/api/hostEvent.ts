@@ -1,8 +1,7 @@
-import { EventResult, CreateEventResult } from "types/model/event";
-import { User } from "types/model/user";
+import { CreateEventResult, EventCoHost, EventResult } from "types/model/event";
 import { emptyApi } from "./emptyApi";
 
-export const userApi = emptyApi.injectEndpoints({
+export const hostEvent = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
     getEevntTypes: builder.query<string[], void>({
       query: () => {
@@ -18,7 +17,7 @@ export const userApi = emptyApi.injectEndpoints({
           url: "events/",
         };
       },
-      providesTags: ["EVENTS"],
+      providesTags: ["HOST_EVENTS"],
     }),
 
     getEventById: builder.query<EventResult, { eventId: string }>({
@@ -27,6 +26,32 @@ export const userApi = emptyApi.injectEndpoints({
           url: `events/${eventId}/`,
         };
       },
+    }),
+
+    getEventTeam: builder.query<EventCoHost, { eventId: string }>({
+      query: ({ eventId }) => {
+        return {
+          url: `events/${eventId}/team/`,
+        };
+      },
+      providesTags: ["HOST_EVENTS"],
+    }),
+
+    inviteCoHost: builder.mutation<
+      { message: string },
+      { name: string; email: string; eventId: string }
+    >({
+      query: ({ name, email, eventId }) => {
+        return {
+          url: `events/${eventId}/host/invite/`,
+          method: "POST",
+          body: {
+            name,
+            email,
+          },
+        };
+      },
+      invalidatesTags: ["HOST_EVENTS"],
     }),
 
     addEvent: builder.mutation<
@@ -91,7 +116,7 @@ export const userApi = emptyApi.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ["EVENTS"],
+      invalidatesTags: ["HOST_EVENTS"],
     }),
   }),
 });
@@ -101,4 +126,6 @@ export const {
   useAddEventMutation,
   useGetEevntTypesQuery,
   useUpdateEventMutation,
-} = userApi;
+  useInviteCoHostMutation,
+  useGetEventTeamQuery,
+} = hostEvent;

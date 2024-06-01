@@ -1,14 +1,27 @@
+import { Avatar } from "antd";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
+import Button from "components/Design/Button/Button";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import dayjs from "dayjs";
+import { EVENT_IMG_LINK } from "dictionaries";
 import { motion } from "framer-motion";
 import useDocumentTitle from "hooks/useDocumentTitle";
+import { useModal } from "hooks/useModal";
+import { useRandomProfile } from "hooks/useRandomProfile";
 import { CalendarHeart, Map, UsersRound } from "lucide-react";
 import { memo, ReactNode } from "react";
 import { useParams } from "react-router-dom";
-import { useGetEventByIdQuery } from "store/api/event";
-import { useGetGuestlistQuery } from "store/api/guest";
+import {
+  useGetEventByIdQuery,
+  useGetEventTeamQuery,
+} from "store/api/hostEvent";
+import InviteCoHost from "./InviteCoHost";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const DetailsItem = ({
   icon,
@@ -19,11 +32,6 @@ const DetailsItem = ({
   subtitle: ReactNode;
   icon: ReactNode;
 }) => {
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
     <motion.div
       className="flex gap-2 items-center bg-whitebase rounded-lg p-3"
@@ -41,6 +49,34 @@ const DetailsItem = ({
   );
 };
 
+const Cohost = ({
+  icon,
+  title,
+  email,
+  index,
+}: {
+  title: ReactNode;
+  email: ReactNode;
+  icon: ReactNode;
+  index: number;
+}) => {
+  return (
+    <motion.div
+      className="flex gap-3 items-center bg-whitebase rounded-lg p-3"
+      initial="hidden"
+      animate="visible"
+      variants={sectionVariants}
+      transition={{ duration: index + 1 * 0.5 }}
+    >
+      {icon}
+      <div>
+        <div className="text-h5-medium text-neutral-900">{title}</div>
+        <div className="text-footnote text-neutral-500">{email}</div>
+      </div>
+    </motion.div>
+  );
+};
+
 const MapCard = () => {
   return (
     <div className="h-96 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
@@ -52,7 +88,54 @@ const MapCard = () => {
   );
 };
 
+const TeamList = () => {
+  const { eventId = "" } = useParams<{ eventId: string }>();
+  const profileUrl = useRandomProfile();
+
+  const { data: coHost } = useGetEventTeamQuery(
+    { eventId },
+    { skip: !eventId }
+  );
+
+  const { team = [] } = coHost || {};
+  const { close, isOpen, open } = useModal();
+
+  return (
+    <div className="rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
+      <div className="flex justify-between">
+        <h3 className="text-h5-medium text-neutral-900">Team</h3>
+        <Button type="primary" size="small" onClick={open}>
+          Invite
+        </Button>
+      </div>
+      <div className="grid gap-4">
+        {team?.map(
+          (
+            { member: { email, first_name, last_name, profile_url } },
+            index
+          ) => (
+            <Cohost
+              index={index}
+              icon={
+                <Avatar
+                  shape="circle"
+                  size={44}
+                  src={profile_url || profileUrl}
+                />
+              }
+              title={`${first_name} ${last_name}`}
+              email={email}
+            />
+          )
+        )}
+      </div>
+      <InviteCoHost close={close} isOpen={isOpen} />
+    </div>
+  );
+};
+
 const MemoMap = memo(MapCard);
+const MemoTeamList = memo(TeamList);
 
 const EventHomePage = () => {
   const { eventId = "" } = useParams<{ eventId: string }>();
@@ -61,19 +144,10 @@ const EventHomePage = () => {
     { skip: !eventId }
   );
 
-  //   TODO: add total count, approved count in  useGetEventByIdQuery
-  const { data: guestList = [] } = useGetGuestlistQuery(
-    { eventId },
-    { skip: !eventId }
-  );
+  const { type, name, end_date, start_date, venue, uuid, guests_info } =
+    data || {};
 
-  const totalGuests = guestList.length;
-  const acceptedCount = guestList.filter(
-    ({ status }) => status === "ACCEPTED"
-  ).length;
-
-  const { type, name, end_date, start_date, venue, uuid } = data || {};
-
+  const { accepted_count, invited_count } = guests_info || {};
   useDocumentTitle(uuid ? `${type}-${name}` : "Event");
 
   return (
@@ -84,20 +158,19 @@ const EventHomePage = () => {
         </Async.Empty>
         <Async.Success>
           <PageLayout>
-            <div className="grid pr-4 gap-3">
-              <div className="rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
+            <div className="grid pr-4 gap-3 grid-cols-2">
+              <div className="col-span-2 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
                 <div>
                   <h3 className="text-h3 text-neutral-900 first-letter:uppercase lowercase">
-                    {type}
+                    {name}
                   </h3>
                   <span className="text-body-regular text-neutral-600">
-                    {name}
+                    {type}
                   </span>
                 </div>
-                <img
-                  loading="lazy"
+                <Avatar
+                  src={EVENT_IMG_LINK[type as keyof typeof EVENT_IMG_LINK]}
                   className="h-80 w-full object-cover rounded-lg"
-                  src="https://images.unsplash.com/photo-1716903904403-20a28f5afb88?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />
                 <div className="flex gap-3 flex-col mt-1">
                   <h3 className="text-h5-medium text-neutral-900">Details</h3>
@@ -125,8 +198,8 @@ const EventHomePage = () => {
                           <UsersRound size={32} color="currentColor" />
                         </span>
                       }
-                      title={<>{totalGuests} Guests</>}
-                      subtitle={<>{acceptedCount} accepted</>}
+                      title={<>{invited_count || 0} Guests</>}
+                      subtitle={<>{accepted_count || 0} accepted</>}
                     />
 
                     <DetailsItem
@@ -141,6 +214,7 @@ const EventHomePage = () => {
                   </div>
                 </div>
               </div>
+              <MemoTeamList />
               <MemoMap />
             </div>
           </PageLayout>

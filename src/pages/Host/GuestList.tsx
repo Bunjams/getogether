@@ -5,11 +5,11 @@ import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
 import StatusCard from "components/Design/StatusCard/StatusCard";
-import GuestTable from "components/GuestList/GuestTable";
+import GuestTable from "components/HostGuestList/GuestTable";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useParams } from "react-router-dom";
 import GuestListEmpty from "static/Image/GuestListEmpty.png";
-import { useGetGuestlistQuery } from "store/api/guest";
+import { useGetGuestlistQuery } from "store/api/hostguest";
 
 const GuestList = () => {
   useDocumentTitle("Guest List");
