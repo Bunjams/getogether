@@ -19,6 +19,8 @@ const EventConsole = () => {
   const location = useLocation();
   const { eventId } = location.state || {};
 
+  const eventLink = `/host/${eventId}/home`;
+
   const onCreateEvent = async ({
     eventId,
     email,
@@ -35,7 +37,7 @@ const EventConsole = () => {
         eventId,
       }).unwrap();
       success({ message: "Co-host invited" });
-      navigate("/host", { state: { eventId: null } });
+      navigate(eventLink, { state: { eventId: null } });
     } catch (error) {
       alert({ message: (error as BackendError).data.error.message });
     }
@@ -126,7 +128,7 @@ const EventConsole = () => {
                   type="text"
                   disabled={isSubmitting}
                   onClick={() =>
-                    navigate("/host", { state: { eventId: null } })
+                    navigate(eventLink, { state: { eventId: null } })
                   }
                   typeof="submit"
                 >

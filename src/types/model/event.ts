@@ -26,6 +26,7 @@ export type EventResult = {
   start_date: string;
   end_date: string;
   type: string;
+  multi_event: boolean;
   guests_info: {
     invited_count: number;
     accepted_count: number;

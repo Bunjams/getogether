@@ -1,8 +1,8 @@
-import { Dropdown, MenuProps } from "antd";
+import { Dropdown, MenuProps, Tooltip } from "antd";
 import classNames from "classnames";
 import Loader from "components/Design/Loader/Loader";
 import { useCurrentUserQuery } from "hooks/useCurrentUserQuery";
-import { HandHeart, PartyPopper } from "lucide-react";
+import { HandHeart, PartyPopper, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CheckSolid from "static/Icons/CheckSolid";
 import { useUpdateRoleMutation } from "store/api/userProfile";
@@ -39,6 +39,10 @@ const Icon = ({ icon }: { icon: ProfileType }) => {
   }
   if (icon === "VENDOR") {
     return <HandHeart strokeWidth={1.5} color="currentColor" size="20" />;
+  }
+
+  if (icon === "GUEST") {
+    return <User strokeWidth={1.5} color="currentColor" size="20" />;
   }
   return null;
 };
@@ -113,6 +117,21 @@ const RoleSwitcher = () => {
             onProfileChange("VENDOR");
           },
         },
+
+        {
+          key: "GUEST",
+          label: (
+            <DropdownItem
+              isActive={currentProfile === "GUEST"}
+              title="Guest"
+              subTitle="Join and track events"
+            />
+          ),
+          icon: <MenuIcon icon="GUEST" isActive={currentProfile === "GUEST"} />,
+          onClick: () => {
+            onProfileChange("GUEST");
+          },
+        },
       ],
     },
   ];
@@ -126,13 +145,15 @@ const RoleSwitcher = () => {
       trigger={["click"]}
       disabled={loading}
     >
-      <button className="all:unset bg-red-100 p-3 rounded-sm cursor-pointer text-red-600">
-        {loading ? (
-          <Loader size="20" />
-        ) : (
-          <>{currentProfile && <Icon icon={currentProfile} />}</>
-        )}
-      </button>
+      <Tooltip placement="right" title={currentProfile}>
+        <button className="all:unset bg-red-100 p-3 rounded-sm cursor-pointer text-red-600">
+          {loading ? (
+            <Loader size="20" />
+          ) : (
+            <>{currentProfile && <Icon icon={currentProfile} />}</>
+          )}
+        </button>
+      </Tooltip>
     </Dropdown>
   );
 };

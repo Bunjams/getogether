@@ -75,7 +75,13 @@ const ProfileSetup = () => {
               }}
               onSubmit={handleAddUserData}
             >
-              {({ isSubmitting, submitForm, handleChange, setFieldValue }) => {
+              {({
+                isSubmitting,
+                submitForm,
+                handleChange,
+                setFieldValue,
+                values: { name },
+              }) => {
                 return (
                   <Form className="flex gap-4 flex-col">
                     <UploadAvatar
@@ -95,6 +101,7 @@ const ProfileSetup = () => {
                       size="large"
                       type="text"
                       onChange={handleChange}
+                      value={name}
                       prefix={<UserOutlined className="text-neutral-300" />}
                     />
 
