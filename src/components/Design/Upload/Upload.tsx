@@ -15,6 +15,7 @@ type UploadProps = {
   acceptFileType?: Accept;
   name?: string;
   children: (state: DropzoneState) => React.ReactNode;
+  src?: string | null;
 } & DropzoneOptions;
 
 const Upload = ({
@@ -47,8 +48,8 @@ const Upload = ({
   );
 };
 
-const UploadAvatar = ({ ...restProps }: Omit<UploadProps, "children">) => {
-  const [file, setFile] = React.useState<File | null>(null);
+const UploadAvatar = ({ src, ...restProps }: Omit<UploadProps, "children">) => {
+  const [file, setFile] = React.useState<File | string>(src || "");
 
   const onDrop = (
     acceptedFiles: File[],
@@ -71,7 +72,12 @@ const UploadAvatar = ({ ...restProps }: Omit<UploadProps, "children">) => {
             <Avatar
               shape="square"
               size={64}
-              icon={<Image width={64} src={URL.createObjectURL(file)} />}
+              icon={
+                <Image
+                  width={64}
+                  src={file instanceof File ? URL.createObjectURL(file) : file}
+                />
+              }
             />
           ) : (
             <Avatar
