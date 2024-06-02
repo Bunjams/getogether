@@ -7,6 +7,7 @@ import {
   Users,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
+import ChatNavMenu from "./ChatNavMenu";
 
 const HostNavigation = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -19,14 +20,7 @@ const HostNavigation = () => {
       >
         Home
       </NavMenu>
-      <NavMenu
-        to={`/host/${eventId}/chat`}
-        icon={
-          <MessageSquareMore size={16} strokeWidth={2} color="currentColor" />
-        }
-      >
-        Chat
-      </NavMenu>
+      <ChatNavMenu to={`/host/${eventId}/chat`} />
       <NavMenu
         to={`/host/${eventId}/guest-list`}
         icon={<ListChecks size={16} strokeWidth={2} color="currentColor" />}

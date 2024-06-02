@@ -21,6 +21,7 @@ const ExpenseManager = () => {
     isLoading: false,
     isSuccess: true,
   };
+
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
       <Async.Root isEmpty={isEmpty} isLoading={isLoading} isSuccess={isSuccess}>

@@ -1,7 +1,13 @@
 import classNames from "classnames";
 import { motion } from "framer-motion";
 
-const Loader = ({ size = "44" }: { size?: string }) => {
+const Loader = ({
+  size = "44",
+  loop = true,
+}: {
+  size?: string;
+  loop?: boolean;
+}) => {
   const pathVariants = {
     hidden: {
       pathLength: 0.1,
@@ -13,7 +19,7 @@ const Loader = ({ size = "44" }: { size?: string }) => {
       transition: {
         duration: 1,
         ease: "easeInOut",
-        repeat: Infinity,
+        repeat: loop ? Infinity : 1,
       },
     },
   };

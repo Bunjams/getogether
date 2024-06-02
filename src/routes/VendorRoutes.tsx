@@ -8,6 +8,7 @@ const EventList = lazy(() => import("pages/Vendor/EventList"));
 const Home = lazy(() => import("pages/Vendor/Home"));
 const Services = lazy(() => import("pages/Vendor/Services"));
 const Calendar = lazy(() => import("pages/Vendor/Calendar"));
+const ComingSoon = lazy(() => import("components/ComingSoon/ComingSoon"));
 
 const VendorRoutes = () => {
   return (
@@ -28,12 +29,7 @@ const VendorRoutes = () => {
           <Route path="/services" element={<Services />} />
           <Route
             path="/payments"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                payments
-              </section>
-            }
+            element={<ComingSoon text="Payments Coming soon" />}
           />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="*" element={<NotFound />} />

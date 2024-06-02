@@ -2,11 +2,13 @@ import CurrentUserProvider from "components/Context/CurrentUser";
 import { PageLoader } from "components/Design/Loader/Loader";
 import PrimarySideBar from "components/SideBar/PrimarySideBar";
 import { useCurrentUserQuery } from "hooks/useCurrentUserQuery";
-import { lazy, Suspense } from "react";
+import { useStreamClient } from "hooks/useStreamClient";
+import { lazy, ReactNode, Suspense, useMemo } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import AccountSetup from "routes/AccountSetup";
 import OtpOutlet from "routes/OtpOutlet";
 import PrivateRoute from "routes/PrivateRoute";
+import { Chat } from "stream-chat-react";
 const ProfileSetup = lazy(() => import("pages/ProfileSetup"));
 const SignUp = lazy(() => import("pages/SignUp"));
 const OTP = lazy(() => import("pages/OTP"));
@@ -106,33 +108,44 @@ const GuestProtected = () => {
   }
 };
 
+const ChatWapper = ({ children }: { children: ReactNode }) => {
+  const { client } = useStreamClient();
+  const memoClient = useMemo(() => client, [client]);
+
+  if (!memoClient) return <PageLoader noBorder block />;
+
+  return <Chat client={memoClient}>{children}</Chat>;
+};
+
 const Layout = () => {
   return (
     <CurrentUserProvider>
-      <section className="flex h-screen bg-neutral-0 border-8  border-red-400 overflow-auto w-full no-scrollbar">
-        <PrimarySideBar />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route index element={<RedirectToRoleBasedRoute />} />
-            <Route element={<HostProtected />} errorElement={<ErrorPage />}>
-              <Route path="/host" element={<HostNoEventPage />} />
-              <Route path="/host/:eventId/*" element={<HostRoutes />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
+      <ChatWapper>
+        <section className="flex h-screen bg-neutral-0 border-8  border-red-400 overflow-auto w-full no-scrollbar">
+          <PrimarySideBar />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route index element={<RedirectToRoleBasedRoute />} />
+              <Route element={<HostProtected />} errorElement={<ErrorPage />}>
+                <Route path="/host" element={<HostNoEventPage />} />
+                <Route path="/host/:eventId/*" element={<HostRoutes />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
 
-            <Route element={<GuestProtected />} errorElement={<ErrorPage />}>
-              <Route path="/guest" element={<NoInvites />} />
-              <Route path="/guest/:eventId/*" element={<GuestRoutes />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
+              <Route element={<GuestProtected />} errorElement={<ErrorPage />}>
+                <Route path="/guest" element={<NoInvites />} />
+                <Route path="/guest/:eventId/*" element={<GuestRoutes />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
 
-            <Route element={<VendorProtected />} errorElement={<ErrorPage />}>
-              <Route path="/vendor/*" element={<VendorRoutes />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </Suspense>
-      </section>
+              <Route element={<VendorProtected />} errorElement={<ErrorPage />}>
+                <Route path="/vendor/*" element={<VendorRoutes />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </section>
+      </ChatWapper>
     </CurrentUserProvider>
   );
 };
