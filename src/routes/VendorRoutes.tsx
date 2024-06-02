@@ -1,10 +1,12 @@
 import { PageLoader } from "components/Design/Loader/Loader";
 import VendorNavigation from "components/Navigation/VendorNavigation";
-import Home from "pages/Vendor/Home";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
+const EventList = lazy(() => import("pages/Vendor/EventList"));
+const Home = lazy(() => import("pages/Vendor/Home"));
+const Services = lazy(() => import("pages/Vendor/Services"));
 
 const VendorRoutes = () => {
   return (
@@ -19,25 +21,10 @@ const VendorRoutes = () => {
       >
         <Routes>
           <Route path="/" element={<Navigate to={`/vendor/home`} />} />
-          <Route
-            path="/home"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <Home />
-              </section>
-            }
-          />
-          <Route path="/event" element={<>event</>} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/event" element={<EventList />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route
-            path="/services"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                services
-              </section>
-            }
-          />
+          <Route path="/services" element={<Services />} />
           <Route
             path="/payments"
             element={

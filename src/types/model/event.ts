@@ -18,6 +18,14 @@ export type CreateEventResult = {
   type: string;
 };
 
+export type SubEvent = {
+  uuid: string;
+  name: string;
+  venue: Venu;
+  start_date: string;
+  end_date: string;
+};
+
 export type EventResult = {
   uuid: string;
   primary_host: null;
@@ -26,18 +34,12 @@ export type EventResult = {
   start_date: string;
   end_date: string;
   type: string;
-  multi_event: boolean;
   guests_info: {
     invited_count: number;
     accepted_count: number;
   };
-  subevents?: {
-    uuid: string;
-    name: string;
-    venue: Venu;
-    start_date: string;
-    end_date: string;
-  }[];
+  multi_event: boolean;
+  subevents?: SubEvent[];
 };
 
 export type EventCoHost = {
@@ -49,14 +51,8 @@ export type EventCoHost = {
   invited_team_members: { name: string; email: string }[];
 };
 
-export type GuestInitedEvent = {
-  guest_subevents?: {
-    uuid: string;
-    name: string;
-    venue: Venu;
-    start_date: string;
-    end_date: string;
-  }[];
+export type GuestInvitedEvent = {
+  guest_subevents?: SubEvent[];
 } & EventResult;
 
 export type GuestInviteMagicLinkResponse = {
