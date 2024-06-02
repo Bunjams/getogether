@@ -50,11 +50,12 @@ const VendorUpcomingEvents = () => {
   return (
     <div className="flex gap-6 flex-col">
       <h4 className="text-h4 text-neutral-900">Upcoming events</h4>
-      <div className="flex w-full flex-wrap gap-6 justify-around">
+      <div className="flex w-full flex-wrap gap-6">
         {upcomingEventMock.map(
-          ({ event_name, end_date, start_date, type, invited_by }) => {
+          ({ event_name, end_date, start_date, type, invited_by, uuid }) => {
             return (
               <EventCard
+                key={uuid}
                 type={type}
                 event_name={event_name}
                 host={invited_by.name}

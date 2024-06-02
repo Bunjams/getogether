@@ -6,6 +6,7 @@ const NotFound = lazy(() => import("components/NotFound/NotFound"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
 const EventList = lazy(() => import("pages/Vendor/EventList"));
 const Home = lazy(() => import("pages/Vendor/Home"));
+const Services = lazy(() => import("pages/Vendor/Services"));
 
 const VendorRoutes = () => {
   return (
@@ -23,15 +24,7 @@ const VendorRoutes = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/event" element={<EventList />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route
-            path="/services"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                services
-              </section>
-            }
-          />
+          <Route path="/services" element={<Services />} />
           <Route
             path="/payments"
             element={
