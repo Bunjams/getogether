@@ -62,7 +62,7 @@ const GuestCard = ({ title, index }: { title: string; index: number }) => {
       const [uuid] = s.split(",");
       return uuid;
     });
-    setFieldValue("rsvp_invites.${index}.sub_event_ids", service);
+    setFieldValue(`rsvp_invites.${index}.sub_event_ids`, service);
   };
 
   return (
