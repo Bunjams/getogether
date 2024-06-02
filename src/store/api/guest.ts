@@ -3,7 +3,7 @@ import { emptyApi } from "./emptyApi";
 
 export const guestAPI = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllEventForGuest: builder.query<EventResult[], void>({
+    getAllEventForGuest: builder.query<EventResult[], {}>({
       query: () => {
         return {
           url: `events/guest/`,

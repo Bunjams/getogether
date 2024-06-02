@@ -75,7 +75,8 @@ const RoleSwitcher = () => {
 
   const onProfileChange = async (profile: ProfileType) => {
     try {
-      await onRoleUpdate({ role: profile }).unwrap();
+      const user = await onRoleUpdate({ role: profile }).unwrap();
+      localStorage.setItem("authUser", JSON.stringify(user));
       navigate("/");
     } catch (error) {}
   };

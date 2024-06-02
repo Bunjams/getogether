@@ -3,15 +3,21 @@ import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
 import { useGetAllEventForGuestQuery } from "store/api/guest";
 import { setCurrentEventId } from "store/slices/currentEvent";
 
 const NoInvites = () => {
   useDocumentTitle("Getogether");
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data = [], isSuccess } = useGetAllEventForGuestQuery();
+  const { data = [], isSuccess } = useGetAllEventForGuestQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -22,12 +28,9 @@ const NoInvites = () => {
   useEffect(() => {
     if (isSuccess && data.length > 0) {
       dispatch(setCurrentEventId(data[0].uuid));
+      navigate(`/guest/${data[0].uuid}/home`);
     }
-  }, [isSuccess]);
-
-  if (isSuccess && data.length > 0) {
-    return <Navigate to={`/guest/${data[0].uuid}/home`} />;
-  }
+  }, [isSuccess, JSON.stringify(data)]);
 
   return (
     <AnimatedPage

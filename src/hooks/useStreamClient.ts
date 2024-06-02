@@ -1,21 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
+import { useGetUserProfileQuery } from "store/api/userProfile";
 import { StreamChat } from "stream-chat";
 import { useCurrentUser } from "./useCurrentUser";
 import { useRandomProfile } from "./useRandomProfile";
 
 export const useStreamClient = () => {
-  const user = useCurrentUser();
+  const { data } = useGetUserProfileQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
   const [client, setClient] = useState<StreamChat | null>(null);
   const profileUrl = useRandomProfile();
 
-  const token = user?.member?.access_token;
-  const userId = user?.member?.member_id;
+  const token = data?.member?.access_token;
+  const userId = data?.member?.member_id;
 
   const streamUser = useMemo(
     () => ({
-      id: userId,
-      name: user?.first_name,
-      image: user?.profile_url || profileUrl,
+      id: userId || "",
+      name: data?.first_name || "",
+      image: data?.profile_url || profileUrl,
     }),
     [userId]
   );

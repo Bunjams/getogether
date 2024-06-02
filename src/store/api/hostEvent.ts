@@ -11,7 +11,7 @@ export const hostEvent = emptyApi.injectEndpoints({
       },
     }),
 
-    getAllEevnts: builder.query<EventResult[], void>({
+    getAllEevnts: builder.query<EventResult[], {}>({
       query: () => {
         return {
           url: "events/",
