@@ -38,7 +38,7 @@ const NoInvites = () => {
       <EmptyScreen
         img={EventEmpty}
         title="No Invitaion yet!"
-        subtitle="Start by adding your first event."
+        subtitle=""
         noAction
       />
     </AnimatedPage>

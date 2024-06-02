@@ -27,10 +27,7 @@ const VendorRoutes = () => {
           <Route path="/event" element={<EventList />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/services" element={<Services />} />
-          <Route
-            path="/payments"
-            element={<ComingSoon text="Payments Coming soon" />}
-          />
+          <Route path="/payments" element={<ComingSoon />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

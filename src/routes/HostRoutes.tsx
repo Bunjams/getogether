@@ -29,10 +29,7 @@ const HostRoutes = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/guest-list" element={<GuestList />} />
           <Route path="/vendors" element={<VendorList />} />
-          <Route
-            path="/expense-manager"
-            element={<ComingSoon text="Expense Manager Coming soon" />}
-          />
+          <Route path="/expense-manager" element={<ComingSoon />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

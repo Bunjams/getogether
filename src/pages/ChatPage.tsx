@@ -3,6 +3,7 @@ import Async from "components/Design/Async/Async";
 import Header from "components/Design/Header/Header";
 import { PageLoader } from "components/Design/Loader/Loader";
 import PageLayout from "components/Design/PageLayout/PageLayout";
+import useDocumentTitle from "hooks/useDocumentTitle";
 import { useStreamClient } from "hooks/useStreamClient";
 import React from "react";
 import {
@@ -54,6 +55,7 @@ const ChannelFilteredList = () => {
 // };
 
 const ChatPage = () => {
+  useDocumentTitle("Chat");
   const { client } = useStreamClient();
 
   const memoClient = React.useMemo(() => client, [client]);
@@ -72,10 +74,10 @@ const ChatPage = () => {
         </Async.Empty>
         <Async.Success>
           <PageLayout header={<Header title="Chat" />}>
-            <section className="grid grid-flow-col w-full gap-2 overflow-auto h-[calc(100vh-140px)]">
+            <section className="grid grid-flow-col w-full gap-2 overflow-auto h-[calc(100vh-140px)] grid-cols-3">
               <Chat client={memoClient}>
                 <ChannelFilteredList />
-                <section className="grid grid-flow-col w-full gap-2 overflow-auto ">
+                <section className="grid grid-flow-col w-full gap-2 overflow-auto col-span-2">
                   <Channel>
                     <Window>
                       <span className="sticky top-0 z-50">

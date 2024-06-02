@@ -108,7 +108,6 @@ const ProfileSetup = () => {
 
                     <Input
                       label="Phone number"
-                      required
                       placeholder="00000 00000"
                       size="large"
                       type="number"
