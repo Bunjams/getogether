@@ -20,7 +20,7 @@ const sectionVariants = {
 };
 
 type Invite = {
-  noSubevents: boolean;
+  multi_event: boolean;
   rsvp_invites: {
     name: string;
     email: string;
@@ -50,7 +50,7 @@ const GuestCard = ({ title, index }: { title: string; index: number }) => {
     );
   };
 
-  const { subevents = [], multi_event: noSubevents } = data || {};
+  const { subevents = [], multi_event } = data || {};
 
   const options = subevents?.map(({ name, uuid }) => ({
     label: name,
@@ -103,7 +103,7 @@ const GuestCard = ({ title, index }: { title: string; index: number }) => {
         placeholder="Input guest email"
         onChange={handleChange}
       />
-      {!noSubevents && (
+      {multi_event && (
         <Select
           required
           name={`rsvp_invites.${index}.sub_event_ids`}
@@ -131,10 +131,9 @@ const InviteForm = () => {
     setFieldValue("rsvp_invites", [
       ...rsvp_invites,
       {
-        eventName: "",
-        venue: "",
-        startDate: "",
-        endDate: "",
+        name: "",
+        email: "",
+        sub_event_ids: [],
         message: "",
         id: randomBytes(10).toString("hex"),
       },
@@ -161,7 +160,7 @@ const InviteGuest = ({ isOpen, close }: ModalProps) => {
   const [inviteGuest] = useInviteGuestMutation();
 
   const { data } = useGetEventByIdQuery({ eventId }, { skip: !eventId });
-  const { multi_event: noSubevents } = data || {};
+  const { multi_event } = data || {};
 
   const onSubmit = async ({ rsvp_invites }: Pick<Invite, "rsvp_invites">) => {
     try {
@@ -183,7 +182,7 @@ const InviteGuest = ({ isOpen, close }: ModalProps) => {
     <Modal.Root open={isOpen} onOpenChange={close} modal={false}>
       <Formik
         initialValues={{
-          noSubevents,
+          multi_event,
           rsvp_invites: [
             {
               name: "",
