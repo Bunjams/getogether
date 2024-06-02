@@ -10,7 +10,6 @@ export const userApi = emptyApi.injectEndpoints({
         };
       },
       providesTags: (user) => {
-        localStorage.setItem("authUser", JSON.stringify(user));
         return ["USER_PROFILE"];
       },
     }),

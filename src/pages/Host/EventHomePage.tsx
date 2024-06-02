@@ -63,8 +63,9 @@ export const MapCard = () => {
   return (
     <div className="h-96 rounded-lg border-neutral-100 bg-whitebase shadow-button-secondary p-6 flex gap-3 flex-col">
       <iframe
-        src="https://www.google.com/maps/@12.918057,77.6167088,16z?entry=ttu"
         className="h-full"
+        src="https://api.mapbox.com/styles/v1/siriuswapnil/clwxqae6f01f201nycb0h090m.html?title=false&access_token=pk.eyJ1Ijoic2lyaXVzd2FwbmlsIiwiYSI6ImNsd3hwbDBqejFjYjkybHBzYjBmeGU5YnQifQ.OgvMgngDR35W2Hek18141w&zoomwheel=false#12.75/12.97154/77.60227"
+        title="Untitled"
       />
     </div>
   );
