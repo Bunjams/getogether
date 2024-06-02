@@ -27,7 +27,8 @@ export type InvitedVendor = {
 
 export type VendorEvents = EventResult & {
   vendor_services: VendorService[];
-  event_status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
+  status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
+  rating: number;
 };
 
 export type VendorInvitedEvent = {

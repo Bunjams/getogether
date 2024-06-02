@@ -16,6 +16,12 @@ export const VENDOR_EVENT_STATUS_COLOR = {
   COMPLETED: "green",
 };
 
+export const VENDOR_EVENT_INVITE_STATUS_BADGE = {
+  NOT_STARTED: "error",
+  IN_PROGRESS: "warning",
+  COMPLETED: "success",
+};
+
 export const VENDOR_EVENT_INVITE_STATUS_COLOR = {
   INVITED: "orange",
   JOINED: "green",
