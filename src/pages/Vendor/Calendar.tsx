@@ -1,14 +1,12 @@
-import React from "react";
 import AnimatedPage from "components/Design/AnimatedPage/AnimatedPage";
 import Async from "components/Design/Async/Async";
 import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
-import VendorEventsTable from "components/VendorEvent/VendorEventsTable";
+import VendorCalendar from "components/VendorCalendar/VendorCalendar";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import VendorListEmpty from "static/Image/VendorListEmpty.png";
 import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
-import VendorCalendar from "components/VendorCalendar/VendorCalendar";
 
 const Calendar = () => {
   useDocumentTitle("Event Calendar");
@@ -30,8 +28,7 @@ const Calendar = () => {
         </Async.Empty>
         <Async.Success>
           <PageLayout header={<Header title="Calendar" />}>
-            {/* <VendorCalendar /> */}
-            <>VendorCalendar</>
+            <VendorCalendar />
           </PageLayout>
         </Async.Success>
       </Async.Root>
