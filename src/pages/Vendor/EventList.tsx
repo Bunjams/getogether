@@ -3,19 +3,14 @@ import Async from "components/Design/Async/Async";
 import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import Header from "components/Design/Header/Header";
 import PageLayout from "components/Design/PageLayout/PageLayout";
-import VendorUpcomingEvents from "components/VendorHomePage/VendorUpcomingEvents";
+import VendorEventsTable from "components/VendorEvent/VendorEventsTable";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import VendorListEmpty from "static/Image/VendorListEmpty.png";
-import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
 
-const Home = () => {
-  useDocumentTitle("Upcoming events");
+const EventList = () => {
+  useDocumentTitle("Event");
 
-  // TODO: use this data
-  const { data } = useGetAllEventForVendorQuery({
-    show_upcoming: true,
-  });
-
+  //   TODO: add API
   const isLoading = false;
   const isSuccess = true;
   const isEmpty = false;
@@ -25,17 +20,16 @@ const Home = () => {
       <Async.Root isEmpty={isEmpty} isLoading={isLoading} isSuccess={isSuccess}>
         <Async.Empty>
           <EmptyScreen
-            // TODO: image change
             img={VendorListEmpty}
             // TODO: copy changes
-            title="No Upcoming events"
-            subtitle=""
+            title="No event yet!"
+            subtitle="Track your event"
             noAction
           />
         </Async.Empty>
         <Async.Success>
-          <PageLayout header={<Header title="Welcome" />}>
-            <VendorUpcomingEvents />
+          <PageLayout header={<Header title="Event" />}>
+            <VendorEventsTable />
           </PageLayout>
         </Async.Success>
       </Async.Root>
@@ -43,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default EventList;

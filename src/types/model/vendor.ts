@@ -1,3 +1,5 @@
+import { EventResult } from "./event";
+
 export type VendorService = { name: string; uuid: string; category: string };
 
 export type AvailableVendors = {
@@ -19,6 +21,17 @@ export type InvitedVendor = {
   uuid: string;
   services: VendorService[];
   rating: number;
-  channel_utl: string | null;
+  channel_url: string | null;
   vendor_id?: string;
+};
+
+// TODO : update with new response
+export type VendorInvitedEvent = {
+  vendor: {
+    name: string;
+    uuid: string;
+    email: string;
+    services: VendorService[];
+  };
+  events: EventResult[];
 };

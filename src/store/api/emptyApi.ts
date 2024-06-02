@@ -122,6 +122,7 @@ export const emptyApi = createApi({
     "HOST_VENODRS",
     "GUEST",
     "GUEST_VIEW",
+    "VENDOR_EVENTS",
   ],
   baseQuery: baseQuery,
   endpoints: () => ({}),
