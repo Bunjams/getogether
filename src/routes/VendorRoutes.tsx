@@ -7,6 +7,7 @@ const ChatPage = lazy(() => import("pages/ChatPage"));
 const EventList = lazy(() => import("pages/Vendor/EventList"));
 const Home = lazy(() => import("pages/Vendor/Home"));
 const Services = lazy(() => import("pages/Vendor/Services"));
+const Calendar = lazy(() => import("pages/Vendor/Calendar"));
 
 const VendorRoutes = () => {
   return (
@@ -34,15 +35,7 @@ const VendorRoutes = () => {
               </section>
             }
           />
-          <Route
-            path="/calendar"
-            element={
-              <section className="flex items-center w-full justify-center">
-                <PageLoader noBorder />
-                calendar
-              </section>
-            }
-          />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
