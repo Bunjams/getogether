@@ -27,7 +27,7 @@ const MagicLink = () => {
       navigate("/", { replace: true });
     } catch (e) {
       alert({ message: (e as BackendError).data.error.message });
-      // navigate("/", { replace: true });
+      navigate("/", { replace: true });
     }
   };
 
