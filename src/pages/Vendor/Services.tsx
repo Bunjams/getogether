@@ -28,7 +28,7 @@ const Services = () => {
             img={VendorServicesEmpty}
             title="List your services"
             subtitle="Add your services and pricing"
-            onClick={() => {}}
+            onClick={open}
             actionText="Add Service"
           />
         </Async.Empty>

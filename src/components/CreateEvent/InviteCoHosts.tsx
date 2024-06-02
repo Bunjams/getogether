@@ -95,7 +95,6 @@ const EventConsole = () => {
                       status={name ? "error" : undefined}
                       placeholder="Enter co-host name"
                       label="Name"
-                      required
                       size="large"
                     />
                     <ErrorMessage
@@ -111,7 +110,6 @@ const EventConsole = () => {
                       status={email ? "error" : undefined}
                       placeholder="Enter co-host email"
                       label="Email Address"
-                      required
                       size="large"
                     />
                     <ErrorMessage
