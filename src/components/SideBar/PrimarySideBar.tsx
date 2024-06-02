@@ -34,8 +34,16 @@ const EventList = ({
   useEffect(() => {
     if (isSuccess && data.length > 0) {
       dispatch(setCurrentEventId(data[0].uuid));
+      if (role === "HOST") {
+        navigate(`/host/${data[0].uuid}/home`, {});
+        return;
+      }
+      if (role === "GUEST") {
+        navigate(`/guest/${data[0].uuid}/home`, {});
+        return;
+      }
     }
-  }, [isSuccess]);
+  }, [isSuccess, JSON.stringify(data)]);
 
   const onClick = ({ uuid }: { uuid: string }) => {
     dispatch(setCurrentEventId(uuid));
@@ -81,7 +89,11 @@ const EventList = ({
 };
 
 const HostEventList = () => {
-  const { data = [], isSuccess } = useGetAllEevntsQuery();
+  const { data = [], isSuccess } = useGetAllEevntsQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
+
   return (
     <>
       <EventList eventList={data} isSuccess={isSuccess} />
@@ -98,7 +110,12 @@ const HostEventList = () => {
 };
 
 const GuestEventList = () => {
-  const { data = [], isSuccess } = useGetAllEventForGuestQuery();
+  const { data = [], isSuccess } = useGetAllEventForGuestQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
   return <EventList eventList={data} isSuccess={isSuccess} />;
 };
 

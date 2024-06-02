@@ -9,7 +9,10 @@ export const userApi = emptyApi.injectEndpoints({
           url: "users/profile/",
         };
       },
-      providesTags: ["USER_PROFILE"],
+      providesTags: (user) => {
+        localStorage.setItem("authUser", JSON.stringify(user));
+        return ["USER_PROFILE"];
+      },
     }),
 
     updateUser: builder.mutation<

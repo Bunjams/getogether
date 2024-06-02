@@ -3,7 +3,7 @@ import EmptyScreen from "components/Design/EmptyScreen/EmptyScreen";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EventEmpty from "static/Image/EventEmpty.png";
 import { useGetAllEevntsQuery } from "store/api/hostEvent";
 import { setCurrentEventId } from "store/slices/currentEvent";
@@ -12,7 +12,10 @@ const HostNoEventPage = () => {
   useDocumentTitle("Getogether");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data = [], isSuccess, isLoading } = useGetAllEevntsQuery();
+  const { data = [], isSuccess } = useGetAllEevntsQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -23,12 +26,9 @@ const HostNoEventPage = () => {
   useEffect(() => {
     if (isSuccess && data.length > 0) {
       dispatch(setCurrentEventId(data[0].uuid));
+      navigate(`/host/${data[0].uuid}/home`);
     }
-  }, [isSuccess]);
-
-  if (isSuccess && data.length > 0) {
-    return <Navigate to={`/host/${data[0].uuid}/home`} />;
-  }
+  }, [isSuccess, JSON.stringify(data)]);
 
   return (
     <AnimatedPage
