@@ -8,49 +8,35 @@ import { VENDOR_EVENT_STATUS_COLOR } from "dictionaries";
 import { Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
-import { InvitedVendor } from "types/model/vendor";
+import { InvitedVendor, VendorEvents } from "types/model/vendor";
 import { debounce } from "utils/debouncing";
-import { eventMock } from "./mockData";
-
-type VENDOR = {
-  event_name: string;
-  event_status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
-  invited_by: {
-    name: string;
-    uuid: string;
-  };
-  uuid: string;
-  services: { name: string; uuid: string; category: string }[];
-  rating: number;
-  end_date: string;
-  start_date: string;
-  type: string;
-};
 
 const VendorEventsTable = () => {
   const [searchText, setSearchText] = useState("");
 
-  // TODO: use this data
-  const { data, isLoading } = useGetAllEventForVendorQuery({
+  const { data } = useGetAllEventForVendorQuery({
     searchText,
+    show_upcoming: false,
   });
 
-  const columns: TableProps<VENDOR>["columns"] = [
+  const { events = [] } = data || {};
+
+  const columns: TableProps<VendorEvents>["columns"] = [
     {
       title: "Event Name",
-      dataIndex: "event_name",
-      key: "event_name",
+      dataIndex: "name",
+      key: "name",
       width: "20%",
       render: (name) => name || "-",
     },
 
     {
       title: "Host",
-      dataIndex: "invited_by",
-      key: "host",
+      dataIndex: "primary_host",
+      key: "primary_host",
       width: "20%",
-      render: (host) => {
-        return host.name || "-";
+      render: (primary_host) => {
+        return primary_host || "-";
       },
     },
 
@@ -74,8 +60,8 @@ const VendorEventsTable = () => {
 
     {
       title: "Services",
-      dataIndex: "services",
-      key: "services",
+      dataIndex: "vendor_services",
+      key: "vendor_services",
       width: "25%",
       render: (services: InvitedVendor["services"]) => {
         if (services?.length === 0) {
@@ -125,7 +111,7 @@ const VendorEventsTable = () => {
   return (
     <Table
       columns={columns}
-      dataSource={eventMock}
+      dataSource={events}
       pagination={false}
       header={
         <header className="grid grid-cols-3 py-2.5">

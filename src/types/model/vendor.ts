@@ -25,7 +25,11 @@ export type InvitedVendor = {
   vendor_id?: string;
 };
 
-// TODO : update with new response
+export type VendorEvents = EventResult & {
+  vendor_services: VendorService[];
+  event_status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
+};
+
 export type VendorInvitedEvent = {
   vendor: {
     name: string;
@@ -33,5 +37,5 @@ export type VendorInvitedEvent = {
     email: string;
     services: VendorService[];
   };
-  events: EventResult[];
+  events: VendorEvents[];
 };

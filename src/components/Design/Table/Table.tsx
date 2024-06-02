@@ -22,7 +22,7 @@ const Table = ({ header, ...rest }: Props) => {
           },
         }}
       >
-        <AntTable {...rest} />
+        <AntTable {...rest} pagination={false} />
       </ConfigProvider>
     </div>
   );

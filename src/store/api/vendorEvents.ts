@@ -4,7 +4,7 @@ import { emptyApi } from "./emptyApi";
 export const vendorEvents = emptyApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllEventForVendor: builder.query<
-      VendorInvitedEvent[],
+      VendorInvitedEvent,
       { show_upcoming?: boolean; searchText?: string }
     >({
       query: ({ show_upcoming, searchText }) => {

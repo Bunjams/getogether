@@ -6,14 +6,13 @@ import PageLayout from "components/Design/PageLayout/PageLayout";
 import VendorEventsTable from "components/VendorEvent/VendorEventsTable";
 import useDocumentTitle from "hooks/useDocumentTitle";
 import VendorListEmpty from "static/Image/VendorListEmpty.png";
+import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
 
 const EventList = () => {
   useDocumentTitle("Event");
-
-  //   TODO: add API
-  const isLoading = false;
-  const isSuccess = true;
-  const isEmpty = false;
+  const { data, isLoading, isSuccess } = useGetAllEventForVendorQuery({});
+  const { events = [] } = data || {};
+  const isEmpty = events?.length === 0;
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">

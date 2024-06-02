@@ -3,22 +3,7 @@ import Label from "components/Design/Label/Label";
 import dayjs from "dayjs";
 import { EVENT_IMG_LINK } from "dictionaries";
 import { ReactNode } from "react";
-import { upcomingEventMock } from "./mockData";
-
-type VENDOR = {
-  event_name: string;
-  event_status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
-  invited_by: {
-    name: string;
-    uuid: string;
-  };
-  uuid: string;
-  services: { name: string; uuid: string; category: string }[];
-  rating: number;
-  end_date: string;
-  start_date: string;
-  type: string;
-};
+import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
 
 const EventCard = ({
   type,
@@ -47,18 +32,24 @@ const EventCard = ({
 };
 
 const VendorUpcomingEvents = () => {
+  const { data } = useGetAllEventForVendorQuery({
+    show_upcoming: true,
+  });
+
+  const { events = [] } = data || {};
+
   return (
     <div className="flex gap-6 flex-col">
       <h4 className="text-h4 text-neutral-900">Upcoming events</h4>
       <div className="flex w-full flex-wrap gap-6">
-        {upcomingEventMock.map(
-          ({ event_name, end_date, start_date, type, invited_by, uuid }) => {
+        {events.map(
+          ({ name, end_date, start_date, type, primary_host, uuid }) => {
             return (
               <EventCard
                 key={uuid}
                 type={type}
-                event_name={event_name}
-                host={invited_by.name}
+                event_name={name}
+                host={primary_host || "-"}
                 date={
                   <>
                     {dayjs(start_date).format("ddd")}{" "}

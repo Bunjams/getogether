@@ -11,14 +11,12 @@ import { useGetAllEventForVendorQuery } from "store/api/vendorEvents";
 const Home = () => {
   useDocumentTitle("Upcoming events");
 
-  // TODO: use this data
-  const { data } = useGetAllEventForVendorQuery({
+  const { data, isLoading, isSuccess } = useGetAllEventForVendorQuery({
     show_upcoming: true,
   });
 
-  const isLoading = false;
-  const isSuccess = true;
-  const isEmpty = false;
+  const { events } = data || {};
+  const isEmpty = events?.length === 0;
 
   return (
     <AnimatedPage animation="fade" className="flex w-full flex-col gap-2">
