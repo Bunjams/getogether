@@ -8,6 +8,7 @@ const HostEventPage = lazy(() => import("pages/Host/EventHomePage"));
 const ChatPage = lazy(() => import("pages/ChatPage"));
 const VendorList = lazy(() => import("pages/Host/VendorList"));
 const ExpenseManager = lazy(() => import("pages/Host/ExpenseManager"));
+const ComingSoon = lazy(() => import("components/ComingSoon/ComingSoon"));
 
 const HostRoutes = () => {
   const { eventId = "" } = useParams<{ eventId: string }>();
@@ -28,7 +29,10 @@ const HostRoutes = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/guest-list" element={<GuestList />} />
           <Route path="/vendors" element={<VendorList />} />
-          <Route path="/expense-manager" element={<ExpenseManager />} />
+          <Route
+            path="/expense-manager"
+            element={<ComingSoon text="Expense Manager Coming soon" />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { emptyApi } from "./api/emptyApi";
 import { guestInvitePublicApi } from "./api/guestInvitePublicAPI";
 import { onboardingApi } from "./api/onboarding";
+import chatUnreadCount from "./slices/chatUnreadCount";
 import currerntEvent from "./slices/currentEvent";
 
 const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   [onboardingApi.reducerPath]: onboardingApi.reducer,
   [guestInvitePublicApi.reducerPath]: guestInvitePublicApi.reducer,
   currerntEvent,
+  chatUnreadCount,
 });
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {

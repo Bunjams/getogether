@@ -1,6 +1,7 @@
 import SecondarySideBar, { NavMenu } from "components/SideBar/SecondarySideBar";
 import { Home, MessageSquareMore } from "lucide-react";
 import { useParams } from "react-router-dom";
+import ChatNavMenu from "./ChatNavMenu";
 
 const GuestNavigation = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -13,14 +14,7 @@ const GuestNavigation = () => {
       >
         Home
       </NavMenu>
-      <NavMenu
-        to={`/guest/${eventId}/chat`}
-        icon={
-          <MessageSquareMore size={16} strokeWidth={2} color="currentColor" />
-        }
-      >
-        Chat
-      </NavMenu>
+      <ChatNavMenu to={`/guest/${eventId}/chat`} />
     </SecondarySideBar>
   );
 };

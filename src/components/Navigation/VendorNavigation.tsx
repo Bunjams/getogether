@@ -11,6 +11,7 @@ import {
   WandSparkles,
 } from "lucide-react";
 import React from "react";
+import ChatNavMenu from "./ChatNavMenu";
 
 const VendorNavigation = () => {
   return (
@@ -28,14 +29,8 @@ const VendorNavigation = () => {
       >
         Event
       </NavMenu>
-      <NavMenu
-        to={`/vendor/chat`}
-        icon={
-          <MessageSquareMore size={16} strokeWidth={2} color="currentColor" />
-        }
-      >
-        Chat
-      </NavMenu>
+
+      <ChatNavMenu to={`/vendor/chat`} />
       <NavMenu
         to={`/vendor/services`}
         icon={<WandSparkles size={16} strokeWidth={2} color="currentColor" />}
@@ -43,16 +38,16 @@ const VendorNavigation = () => {
         Services
       </NavMenu>
       <NavMenu
-        to={`/vendor/payments`}
-        icon={<CreditCard size={16} strokeWidth={2} color="currentColor" />}
-      >
-        Payments
-      </NavMenu>
-      <NavMenu
         to={`/vendor/calendar`}
         icon={<CalendarClock size={16} strokeWidth={2} color="currentColor" />}
       >
         Calendar
+      </NavMenu>
+      <NavMenu
+        to={`/vendor/payments`}
+        icon={<CreditCard size={16} strokeWidth={2} color="currentColor" />}
+      >
+        Payments
       </NavMenu>
     </SecondarySideBar>
   );

@@ -14,7 +14,7 @@ export const NavMenu = ({
   children,
   icon,
   ...props
-}: NavLinkProps & { icon: JSX.Element }) => {
+}: NavLinkProps & { icon: JSX.Element; children: ReactNode }) => {
   return (
     <AnimatePresence>
       <motion.aside
