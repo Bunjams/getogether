@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGetUserProfileQuery } from "store/api/userProfile";
 import { StreamChat } from "stream-chat";
-import { useCurrentUser } from "./useCurrentUser";
 import { useRandomProfile } from "./useRandomProfile";
 
 export const useStreamClient = () => {
@@ -9,50 +8,54 @@ export const useStreamClient = () => {
     {},
     { refetchOnMountOrArgChange: true }
   );
-  const [client, setClient] = useState<StreamChat | null>(null);
   const profileUrl = useRandomProfile();
 
-  const token = data?.member?.access_token;
-  const userId = data?.member?.member_id;
+  const chatAccessToken = data?.member?.access_token;
+  const chatMemberId = data?.member?.member_id;
 
-  const streamUser = useMemo(
+  const user = useMemo(
     () => ({
-      id: userId || "",
+      id: chatMemberId || "",
       name: data?.first_name || "",
       image: data?.profile_url || profileUrl,
     }),
-    [userId]
+    [chatMemberId]
   );
 
-  useEffect(() => {
-    const initializeChat = async () => {
-      const apiKey = process.env.REACT_APP_STREAM_API_KEY || "";
+  const [client, setClient] = useState<null | StreamChat>(null);
+  const apiKey = process.env.REACT_APP_STREAM_API_KEY || "";
 
-      // Initialize the Stream Chat client
-      const client = StreamChat.getInstance(apiKey);
-      await client.connectUser(
-        {
-          ...streamUser,
+  useEffect(() => {
+    if (chatAccessToken && apiKey) {
+      const client = new StreamChat(apiKey, { timeout: 20000 });
+      // prevents application from setting stale client (user changed, for example)
+      let didUserConnectInterrupt = false;
+
+      const connectionPromise = client.connectUser(user, chatAccessToken).then(
+        (e) => {
+          // @ts-ignore
+          if (!didUserConnectInterrupt) {
+            setClient(client);
+          }
         },
-        token
+        (e) => console.log(e)
       );
 
-      setClient(client);
-    };
-
-    if (userId && token) {
-      initializeChat();
+      return () => {
+        didUserConnectInterrupt = true;
+        setClient(null);
+        // wait for connection to finish before initiating closing sequence
+        connectionPromise
+          .then(() => client.disconnectUser())
+          .then(() => {
+            console.log("connection closed");
+          });
+      };
     }
-
-    // Clean up the connection when the component unmounts
-    return () => {
-      if (client) {
-        client.disconnectUser();
-      }
-    };
-  }, [streamUser]);
+  }, [chatAccessToken, user]);
 
   return {
     client,
+    user,
   };
 };
