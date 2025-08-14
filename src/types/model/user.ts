@@ -20,7 +20,7 @@ export type User = {
 //   first_name: "vikas";
 //   last_name: "gaikwad";
 //   mobile: null;
-//   email: "vikas@inkle.io";
+//   email: "temp";
 //   profile_url: null;
 //   uuid: "9b4ff1b0-ccd3-4854-b0ea-d0cecc74f9fc";
 //   role: "HOST";
